@@ -12,6 +12,11 @@ add_executable(
     ${PROJECT_NAME}
     main.cpp
     src/Game.h src/Game.cpp
+    src/enums/GameState.h src/enums/GameState.cpp
+    src/Menu.h src/Menu.cpp
+    src/Princess.h src/Princess.cpp
+    src/RocketSpawner.h src/RocketSpawner.cpp
+    src/Rocket.h src/Rocket.cpp
 )
 
 include(GNUInstallDirs)

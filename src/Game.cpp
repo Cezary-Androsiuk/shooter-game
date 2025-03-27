@@ -1,8 +1,13 @@
 #include "Game.h"
 
+void Game::initValues()
+{
+    m_gameState = GameState::Menu;
+}
+
 void Game::initWindow()
 {
-    sf::VideoMode vm = DEBUG_VIEW ? sf::VideoMode(400, 200) : sf::VideoMode::getDesktopMode();
+    sf::VideoMode vm = DEBUG_VIEW ? sf::VideoMode(800, 600) : sf::VideoMode::getDesktopMode();
     // m_contextSettings
     m_window = new sf::RenderWindow(vm, "Edu Game", DEBUG_VIEW ? sf::Style::Default : sf::Style::Fullscreen, m_contextSettings);
     // m_window->setFramerateLimit(240);
@@ -10,6 +15,7 @@ void Game::initWindow()
 
 Game::Game()
 {
+    this->initValues();
     this->initWindow();
 }
 
@@ -45,6 +51,16 @@ void Game::pollEvent()
     }
 }
 
+void Game::updateMenu()
+{
+
+}
+
+void Game::updatePlay()
+{
+
+}
+
 void Game::update()
 {
     if(m_currentTick % 100 == 1)
@@ -54,6 +70,13 @@ void Game::update()
         printf("frame: %lld, fps: %d", m_currentTick, fps);
         fflush(stdout);
     }
+
+    if(m_gameState == GameState::Menu)
+        this->updateMenu();
+    else if(m_gameState == GameState::Play)
+        this->updatePlay();
+    else
+        printf("unknown game state\n");
 }
 
 void Game::render()
