@@ -3,6 +3,8 @@
 void Game::initValues()
 {
     m_gameState = GameState::Menu;
+    m_maxFPS = 0;
+    m_minFPS = (size_t)-1;
 }
 
 void Game::initWindow()
@@ -66,8 +68,11 @@ void Game::update()
     if(m_currentTick % 100 == 1)
     {
         int fps = 1.f/m_dt;
+        if(fps > m_maxFPS) m_maxFPS = fps;
+        if(fps < m_minFPS) m_minFPS = fps;
+
         printf("\r                              \r");
-        printf("frame: %lld, fps: %d", m_currentTick, fps);
+        printf("frame: % 9lld, fps: % 6d, (min: %lld, max: %lld)", m_currentTick, fps, m_minFPS, m_maxFPS);
         fflush(stdout);
     }
 

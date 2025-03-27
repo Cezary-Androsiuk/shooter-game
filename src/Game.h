@@ -51,6 +51,8 @@ private:
 
     sf::Clock m_deltaTimeClock;
     float m_dt;
+    size_t m_minFPS;
+    size_t m_maxFPS;
     size_t m_currentTick;
 
     GameState m_gameState;
