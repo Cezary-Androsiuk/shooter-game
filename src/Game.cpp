@@ -2,7 +2,8 @@
 
 void Game::initValues()
 {
-    m_gameState = GameState::Menu;
+    // m_gameState = GameState::Menu;
+    m_gameState = GameState::Play;
     m_maxFPS = 0;
     m_minFPS = (size_t)-1;
 }
@@ -15,10 +16,24 @@ void Game::initWindow()
     // m_window->setFramerateLimit(240);
 }
 
+void Game::initPrincess()
+{
+    auto size = m_window->getSize();
+    float width = static_cast<float>(size.x);
+    float height = static_cast<float>(size.y);
+    m_princess.setPosition(sf::Vector2f(width/2.f, height/2.f));
+}
+
+void Game::initObjects()
+{
+    this->initPrincess();
+}
+
 Game::Game()
 {
     this->initValues();
     this->initWindow();
+    this->initObjects();
 }
 
 Game::~Game()
@@ -53,14 +68,14 @@ void Game::pollEvent()
     }
 }
 
-void Game::updateMenu()
+void Game::updateMenuStage()
 {
 
 }
 
-void Game::updatePlay()
+void Game::updatePlayStage()
 {
-
+    m_princess.update();
 }
 
 void Game::update()
@@ -76,17 +91,33 @@ void Game::update()
         fflush(stdout);
     }
 
-    if(m_gameState == GameState::Menu)
-        this->updateMenu();
-    else if(m_gameState == GameState::Play)
-        this->updatePlay();
-    else
-        printf("unknown game state\n");
+    switch (m_gameState) {
+    case GameState::Menu: this->updateMenuStage(); break;
+    case GameState::Play: this->updatePlayStage(); break;
+    default: printf("unknown game state, can't update\n"); break;
+    }
+}
+
+void Game::renderMenuStage()
+{
+
+}
+
+void Game::renderPlayStage()
+{
+    m_princess.render(m_window);
+
 }
 
 void Game::render()
 {
     m_window->clear(BACKGROUND_SF_COLOR);
+
+    switch (m_gameState) {
+    case GameState::Menu: this->renderMenuStage(); break;
+    case GameState::Play: this->renderPlayStage(); break;
+    default: printf("unknown game state, can't render\n"); break;
+    }
 
     m_window->display();
 }

@@ -20,6 +20,8 @@ class Game
     /* INITIALIZE */
     void initValues();
     void initWindow();
+    void initPrincess();
+    void initObjects();
 
     Game();
     ~Game();
@@ -32,11 +34,13 @@ class Game
     void pollEvent();
 
     /* UPDATE */
-    void updateMenu();
-    void updatePlay();
+    void updateMenuStage();
+    void updatePlayStage();
     void update();
 
     /* RENDER */
+    void renderMenuStage();
+    void renderPlayStage();
     void render();
 
     inline bool running() const noexcept;

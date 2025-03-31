@@ -6,6 +6,8 @@
 class Princess
 {
     /* INITIALIZE */
+    void initData();
+    void initBody();
 
 public:
     Princess();
@@ -18,16 +20,33 @@ private:
     /* EVENTS */
     void pollEvent();
 
+private:
     /* UPDATE */
+    void updateBody();
+public:
     void update();
 
+private:
     /* RENDER */
+public:
     void render(sf::RenderTarget *target);
 
-
 public:
+    /* GETTERS */
+
+
+    /* SETTERS */
+    void setPosition(const sf::Vector2f &position);
 
 private:
+
+    struct{
+        sf::RectangleShape bounds;
+
+    } m_body;
+
+    sf::Vector2f m_position;
+    sf::Vector2f m_size;
 
 };
 
