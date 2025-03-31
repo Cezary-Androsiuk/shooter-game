@@ -8,15 +8,23 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SFML_DIR "C:/SFML-2.6.1/lib/cmake/SFML")
 find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)
 
+# Add resources (for visualization purposes only)
+set(RESOURCE_FILES
+    resources/data.txt
+)
+source_group("Resources" FILES ${RESOURCE_FILES})
+
 add_executable(
     ${PROJECT_NAME}
     main.cpp
-    src/Game.h src/Game.cpp
-    src/enums/GameState.h src/enums/GameState.cpp
-    src/Menu.h src/Menu.cpp
-    src/Princess.h src/Princess.cpp
-    src/RocketSpawner.h src/RocketSpawner.cpp
-    src/Rocket.h src/Rocket.cpp
+    source/Game.h source/Game.cpp
+    source/enums/GameState.h source/enums/GameState.cpp
+    source/Menu.h source/Menu.cpp
+    source/Princess.h source/Princess.cpp
+    source/RocketSpawner.h source/RocketSpawner.cpp
+    source/Rocket.h source/Rocket.cpp
+
+    ${RESOURCE_FILES}
 )
 
 include(GNUInstallDirs)
