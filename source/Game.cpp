@@ -12,21 +12,21 @@ void Game::initWindow()
 {
     sf::VideoMode vm = DEBUG_VIEW ? sf::VideoMode(800, 600) : sf::VideoMode::getDesktopMode();
     // m_contextSettings
-    m_window = new sf::RenderWindow(vm, "Edu Game", DEBUG_VIEW ? sf::Style::Default : sf::Style::Fullscreen, m_contextSettings);
+    m_window = new sf::RenderWindow(vm, "Shooter Game", DEBUG_VIEW ? sf::Style::Default : sf::Style::Fullscreen, m_contextSettings);
     // m_window->setFramerateLimit(240);
 }
 
-void Game::initPrincess()
+void Game::initPlayer()
 {
     auto size = m_window->getSize();
     float width = static_cast<float>(size.x);
     float height = static_cast<float>(size.y);
-    m_princess.setPosition(sf::Vector2f(width/2.f, height/2.f));
+    m_player.setPosition(sf::Vector2f(width/2.f, height/2.f));
 }
 
 void Game::initObjects()
 {
-    this->initPrincess();
+    this->initPlayer();
 }
 
 Game::Game()
@@ -75,7 +75,7 @@ void Game::updateMenuStage()
 
 void Game::updatePlayStage()
 {
-    m_princess.update();
+    m_player.update();
 }
 
 void Game::update()
@@ -105,7 +105,7 @@ void Game::renderMenuStage()
 
 void Game::renderPlayStage()
 {
-    m_princess.render(m_window);
+    m_player.render(m_window);
 
 }
 

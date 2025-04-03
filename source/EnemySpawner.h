@@ -1,15 +1,15 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef ENEMYSPAWNER_H
+#define ENEMYSPAWNER_H
 
 #include <SFML/Graphics.hpp>
 
-class Menu
+class EnemySpawner
 {
     /* INITIALIZE */
 
 public:
-    Menu();
-    ~Menu();
+    EnemySpawner();
+    ~EnemySpawner();
 
 private:
     /* OTHER */
@@ -22,7 +22,7 @@ private:
     void update();
 
     /* RENDER */
-    void render(sf::RenderTarget *target);
+    /* ------ */
 
 
 public:
@@ -31,4 +31,4 @@ private:
 
 };
 
-#endif // MENU_H
+#endif // ENEMYSPAWNER_H

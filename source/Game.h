@@ -7,10 +7,10 @@
 
 #include "enums/GameState.h"
 
-#include "Menu.h"
-#include "Princess.h"
-#include "RocketSpawner.h"
-#include "Rocket.h"
+#include "states/Menu.h"
+#include "Player.h"
+#include "EnemySpawner.h"
+#include "Enemy.h"
 
 #define DEBUG_VIEW true // makes window smaller
 #define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
@@ -20,7 +20,7 @@ class Game
     /* INITIALIZE */
     void initValues();
     void initWindow();
-    void initPrincess();
+    void initPlayer();
     void initObjects();
 
     Game();
@@ -62,9 +62,9 @@ private:
     GameState m_gameState;
 
     Menu m_menu;
-    Princess m_princess;
-    RocketSpawner m_rocketSpawner;
-    std::vector<Rocket> m_rockets;
+    Player m_player;
+    EnemySpawner m_enemySpawner;
+    std::vector<Enemy> m_enemies;
 
 };
 

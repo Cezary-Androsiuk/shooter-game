@@ -1,6 +1,6 @@
-#include "Princess.h"
+#include "Player.h"
 
-void Princess::initData()
+void Player::initData()
 {
     /// Position
     m_position.x = 0.f;
@@ -11,7 +11,7 @@ void Princess::initData()
     m_size.y = 50.f;
 }
 
-void Princess::initBody()
+void Player::initBody()
 {
     m_body.bounds.setPosition(m_position);
     m_body.bounds.setFillColor(sf::Color(180, 40, 40));
@@ -19,33 +19,33 @@ void Princess::initBody()
     m_body.bounds.setOrigin(sf::Vector2f(m_size.x/2, m_size.y/2));
 }
 
-Princess::Princess()
+Player::Player()
 {
     this->initData();
     this->initBody();
 }
 
-Princess::~Princess()
+Player::~Player()
 {
 
 }
 
-void Princess::updateBody()
+void Player::updateBody()
 {
     m_body.bounds.setPosition(m_position);
 }
 
-void Princess::update()
+void Player::update()
 {
     this->updateBody();
 }
 
-void Princess::render(sf::RenderTarget *target)
+void Player::render(sf::RenderTarget *target)
 {
     target->draw(m_body.bounds);
 }
 
-void Princess::setPosition(const sf::Vector2f &position)
+void Player::setPosition(const sf::Vector2f &position)
 {
     m_position = position;
 }

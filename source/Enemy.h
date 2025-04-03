@@ -1,15 +1,15 @@
-#ifndef ROCKETSPAWNER_H
-#define ROCKETSPAWNER_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include <SFML/Graphics.hpp>
 
-class RocketSpawner
+class Enemy
 {
     /* INITIALIZE */
 
 public:
-    RocketSpawner();
-    ~RocketSpawner();
+    Enemy();
+    ~Enemy();
 
 private:
     /* OTHER */
@@ -22,7 +22,7 @@ private:
     void update();
 
     /* RENDER */
-    /* ------ */
+    void render(sf::RenderTarget *target);
 
 
 public:
@@ -31,4 +31,4 @@ private:
 
 };
 
-#endif // ROCKETSPAWNER_H
+#endif // ENEMY_H

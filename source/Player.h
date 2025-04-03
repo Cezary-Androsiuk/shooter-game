@@ -1,17 +1,17 @@
-#ifndef PRINCESS_H
-#define PRINCESS_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <SFML/Graphics.hpp>
 
-class Princess
+class Player
 {
     /* INITIALIZE */
     void initData();
     void initBody();
 
 public:
-    Princess();
-    ~Princess();
+    Player();
+    ~Player();
 
 private:
     /* OTHER */
@@ -50,4 +50,4 @@ private:
 
 };
 
-#endif // PRINCESS_H
+#endif // PLAYER_H

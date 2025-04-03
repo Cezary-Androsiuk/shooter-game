@@ -1,15 +1,17 @@
-#ifndef ROCKET_H
-#define ROCKET_H
+#ifndef MENU_H
+#define MENU_H
 
 #include <SFML/Graphics.hpp>
 
-class Rocket
+#include "states/Play.h"
+
+class Menu
 {
     /* INITIALIZE */
 
 public:
-    Rocket();
-    ~Rocket();
+    Menu();
+    ~Menu();
 
 private:
     /* OTHER */
@@ -31,4 +33,4 @@ private:
 
 };
 
-#endif // ROCKET_H
+#endif // MENU_H
