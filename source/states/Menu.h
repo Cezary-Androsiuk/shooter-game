@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "states/Play.h"
+#include "State.h"
 
-class Menu
+class Menu : public State
 {
     /* INITIALIZE */
 
@@ -16,18 +16,17 @@ public:
 private:
     /* OTHER */
 
-
     /* EVENTS */
-    void pollEvent();
 
     /* UPDATE */
-    void update();
 
     /* RENDER */
-    void render(sf::RenderTarget *target);
-
 
 public:
+    void pollEvent() override;
+    void update() override;
+    void render(sf::RenderTarget *target) override;
+
 
 private:
 

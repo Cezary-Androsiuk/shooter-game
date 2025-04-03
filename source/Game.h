@@ -8,9 +8,9 @@
 #include "enums/GameState.h"
 
 #include "states/Menu.h"
-#include "Player.h"
-#include "EnemySpawner.h"
-#include "Enemy.h"
+#include "objects/Player.h"
+#include "objects/EnemySpawner.h"
+#include "objects/Enemy.h"
 
 #define DEBUG_VIEW true // makes window smaller
 #define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)

@@ -1,0 +1,5 @@
+jak bardzo życie może ułatwić ustawienie ścieżek w CMakeLists
+poprzednio gdy implementowałem strukturę stosowałem jedno z dwóch podejsc: 
+State Play miał by pod sobą (w folderze Play) wszystkie obiekty tj. Player, Enemy itd. 
+taką strukturę jak teraz
+ale obie stwarzały problemy przez sposób importu, jeżeli chciałbym z State Menu dołączyć Playera to musiał bym jakieś dziwne ścieżki robić np z ../objects/Player lub Play/Player co strasznie utrudniało zarządzanie strukturą pojedyncze polecenie include_directory w CMake dało mi teraz możliwość odwoływania się tam gdzie potrzeba mam ładnie podzielone obiekty, stany, enumy i takie tam

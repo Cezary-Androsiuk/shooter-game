@@ -20,6 +20,9 @@ source_group("Resources" FILES ${RESOURCE_FILES})
 
 add_executable(
     ${PROJECT_NAME}
+
+    ${RESOURCE_FILES} # allows to copy resources within compilation
+
     main.cpp
     source/Game.h source/Game.cpp
 
@@ -27,13 +30,18 @@ add_executable(
     source/enums/GameState.h source/enums/GameState.cpp
 
     # STATES
+    source/states/State.h source/states/State.cpp
     source/states/Menu.h source/states/Menu.cpp
     source/states/Play.h source/states/Play.cpp
 
     # OBJECTS
-    source/Player.h source/Player.cpp
-    source/EnemySpawner.h source/EnemySpawner.cpp
-    source/Enemy.h source/Enemy.cpp
+    ## ENTITIES
+    source/objects/entities/Player.h source/objects/entities/Player.cpp
+    source/objects/entities/Enemy.h source/objects/entities/Enemy.cpp
+
+    # MECHANICS
+    ## SPAWNERS
+    source/mechanics/spawners/EnemySpawner.h source/mechanics/spawners/EnemySpawner.cpp
 
     # SFML SimpleGUI
     source/SimpleGUI/common.hpp
@@ -47,7 +55,8 @@ add_executable(
     source/SimpleGUI/Switch.cpp source/SimpleGUI/Switch.hpp
     source/SimpleGUI/TabControl.cpp source/SimpleGUI/TabControl.hpp
 
-    ${RESOURCE_FILES} # allows to copy resources within compilation
+
+    source/states/StateManager.h source/states/StateManager.cpp
 )
 
 include(GNUInstallDirs)
