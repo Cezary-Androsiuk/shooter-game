@@ -59,14 +59,18 @@ add_executable(
     source/states/StateManager.h source/states/StateManager.cpp
 )
 
-# copy resources
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
+file(GLOB RESOURCE_FILES_LIST "${CMAKE_SOURCE_DIR}/resources/*")
+
+add_custom_target(resources_copy ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/resources
         ${CMAKE_BINARY_DIR}/resources
+    DEPENDS ${RESOURCE_FILES_LIST}
     COMMENT "Copying resources to build directory"
 )
+
+add_dependencies(${PROJECT_NAME} resources_copy)
+
 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
