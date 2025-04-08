@@ -21,7 +21,7 @@ source_group("Resources" FILES ${RESOURCE_FILES})
 add_executable(
     ${PROJECT_NAME}
 
-    ${RESOURCE_FILES} # allows to copy resources within compilation
+    # ${RESOURCE_FILES} # allows to copy resources within compilation
 
     main.cpp
     source/Game.h source/Game.cpp
@@ -57,6 +57,15 @@ add_executable(
 
 
     source/states/StateManager.h source/states/StateManager.cpp
+)
+
+# copy resources
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resources
+        ${CMAKE_BINARY_DIR}/resources
+    COMMENT "Copying resources to build directory"
 )
 
 include(GNUInstallDirs)
