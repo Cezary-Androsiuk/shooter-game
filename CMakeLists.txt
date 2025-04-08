@@ -21,7 +21,7 @@ source_group("Resources" FILES ${RESOURCE_FILES})
 add_executable(
     ${PROJECT_NAME}
 
-    # ${RESOURCE_FILES} # allows to copy resources within compilation
+    ${RESOURCE_FILES} # allows to copy resources within compilation
 
     main.cpp
     source/Game.h source/Game.cpp
