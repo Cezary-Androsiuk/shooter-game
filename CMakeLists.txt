@@ -21,7 +21,7 @@ source_group("Resources" FILES ${RESOURCE_FILES})
 add_executable(
     ${PROJECT_NAME}
 
-    ${RESOURCE_FILES} # allows to copy resources within compilation
+    ${RESOURCE_FILES} # add resources to QtCreator
 
     main.cpp
     source/Game.h source/Game.cpp
@@ -29,7 +29,12 @@ add_executable(
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp
 
+    # ENVIRONMENT
+    source/environment/Obstacle.h source/environment/Obstacle.cpp
+    source/environment/Map.h source/environment/Map.cpp
+
     # STATES
+    source/states/StateManager.h source/states/StateManager.cpp
     source/states/State.h source/states/State.cpp
     source/states/Menu.h source/states/Menu.cpp
     source/states/Play.h source/states/Play.cpp
@@ -40,6 +45,7 @@ add_executable(
     source/objects/entities/Enemy.h source/objects/entities/Enemy.cpp
 
     # MECHANICS
+    source/mechanics/DeltaTime.h source/mechanics/DeltaTime.cpp
     ## SPAWNERS
     source/mechanics/spawners/EnemySpawner.h source/mechanics/spawners/EnemySpawner.cpp
 
@@ -56,7 +62,6 @@ add_executable(
     source/SimpleGUI/TabControl.cpp source/SimpleGUI/TabControl.hpp
 
 
-    source/states/StateManager.h source/states/StateManager.cpp
 )
 
 file(GLOB RESOURCE_FILES_LIST "${CMAKE_SOURCE_DIR}/resources/*")

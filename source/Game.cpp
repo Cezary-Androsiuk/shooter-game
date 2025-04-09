@@ -41,16 +41,6 @@ Game::~Game()
     delete m_window;
 }
 
-void Game::updateCurrentrTick()
-{
-    ++m_currentTick;
-}
-
-void Game::updateDeltaTime()
-{
-    m_dt = m_deltaTimeClock.restart().asSeconds();
-}
-
 void Game::pollEvent()
 {
     while(m_window->pollEvent(m_currentEvent)){
@@ -80,14 +70,15 @@ void Game::updatePlayStage()
 
 void Game::update()
 {
-    if(m_currentTick % 100 == 1)
+    DeltaTime *dt = DeltaTime::get();
+    if(dt->currentGameTick() % 100 == 1)
     {
-        int fps = 1.f/m_dt;
+        int fps = 1.f/dt->value();
         if(fps > m_maxFPS) m_maxFPS = fps;
         if(fps < m_minFPS) m_minFPS = fps;
 
         printf("\r                              \r");
-        printf("frame: % 9lld, fps: % 6d, (min: %lld, max: %lld)", m_currentTick, fps, m_minFPS, m_maxFPS);
+        printf("frame: % 9lld, fps: % 6d, (min: %lld, max: %lld)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
         fflush(stdout);
     }
 
@@ -132,8 +123,7 @@ void Game::play()
     Game game;
     while(game.running())
     {
-        game.updateCurrentrTick();
-        game.updateDeltaTime();
+        DeltaTime::get()->update();
 
         game.pollEvent();
         game.update();

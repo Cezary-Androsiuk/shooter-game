@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "mechanics/DeltaTime.h"
+
 #include "enums/GameState.h"
 
 #include "states/Menu.h"
@@ -27,8 +29,6 @@ class Game
     ~Game();
 
     /* OTHER */
-    void updateCurrentrTick();
-    void updateDeltaTime();
 
     /* EVENTS */
     void pollEvent();
@@ -54,10 +54,8 @@ private:
     sf::Event m_currentEvent;
 
     sf::Clock m_deltaTimeClock;
-    float m_dt;
     size_t m_minFPS;
     size_t m_maxFPS;
-    size_t m_currentTick;
 
     GameState m_gameState;
 
