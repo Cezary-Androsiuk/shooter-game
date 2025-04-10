@@ -79,38 +79,38 @@ void Player::preventMoveThatEnterBounds(
     const FloatRectEdges &playerBounds,
     const FloatRectEdges &obstacleBounds)
 {
-    /// Left - jeśli gracz próbuje wejść od prawej strony przeszkody
-    if(m_position.x + m_size.x >= obstacleBounds.left &&
-        m_position.x < obstacleBounds.left &&
-        m_position.y + m_size.y > obstacleBounds.top &&
-        m_position.y < obstacleBounds.bottom)
+    /// Left
+    if(playerBounds.right >= obstacleBounds.left &&
+        playerBounds.left < obstacleBounds.left &&
+        playerBounds.bottom > obstacleBounds.top &&
+        playerBounds.top < obstacleBounds.bottom)
     {
         m_position.x = obstacleBounds.left - m_size.x;
     }
-    /// Right - jeśli gracz próbuje wejść od lewej strony przeszkody
-    else if(m_position.x <= obstacleBounds.right &&
-             m_position.x + m_size.x > obstacleBounds.right &&
-             m_position.y + m_size.y > obstacleBounds.top &&
-             m_position.y < obstacleBounds.bottom)
+    /// Right
+    else if(playerBounds.left <= obstacleBounds.right &&
+             playerBounds.right > obstacleBounds.right &&
+             playerBounds.bottom > obstacleBounds.top &&
+             playerBounds.top < obstacleBounds.bottom)
     {
         m_position.x = obstacleBounds.right;
     }
-    /// Top - jeśli gracz próbuje wejść od dołu przeszkody
-    else if(m_position.y + m_size.y >= obstacleBounds.top &&
-             m_position.y < obstacleBounds.top &&
-             m_position.x + m_size.x > obstacleBounds.left &&
-             m_position.x < obstacleBounds.right)
+    /// Top
+    else if(playerBounds.bottom >= obstacleBounds.top &&
+             playerBounds.top < obstacleBounds.top &&
+             playerBounds.right > obstacleBounds.left &&
+             playerBounds.left < obstacleBounds.right)
     {
         m_position.y = obstacleBounds.top - m_size.y;
     }
-    // /// Bottom - jeśli gracz próbuje wejść od góry przeszkody
-    // else if(m_position.y <= obstacleBounds.bottom &&
-    //          m_position.y + m_size.y > obstacleBounds.bottom &&
-    //          m_position.x + m_size.x > obstacleBounds.left &&
-    //          m_position.x < obstacleBounds.right)
-    // {
-    //     m_position.y = obstacleBounds.bottom;
-    // }
+    /// Bottom
+    else if(playerBounds.top <= obstacleBounds.bottom &&
+             playerBounds.bottom > obstacleBounds.bottom &&
+             playerBounds.right > obstacleBounds.left &&
+             playerBounds.left < obstacleBounds.right)
+    {
+        m_position.y = obstacleBounds.bottom;
+    }
 }
 
 // void Player::pollEvent(sf::Event &event)
