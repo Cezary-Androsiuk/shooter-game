@@ -8,7 +8,7 @@ RectEdges<T>::RectEdges()
 }
 
 template<typename T>
-RectEdges<T>::RectEdges(T left, T top, T rigtht, T bottom)
+RectEdges<T>::RectEdges(T left, T top, T right, T bottom)
     : left(left), top(top), right(right), bottom(bottom)
 {
 
@@ -23,3 +23,5 @@ RectEdges<T>::RectEdges(const sf::Rect<T> &bounds)
 {
 
 }
+
+template class RectEdges<float>; /// GPT helps, something like public class instantion or something
