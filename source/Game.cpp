@@ -16,16 +16,25 @@ void Game::initWindow()
     // m_window->setFramerateLimit(240);
 }
 
+void Game::initMap()
+{
+    m_map = std::make_shared<Map>();
+    m_map->setMapSize(m_window->getSize());
+    m_map->buildObstacles();
+}
+
 void Game::initPlayer()
 {
     auto size = m_window->getSize();
     float width = static_cast<float>(size.x);
     float height = static_cast<float>(size.y);
     m_player.setPosition(sf::Vector2f(width/2.f, height/2.f));
+    m_player.setAvailableAreaForPlayer(m_map);
 }
 
 void Game::initObjects()
 {
+    this->initMap();
     this->initPlayer();
 }
 
@@ -78,7 +87,7 @@ void Game::update()
         if(fps < m_minFPS) m_minFPS = fps;
 
         printf("\r                              \r");
-        printf("frame: % 9lld, fps: % 6d, (min: %lld, max: %lld)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
+        printf("frame: % 9llu, fps: % 6d, (min: %llu, max: %llu)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
         fflush(stdout);
     }
 
@@ -96,8 +105,8 @@ void Game::renderMenuStage()
 
 void Game::renderPlayStage()
 {
+    m_map->render(m_window);
     m_player.render(m_window);
-
 }
 
 void Game::render()

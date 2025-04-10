@@ -2,14 +2,17 @@
 #define PLAYER_H
 
 #include <cmath>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
 #include "mechanics/DeltaTime.h"
+#include "utils/RectangleEdges.h"
+#include <environment/Map.h>
 
 // player speed
-constexpr float PLAYER_SPEED_STRAIGHT = 100.f;
-constexpr float PLAYER_SPEED_OBLIQUE = 100.f;
+constexpr float PLAYER_SPEED_STRAIGHT = 500.f;
+constexpr float PLAYER_SPEED_OBLIQUE = 500.f / 1.4142f /* sqrt(2) */;
 
 // player health points on start
 constexpr int PLAYER_HP = 100;
@@ -39,6 +42,12 @@ private:
 
 private:
     /* UPDATE */
+    void preventMoveThatExitBounds(
+        const FloatRectEdges &playerBounds,
+        const FloatRectEdges &obstacleBounds);
+    void preventMoveThatEnterBounds(
+        const FloatRectEdges &playerBounds,
+        const FloatRectEdges &obstacleBounds);
     void limitPlayerMovementToScreenArea();
     void updateBody();
     void updateMovement();
@@ -57,7 +66,7 @@ public:
     /* SETTERS */
     void setDeltaTimePtr(const float *dt);
     void setPosition(const sf::Vector2f &position);
-    void setAvailableAreaForPlayer(const sf::FloatRect availableAreaForPlayer);
+    void setAvailableAreaForPlayer(std::shared_ptr<Map> map);
 
 private:
     struct{
@@ -68,7 +77,7 @@ private:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
 
-    sf::FloatRect m_availableAreaForPlayer;
+    std::shared_ptr<Map> m_map;
 
     int m_points;
     int m_healthPoints;

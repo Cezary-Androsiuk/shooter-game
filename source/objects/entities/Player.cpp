@@ -21,7 +21,7 @@ void Player::initBody()
     m_body.bounds.setPosition(m_position);
     m_body.bounds.setFillColor(sf::Color(180, 40, 40));
     m_body.bounds.setSize(m_size);
-    m_body.bounds.setOrigin(sf::Vector2f(m_size.x/2, m_size.y/2));
+    // m_body.bounds.setOrigin(sf::Vector2f(m_size.x/2, m_size.y/2));
 }
 
 Player::Player()
@@ -51,6 +51,68 @@ void Player::move(sf::Vector2f move)
     );
 }
 
+void Player::preventMoveThatExitBounds(const FloatRectEdges &playerBounds, const FloatRectEdges &obstacleBounds)
+{
+    /// Left
+    if(playerBounds.left <= obstacleBounds.left)
+        m_position = sf::Vector2f(
+            obstacleBounds.left,
+            m_position.y);
+    /// Right
+    if(playerBounds.right >= obstacleBounds.right)
+        m_position = sf::Vector2f(
+            obstacleBounds.right - m_size.x,
+            m_position.y);
+    /// Top
+    if(playerBounds.top <= obstacleBounds.top)
+        m_position = sf::Vector2f(
+            m_position.x,
+            obstacleBounds.top);
+    /// Bottom
+    if(playerBounds.bottom >= obstacleBounds.bottom)
+        m_position = sf::Vector2f(
+            m_position.x,
+            obstacleBounds.bottom - m_size.y);
+}
+
+void Player::preventMoveThatEnterBounds(
+    const FloatRectEdges &playerBounds,
+    const FloatRectEdges &obstacleBounds)
+{
+    /// Left - jeśli gracz próbuje wejść od prawej strony przeszkody
+    if(m_position.x + m_size.x >= obstacleBounds.left &&
+        m_position.x < obstacleBounds.left &&
+        m_position.y + m_size.y > obstacleBounds.top &&
+        m_position.y < obstacleBounds.bottom)
+    {
+        m_position.x = obstacleBounds.left - m_size.x;
+    }
+    /// Right - jeśli gracz próbuje wejść od lewej strony przeszkody
+    else if(m_position.x <= obstacleBounds.right &&
+             m_position.x + m_size.x > obstacleBounds.right &&
+             m_position.y + m_size.y > obstacleBounds.top &&
+             m_position.y < obstacleBounds.bottom)
+    {
+        m_position.x = obstacleBounds.right;
+    }
+    /// Top - jeśli gracz próbuje wejść od dołu przeszkody
+    else if(m_position.y + m_size.y >= obstacleBounds.top &&
+             m_position.y < obstacleBounds.top &&
+             m_position.x + m_size.x > obstacleBounds.left &&
+             m_position.x < obstacleBounds.right)
+    {
+        m_position.y = obstacleBounds.top - m_size.y;
+    }
+    // /// Bottom - jeśli gracz próbuje wejść od góry przeszkody
+    // else if(m_position.y <= obstacleBounds.bottom &&
+    //          m_position.y + m_size.y > obstacleBounds.bottom &&
+    //          m_position.x + m_size.x > obstacleBounds.left &&
+    //          m_position.x < obstacleBounds.right)
+    // {
+    //     m_position.y = obstacleBounds.bottom;
+    // }
+}
+
 // void Player::pollEvent(sf::Event &event)
 // {
 
@@ -58,29 +120,15 @@ void Player::move(sf::Vector2f move)
 
 void Player::limitPlayerMovementToScreenArea()
 {
-    sf::Vector2f leftCornerPosition(m_position.x - m_size.x/2, m_position.y = m_size.y/2);
-    sf::FloatRect playerBounds(leftCornerPosition, m_size);
+    FloatRectEdges playerEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
+    float windowSizeX = static_cast<float>(m_map->getMapSize().x);
+    float windowSizeY = static_cast<float>(m_map->getMapSize().y);
+    FloatRectEdges windowEgdes(0.f, 0.f, windowSizeX, windowSizeY);
 
-    /// Left
-    if(playerBounds.left <= m_availableAreaForPlayer.left)
-        m_position = sf::Vector2f(
-            m_availableAreaForPlayer.left,
-            m_position.y);
-    /// Right
-    if(playerBounds.left + playerBounds.width >= m_availableAreaForPlayer.left + m_availableAreaForPlayer.width)
-        m_position = sf::Vector2f(
-            m_availableAreaForPlayer.left + m_availableAreaForPlayer.width - playerBounds.width,
-            m_position.y);
-    /// Top
-    if(playerBounds.top <= m_availableAreaForPlayer.top)
-        m_position = sf::Vector2f(
-            m_position.x,
-            m_availableAreaForPlayer.top);
-    /// Bottom
-    if(playerBounds.top + playerBounds.height >= m_availableAreaForPlayer.top + m_availableAreaForPlayer.height)
-        m_position = sf::Vector2f(
-            m_position.x,
-            m_availableAreaForPlayer.top + m_availableAreaForPlayer.height - playerBounds.height);
+    this->preventMoveThatExitBounds(playerEdges, windowEgdes);
+
+    for(Obstacle *obstacle : m_map->getObstacles())
+        this->preventMoveThatEnterBounds(playerEdges, obstacle->getBounds());
 }
 
 void Player::updateBody()
@@ -93,10 +141,22 @@ void Player::updateMovement()
     const float pss = PLAYER_SPEED_STRAIGHT * DeltaTime::get()->value();
     const float pso = PLAYER_SPEED_OBLIQUE * DeltaTime::get()->value();
 
-    const bool pressA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-    const bool pressW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-    const bool pressD = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
-    const bool pressS = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+    bool pressA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+    bool pressW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+    bool pressD = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+    bool pressS = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+
+    /// neutralize oposite forces
+    if(pressA && pressD)
+    {
+        pressA = false;
+        pressD = false;
+    }
+    if(pressW && pressS)
+    {
+        pressW = false;
+        pressS = false;
+    }
 
     if(pressA && pressW) this->move(-pso, -pso);        /// move left up
     else if(pressW && pressD) this->move(pso, -pso);    /// move right up
@@ -112,7 +172,7 @@ void Player::update()
 {
 
     this->updateMovement();
-    // this->limitPlayerMovementToScreenArea();
+    this->limitPlayerMovementToScreenArea();
 
     this->updateBody();
 }
@@ -124,10 +184,10 @@ void Player::render(sf::RenderTarget *target)
 
 void Player::setPosition(const sf::Vector2f &position)
 {
-    m_position = position;
+    m_position = sf::Vector2f(position.x - m_size.x/2, position.y - m_size.y/2);
 }
 
-void Player::setAvailableAreaForPlayer(const sf::FloatRect availableAreaForPlayer)
+void Player::setAvailableAreaForPlayer(std::shared_ptr<Map> map)
 {
-    m_availableAreaForPlayer = availableAreaForPlayer;
+    m_map = map;
 }

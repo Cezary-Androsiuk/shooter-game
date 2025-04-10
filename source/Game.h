@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <vector>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
@@ -13,6 +14,7 @@
 #include "objects/entities/Player.h"
 #include "objects/entities/Enemy.h"
 #include "mechanics/spawners/EnemySpawner.h"
+#include "environment/Map.h"
 
 #define DEBUG_VIEW true // makes window smaller
 #define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
@@ -22,6 +24,8 @@ class Game
     /* INITIALIZE */
     void initValues();
     void initWindow();
+
+    void initMap();
     void initPlayer();
     void initObjects();
 
@@ -60,6 +64,7 @@ private:
     GameState m_gameState;
 
     Menu m_menu;
+    std::shared_ptr<Map> m_map;
     Player m_player;
     EnemySpawner m_enemySpawner;
     std::vector<Enemy> m_enemies;

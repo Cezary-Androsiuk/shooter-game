@@ -26,6 +26,9 @@ add_executable(
     main.cpp
     source/Game.h source/Game.cpp
 
+    # UTILS
+    source/utils//RectangleEdges.h source/utils/RectangleEdges.cpp
+
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp
 
