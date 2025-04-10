@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "mechanics/DeltaTime.h"
-#include "utils/RectangleEdges.h"
+#include "utils/RectEdges.h"
 #include <environment/Map.h>
 
 // player speed

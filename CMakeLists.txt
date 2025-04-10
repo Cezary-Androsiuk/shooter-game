@@ -27,7 +27,7 @@ add_executable(
     source/Game.h source/Game.cpp
 
     # UTILS
-    source/utils//RectangleEdges.h source/utils/RectangleEdges.cpp
+    source/utils/RectEdges.h source/utils/RectEdges.cpp
 
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp
@@ -63,8 +63,6 @@ add_executable(
     source/SimpleGUI/RadioButton.cpp source/SimpleGUI/RadioButton.hpp
     source/SimpleGUI/Switch.cpp source/SimpleGUI/Switch.hpp
     source/SimpleGUI/TabControl.cpp source/SimpleGUI/TabControl.hpp
-
-
 )
 
 file(GLOB RESOURCE_FILES_LIST "${CMAKE_SOURCE_DIR}/resources/*")

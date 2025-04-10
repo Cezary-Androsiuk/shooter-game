@@ -1,19 +1,21 @@
-#include "RectangleEdges.h"
+#include "RectEdges.h"
 
-template <typename T>
-RectangleEdges<T>::RectangleEdges()
+template<typename T>
+RectEdges<T>::RectEdges()
     : left(0), top(0), right(0), bottom(0)
 {
-}
 
-template <typename T>
-RectangleEdges<T>::RectangleEdges(T left, T top, T right, T bottom)
-    : left(left), top(top), right(right), bottom(bottom)
-{
 }
 
 template<typename T>
-RectangleEdges<T>::RectangleEdges(const sf::Rect<T> &bounds)
+RectEdges<T>::RectEdges(T left, T top, T rigtht, T bottom)
+    : left(left), top(top), right(right), bottom(bottom)
+{
+
+}
+
+template<typename T>
+RectEdges<T>::RectEdges(const sf::Rect<T> &bounds)
     : left(bounds.left)
     , top(bounds.top)
     , right(bounds.left + bounds.width)
