@@ -79,37 +79,33 @@ void Player::preventMoveThatEnterBounds(
     const FloatRectEdges &playerBounds,
     const FloatRectEdges &obstacleBounds)
 {
-    /// Left
-    if(playerBounds.right >= obstacleBounds.left &&
-        playerBounds.left < obstacleBounds.left &&
-        playerBounds.bottom > obstacleBounds.top &&
-        playerBounds.top < obstacleBounds.bottom)
+    float overlapLeft   = playerBounds.right - obstacleBounds.left;
+    float overlapRight  = obstacleBounds.right - playerBounds.left;
+    float overlapTop    = playerBounds.bottom - obstacleBounds.top;
+    float overlapBottom = obstacleBounds.bottom - playerBounds.top;
+
+    /// test if collision occur
+    if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
     {
-        m_position.x = obstacleBounds.left - m_size.x;
-    }
-    /// Right
-    else if(playerBounds.left <= obstacleBounds.right &&
-             playerBounds.right > obstacleBounds.right &&
-             playerBounds.bottom > obstacleBounds.top &&
-             playerBounds.top < obstacleBounds.bottom)
-    {
-        m_position.x = obstacleBounds.right;
-    }
-    /// Top
-    else if(playerBounds.bottom >= obstacleBounds.top &&
-             playerBounds.top < obstacleBounds.top &&
-             playerBounds.right > obstacleBounds.left &&
-             playerBounds.left < obstacleBounds.right)
-    {
-        m_position.y = obstacleBounds.top - m_size.y;
-    }
-    /// Bottom
-    else if(playerBounds.top <= obstacleBounds.bottom &&
-             playerBounds.bottom > obstacleBounds.bottom &&
-             playerBounds.right > obstacleBounds.left &&
-             playerBounds.left < obstacleBounds.right)
-    {
-        m_position.y = obstacleBounds.bottom;
+        /// test what collision is the smallest - that means this edges are colliding
+        float minOverlap = std::min({overlapLeft, overlapRight, overlapTop, overlapBottom});
+
+        if (minOverlap == overlapLeft)
+        {
+            m_position.x = obstacleBounds.left - m_size.x;
+        }
+        else if (minOverlap == overlapRight)
+        {
+            m_position.x = obstacleBounds.right;
+        }
+        else if (minOverlap == overlapTop)
+        {
+            m_position.y = obstacleBounds.top - m_size.y;
+        }
+        else if (minOverlap == overlapBottom)
+        {
+            m_position.y = obstacleBounds.bottom;
+        }
     }
 }
 
