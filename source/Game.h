@@ -15,8 +15,8 @@
 // #include "objects/entities/Enemy.h"
 // #include "mechanics/spawners/EnemySpawner.h"
 
-#define DEBUG_VIEW false // makes window smaller
-#define DEBUG_EXIT_APP true // if 'P' is pressed then exit app
+#define DEBUG_VIEW true // makes window smaller
+#define DEBUG_EXIT_APP true // if '`' is pressed then exit app
 #define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 
 class Game
@@ -32,6 +32,8 @@ class Game
     ~Game();
 
     /* OTHER */
+    void changeStateToPlay();
+    void changeStateToMenu();
 
     /* EVENTS */
     void pollEventGame();

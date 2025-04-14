@@ -53,6 +53,8 @@ namespace sgui{
         Button(sf::FloatRect bounds);
         ~Button();
 
+        void fflush();
+
     private:
         void centerText();
         void updateShape();

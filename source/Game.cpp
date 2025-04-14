@@ -3,7 +3,7 @@
 void Game::initValues()
 {
     // m_gameState = GameState::Menu;
-    m_gameState = GameState::Play;
+    m_gameState = GameState::Menu;
     m_maxFPS = 0;
     m_minFPS = (size_t)-1;
 }
@@ -43,22 +43,33 @@ Game::~Game()
     delete m_window;
 }
 
+void Game::changeStateToPlay()
+{
+    m_gameState = GameState::Play;
+}
+
+void Game::changeStateToMenu()
+{
+    m_gameState = GameState::Menu;
+    m_menu.fflushGui();
+}
+
 void Game::pollEventGame()
 {
     switch (m_currentEvent.type){
     case sf::Event::Closed:
-        m_window->close();
+        m_window->close(); // prevent clicking X to close window
         break;
     case sf::Event::KeyPressed:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
         {
             if(m_gameState == GameState::Menu)
-                m_gameState = GameState::Play;
+                this->changeStateToPlay();
             else
-                m_gameState = GameState::Menu;
+                this->changeStateToMenu();
         }
 #if DEBUG_EXIT_APP
-        if(m_currentEvent.key.code == sf::Keyboard::P)
+        if(m_currentEvent.key.code == sf::Keyboard::Grave)
             m_window->close();
 #endif
         break;
@@ -95,9 +106,9 @@ void Game::update()
         if(fps > m_maxFPS) m_maxFPS = fps;
         if(fps < m_minFPS) m_minFPS = fps;
 
-        printf("\r                              \r");
-        printf("frame: % 9llu, fps: % 6d, (min: %llu, max: %llu)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
-        fflush(stdout);
+        // printf("\r                              \r");
+        // printf("frame: % 9llu, fps: % 6d, (min: %llu, max: %llu)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
+        // fflush(stdout);
     }
 
     switch (m_gameState) {
@@ -105,6 +116,9 @@ void Game::update()
     case GameState::Play: m_play.update(); break;
     default: printf("unknown game state, can't update\n"); break;
     }
+
+    if(m_menu.hasRequestStateEnd())
+        this->changeStateToPlay();
 }
 
 void Game::render()
@@ -113,11 +127,11 @@ void Game::render()
 
     if(m_gameState == GameState::Menu)
     {
-        m_play.render(m_window); // make it background
+        // m_play.render(m_window); // make it background
 
-        sf::RectangleShape shape(sf::Vector2f(m_window->getSize().x, m_window->getSize().y));
-        shape.setFillColor(sf::Color(30,30,30, 200));
-        m_window->draw(shape);
+        // sf::RectangleShape shape(sf::Vector2f(m_window->getSize().x, m_window->getSize().y));
+        // shape.setFillColor(sf::Color(30,30,30, 200));
+        // m_window->draw(shape);
 
         m_menu.render(m_window);
     }

@@ -41,6 +41,15 @@ sgui::Button::~Button(){
 
 }
 
+void sgui::Button::fflush()
+{
+    _BITSET0(this->state, _dev::bs::Hover);
+    _BITSET0(this->state, _dev::bs::Press);
+    _BITSET0(this->state, _dev::bs::Click);
+    _BITSET1(this->state, _dev::bs::ClickCtrl);
+    // this->state = 32;
+}
+
 
 
 
