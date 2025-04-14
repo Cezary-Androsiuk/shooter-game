@@ -13,6 +13,8 @@ public:
     Menu();
     ~Menu();
 
+    void init();
+
 private:
     /* OTHER */
 
@@ -23,13 +25,16 @@ private:
     /* RENDER */
 
 public:
-    void pollEvent() override;
+    void pollEvent(const sf::Event &event) override;
     void update() override;
     void render(sf::RenderTarget *target) override;
 
+    /// SETTERS
+    void setWindowSize(const sf::Vector2u &size);
 
 private:
 
+    sf::Vector2u m_windowSize;
 };
 
 #endif // MENU_H

@@ -11,12 +11,12 @@
 #include "enums/GameState.h"
 
 #include "states/Menu.h"
-#include "objects/entities/Player.h"
-#include "objects/entities/Enemy.h"
-#include "mechanics/spawners/EnemySpawner.h"
-#include "environment/Map.h"
+#include "states/Play.h"
+// #include "objects/entities/Enemy.h"
+// #include "mechanics/spawners/EnemySpawner.h"
 
-#define DEBUG_VIEW true // makes window smaller
+#define DEBUG_VIEW false // makes window smaller
+#define DEBUG_EXIT_APP true // if 'P' is pressed then exit app
 #define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 
 class Game
@@ -25,9 +25,8 @@ class Game
     void initValues();
     void initWindow();
 
-    void initMap();
-    void initPlayer();
-    void initObjects();
+    void initMenu();
+    void initPlay();
 
     Game();
     ~Game();
@@ -35,16 +34,13 @@ class Game
     /* OTHER */
 
     /* EVENTS */
+    void pollEventGame();
     void pollEvent();
 
     /* UPDATE */
-    void updateMenuStage();
-    void updatePlayStage();
     void update();
 
     /* RENDER */
-    void renderMenuStage();
-    void renderPlayStage();
     void render();
 
     inline bool running() const noexcept;
@@ -57,17 +53,16 @@ private:
     sf::ContextSettings m_contextSettings;
     sf::Event m_currentEvent;
 
-    sf::Clock m_deltaTimeClock;
     size_t m_minFPS;
     size_t m_maxFPS;
 
     GameState m_gameState;
-
     Menu m_menu;
-    std::shared_ptr<Map> m_map;
-    Player m_player;
-    EnemySpawner m_enemySpawner;
-    std::vector<Enemy> m_enemies;
+    Play m_play;
+
+
+    // EnemySpawner m_enemySpawner;
+    // std::vector<Enemy> m_enemies;
 
 };
 

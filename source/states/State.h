@@ -10,7 +10,7 @@ public:
 
 public:
     /* EVENTS */
-    virtual void pollEvent() = 0;
+    virtual void pollEvent(const sf::Event &event) = 0;
 
     /* UPDATE */
     virtual void update() = 0;

@@ -16,33 +16,26 @@ void Game::initWindow()
     // m_window->setFramerateLimit(240);
 }
 
-void Game::initMap()
+void Game::initMenu()
 {
-    m_map = std::make_shared<Map>();
-    m_map->setMapSize(m_window->getSize());
-    m_map->buildObstacles();
+    m_menu.setWindowSize(m_window->getSize());
+
+    m_menu.init();
 }
 
-void Game::initPlayer()
+void Game::initPlay()
 {
-    auto size = m_window->getSize();
-    float width = static_cast<float>(size.x);
-    float height = static_cast<float>(size.y);
-    m_player.setPosition(sf::Vector2f(width/2.f, height/2.f));
-    m_player.setAvailableAreaForPlayer(m_map);
-}
+    m_play.setWindowSize(m_window->getSize());
 
-void Game::initObjects()
-{
-    this->initMap();
-    this->initPlayer();
+    m_play.init();
 }
 
 Game::Game()
 {
     this->initValues();
     this->initWindow();
-    this->initObjects();
+    this->initMenu();
+    this->initPlay();
 }
 
 Game::~Game()
@@ -50,32 +43,48 @@ Game::~Game()
     delete m_window;
 }
 
+void Game::pollEventGame()
+{
+    switch (m_currentEvent.type){
+    case sf::Event::Closed:
+        m_window->close();
+        break;
+    case sf::Event::KeyPressed:
+        if(m_currentEvent.key.code == sf::Keyboard::Escape)
+        {
+            if(m_gameState == GameState::Menu)
+                m_gameState = GameState::Play;
+            else
+                m_gameState = GameState::Menu;
+        }
+#if DEBUG_EXIT_APP
+        if(m_currentEvent.key.code == sf::Keyboard::P)
+            m_window->close();
+#endif
+        break;
+    default:
+        break;
+    }
+}
+
 void Game::pollEvent()
 {
-    while(m_window->pollEvent(m_currentEvent)){
-        switch (m_currentEvent.type){
-        case sf::Event::Closed:
-            m_window->close();
-            break;
-        case sf::Event::KeyPressed:
-            if(m_currentEvent.key.code == sf::Keyboard::Escape)
-                m_window->close();
-            break;
-        default:
-            break;
+    if(m_gameState == GameState::Play)
+    {
+        while(m_window->pollEvent(m_currentEvent)){
+            this->pollEventGame();
+            m_play.pollEvent(m_currentEvent);
+        }
+    }
+    else if(m_gameState == GameState::Menu)
+    {
+        while(m_window->pollEvent(m_currentEvent)){
+            this->pollEventGame();
+            m_menu.pollEvent(m_currentEvent);
         }
     }
 }
 
-void Game::updateMenuStage()
-{
-
-}
-
-void Game::updatePlayStage()
-{
-    m_player.update();
-}
 
 void Game::update()
 {
@@ -92,31 +101,33 @@ void Game::update()
     }
 
     switch (m_gameState) {
-    case GameState::Menu: this->updateMenuStage(); break;
-    case GameState::Play: this->updatePlayStage(); break;
+    case GameState::Menu: m_menu.update(); break;
+    case GameState::Play: m_play.update(); break;
     default: printf("unknown game state, can't update\n"); break;
     }
-}
-
-void Game::renderMenuStage()
-{
-
-}
-
-void Game::renderPlayStage()
-{
-    m_map->render(m_window);
-    m_player.render(m_window);
 }
 
 void Game::render()
 {
     m_window->clear(BACKGROUND_SF_COLOR);
 
-    switch (m_gameState) {
-    case GameState::Menu: this->renderMenuStage(); break;
-    case GameState::Play: this->renderPlayStage(); break;
-    default: printf("unknown game state, can't render\n"); break;
+    if(m_gameState == GameState::Menu)
+    {
+        m_play.render(m_window); // make it background
+
+        sf::RectangleShape shape(sf::Vector2f(m_window->getSize().x, m_window->getSize().y));
+        shape.setFillColor(sf::Color(30,30,30, 200));
+        m_window->draw(shape);
+
+        m_menu.render(m_window);
+    }
+    else if(m_gameState == GameState::Play)
+    {
+        m_play.render(m_window);
+    }
+    else
+    {
+        printf("unknown game state, can't render\n");
     }
 
     m_window->display();
