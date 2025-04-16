@@ -114,7 +114,7 @@ void Player::preventMoveThatEnterBounds(
 
 // }
 
-void Player::limitPlayerMovementToScreenArea()
+void Player::limitPlayerMovementToMap()
 {
     FloatRectEdges playerEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
     float windowSizeX = static_cast<float>(m_map->getMapSize().x);
@@ -168,7 +168,7 @@ void Player::update()
 {
 
     this->updateMovement();
-    this->limitPlayerMovementToScreenArea();
+    this->limitPlayerMovementToMap();
 
     this->updateBody();
 }
@@ -176,6 +176,11 @@ void Player::update()
 void Player::render(sf::RenderTarget *target)
 {
     target->draw(m_body.bounds);
+}
+
+sf::Vector2f Player::getPosition() const
+{
+    return m_position;
 }
 
 void Player::setPosition(const sf::Vector2f &position)

@@ -32,6 +32,7 @@ void Game::initPlay()
 
 Game::Game()
 {
+    printf("game start\n");fflush(stdout);
     this->initValues();
     this->initWindow();
     this->initMenu();
@@ -56,6 +57,8 @@ void Game::changeStateToMenu()
 
 void Game::pollEventGame()
 {
+    static bool allowEscapeKey = true;
+
     switch (m_currentEvent.type){
     case sf::Event::Closed:
         m_window->close(); // prevent clicking X to close window
@@ -63,10 +66,21 @@ void Game::pollEventGame()
     case sf::Event::KeyPressed:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
         {
-            if(m_gameState == GameState::Menu)
-                this->changeStateToPlay();
-            else
-                this->changeStateToMenu();
+            if(allowEscapeKey)
+            {
+                if(m_gameState == GameState::Menu)
+                    this->changeStateToPlay();
+                else
+                    this->changeStateToMenu();
+            }
+            allowEscapeKey = false;
+        }
+    case sf::Event::KeyReleased:
+        if(m_currentEvent.key.code == sf::Keyboard::Escape)
+        {
+            printf("released\n");
+            fflush(stdout);
+            allowEscapeKey = true;
         }
 #if DEBUG_EXIT_APP
         if(m_currentEvent.key.code == sf::Keyboard::Grave)

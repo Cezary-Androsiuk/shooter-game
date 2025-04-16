@@ -21,7 +21,11 @@ source_group("Resources" FILES ${RESOURCE_FILES})
 add_executable(
     ${PROJECT_NAME}
 
+    # /SUBSYSTEM:CONSOLE
+    WIN32
+
     ${RESOURCE_FILES} # add resources to QtCreator
+
 
     main.cpp
     source/Game.h source/Game.cpp
@@ -77,7 +81,6 @@ add_custom_target(resources_copy ALL
 
 add_dependencies(${PROJECT_NAME} resources_copy)
 
-
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -89,3 +92,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     sfml-window
     sfml-system
 )
+
+
+# if (WIN32)
+#     target_link_options(${PROJECT_NAME} PRIVATE /SUBSYSTEM:CONSOLE)
+# endif()

@@ -36,20 +36,50 @@ void Play::init()
     this->initObjects();
 }
 
+void Play::updateEnemySpawner()
+{
+    m_enemySpawner.update();
+    std::shared_ptr<Enemy> enemy = m_enemySpawner.createdEnemy();
+    if(!enemy)
+    {
+        return;
+    }
+
+    m_enemies.push_back(enemy);
+
+    enemy->setPlayerPosition(m_player.getPosition());
+    enemy->setAvailableAreaForEnemy(m_map);
+
+    enemy->init();
+}
+
+void Play::updateEnemies()
+{
+    for(auto enemy : m_enemies)
+    {
+        enemy->update();
+        enemy->setPlayerPosition(m_player.getPosition());
+    }
+}
+
 void Play::pollEvent(const sf::Event &event)
 {
-
+    m_enemySpawner.pollEvent(event);
 }
 
 void Play::update()
 {
     m_player.update();
+    this->updateEnemySpawner();
+    this->updateEnemies();
 }
 
 void Play::render(sf::RenderTarget *target)
 {
     m_map->render(target);
     m_player.render(target);
+    for(auto enemy : m_enemies)
+        enemy->render(target);
 }
 
 void Play::setWindowSize(const sf::Vector2u &size)

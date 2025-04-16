@@ -48,7 +48,7 @@ private:
     void preventMoveThatEnterBounds(
         const FloatRectEdges &playerBounds,
         const FloatRectEdges &obstacleBounds);
-    void limitPlayerMovementToScreenArea();
+    void limitPlayerMovementToMap();
     void updateBody();
     void updateMovement();
 public:
@@ -61,7 +61,7 @@ public:
 
 public:
     /* GETTERS */
-
+    sf::Vector2f getPosition() const;
 
     /* SETTERS */
     void setDeltaTimePtr(const float *dt);

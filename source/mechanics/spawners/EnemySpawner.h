@@ -3,6 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "objects/entities/Enemy.h"
+
+#define SPAWN_DELATY_MS 2000 /// 2000 ms
+
 class EnemySpawner
 {
     /* INITIALIZE */
@@ -14,21 +18,28 @@ public:
 private:
     /* OTHER */
 
-
     /* EVENTS */
-    void pollEvent();
 
     /* UPDATE */
-    void update();
+    void updateSpawnClock();
 
     /* RENDER */
     /* ------ */
 
-
 public:
+    void pollEvent(const sf::Event &event);
+    void update();
+    /// NO RENDER
+
+    std::shared_ptr<Enemy> createdEnemy();
+
+    void setMapSize(sf::Vector2u mapSize);
 
 private:
+    sf::Clock m_spawnClock;
+    bool m_readyToSpawn;
 
+    sf::Vector2u m_mapSize;
 };
 
 #endif // ENEMYSPAWNER_H
