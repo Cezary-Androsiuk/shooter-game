@@ -5,17 +5,7 @@ void Enemy::initData()
     m_position.x = 0.f;
     m_position.y = 0.f;
 
-    /// Size
-    m_size.x = 50.f;
-    m_size.y = 50.f;
-}
-
-void Enemy::initBody()
-{
-    m_body.bounds.setPosition(m_position);
-    m_body.bounds.setFillColor(sf::Color(180, 40, 40));
-    m_body.bounds.setSize(m_size);
-    // m_body.bounds.setOrigin(sf::Vector2f(m_size.x/2, m_size.y/2));
+    m_moveSpeedMultiplier = 1.f;
 }
 
 Enemy::Enemy()
@@ -73,74 +63,18 @@ void Enemy::preventMoveThatEnterBounds(
     }
 }
 
-void Enemy::limitEnemyMovementToMap()
+void Enemy::performMoveTowardsPlayer()
 {
-    FloatRectEdges playerEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
-    float windowSizeX = static_cast<float>(m_map->getMapSize().x);
-    float windowSizeY = static_cast<float>(m_map->getMapSize().y);
-    FloatRectEdges windowEgdes(0.f, 0.f, windowSizeX, windowSizeY);
-
-    /// enemies will start outsite the box
-    // this->preventMoveThatExitBounds(playerEdges, windowEgdes);
-
-    for(Obstacle *obstacle : m_map->getObstacles())
-        this->preventMoveThatEnterBounds(playerEdges, obstacle->getBounds());
-}
-
-void Enemy::updateMove()
-{
-    // if(m_playerPosition != m_lastPlayerPosition)
-    // {
-    // }
     m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
 
-    // static int i=0;
-    // if((i++)%100 == 1)
-    // {
-    //     printf("move v: %f %f\n", m_moveVector.x, m_moveVector.y);
-    //     fflush(stdout);
-    // }
-
     const float dt = DeltaTime::get()->value();
-    m_position.x += m_moveVector.x * ENEMY_SPEED * dt;
-    m_position.y += m_moveVector.y * ENEMY_SPEED * dt;
-
-}
-
-void Enemy::updateBody()
-{
-    m_body.bounds.setPosition(m_position);
+    m_position.x += m_moveVector.x * m_movementSpeed * dt;
+    m_position.y += m_moveVector.y * m_movementSpeed * dt;
 }
 
 void Enemy::init()
 {
     this->initData();
-    this->initBody();
-}
-
-void Enemy::pollEvent(const sf::Event &event)
-{
-
-}
-
-void Enemy::update()
-{
-    this->updateMove();
-    this->limitEnemyMovementToMap();
-
-    this->updateBody();
-
-    // static int i=0;
-    // if((i++)%100 == 1)
-    // {
-    //     printf("%f %f\n", m_position.x, m_position.y);
-    //     fflush(stdout);
-    // }
-}
-
-void Enemy::render(sf::RenderTarget *target)
-{
-    target->draw(m_body.bounds);
 }
 
 void Enemy::setPosition(sf::Vector2f position)

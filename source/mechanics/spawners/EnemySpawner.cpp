@@ -2,9 +2,9 @@
 #include <iostream>
 
 EnemySpawner::EnemySpawner()
-    : m_readyToSpawn{true}
+    : m_readyToSpawn{false}
 {
-
+    m_speedDelayMS = SPAWN_DELATY_MS;
 }
 
 EnemySpawner::~EnemySpawner()
@@ -14,7 +14,7 @@ EnemySpawner::~EnemySpawner()
 
 void EnemySpawner::updateSpawnClock()
 {
-    if (m_spawnClock.getElapsedTime().asMilliseconds() >= SPAWN_DELATY_MS*1000) {
+    if (m_spawnClock.getElapsedTime().asMilliseconds() >= m_speedDelayMS) {
         m_spawnClock.restart();
 
         m_readyToSpawn = true;
@@ -38,7 +38,8 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
         m_readyToSpawn = false;
         printf("enemy spawned\n");
         fflush(stdout);
-        auto enemy = std::make_shared<Enemy>();
+
+        std::shared_ptr<Enemy> enemy = std::make_shared<Ghost>();
         enemy->setPosition({-100.f, -100.f});
         return enemy;
     }

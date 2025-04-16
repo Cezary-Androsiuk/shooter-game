@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/entities/Enemy.h"
+#include "objects/entities/Ghost.h"
 
 #define SPAWN_DELATY_MS 2000 /// 2000 ms
 
@@ -37,6 +38,7 @@ public:
 
 private:
     sf::Clock m_spawnClock;
+    int m_speedDelayMS;
     bool m_readyToSpawn;
 
     sf::Vector2u m_mapSize;

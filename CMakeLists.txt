@@ -50,6 +50,9 @@ add_executable(
     ## ENTITIES
     source/objects/entities/Player.h source/objects/entities/Player.cpp
     source/objects/entities/Enemy.h source/objects/entities/Enemy.cpp
+    source/objects/entities/Ghost.h source/objects/entities/Ghost.cpp
+    source/objects/entities/Zombie.h source/objects/entities/Zombie.cpp
+    source/objects/entities/Skeleton.h source/objects/entities/Skeleton.cpp
 
     # MECHANICS
     source/mechanics/DeltaTime.h source/mechanics/DeltaTime.cpp

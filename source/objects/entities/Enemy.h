@@ -16,16 +16,16 @@ class Enemy
 {
     /* INITIALIZE */
     void initData();
-    void initBody();
 
 public:
     Enemy();
-    ~Enemy();
+    virtual ~Enemy();
 
-private:
+protected:
     /* OTHER */
-    sf::Vector2f calculateNormalizedMovementVector(const sf::Vector2f& currentPosition,
-                                                   const sf::Vector2f& targetPosition);
+    static sf::Vector2f calculateNormalizedMovementVector(
+        const sf::Vector2f& currentPosition,
+        const sf::Vector2f& targetPosition);
 
     /* EVENTS */
 
@@ -33,39 +33,31 @@ private:
     void preventMoveThatEnterBounds(
         const FloatRectEdges &playerBounds,
         const FloatRectEdges &obstacleBounds);
-    void limitEnemyMovementToMap();
-    void updateMove();
-
-    void updateBody();
+    void performMoveTowardsPlayer();
 
     /* RENDER */
 
 public:
-    void init();
-
-    void pollEvent(const sf::Event &event);
-    void update();
-    void render(sf::RenderTarget *target);
+    virtual void init();
+    virtual void pollEvent(const sf::Event &event) = 0;
+    virtual void update() = 0;
+    virtual void render(sf::RenderTarget *target) = 0;
 
     void setPosition(sf::Vector2f position);
     void setPlayerPosition(sf::Vector2f position);
     void setAvailableAreaForEnemy(std::shared_ptr<Map> map);
 
-private:
-    struct{
-        sf::RectangleShape bounds;
-
-    } m_body;
-
+protected:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
+    float m_movementSpeed;
+    float m_moveSpeedMultiplier;
+    sf::Vector2f m_moveVector;
 
     std::shared_ptr<Map> m_map;
 
     sf::Vector2f m_lastPlayerPosition;
     sf::Vector2f m_playerPosition;
-    sf::Vector2f m_moveVector;
-
 };
 
 #endif // ENEMY_H
