@@ -11,6 +11,8 @@ void Game::initFPSLabel()
         m_fontLoaded = true;
         m_fpsLabel.setFont(m_fpsFont);
         m_fpsLabel.setString("FPS");
+        m_fpsLabel.setCharacterSize(16);
+        m_fpsLabel.setVisible(false);
     }
 }
 
@@ -28,6 +30,22 @@ void Game::initWindow()
     // m_contextSettings
     m_window = new sf::RenderWindow(vm, "Shooter Game", DEBUG_VIEW ? sf::Style::Default : sf::Style::Fullscreen, m_contextSettings);
     // m_window->setFramerateLimit(240);
+}
+
+void Game::initRenderTexture()
+{
+    // printf("max size: %u, ", sf::Texture::getMaximumSize());
+    fflush(stdout);
+
+    m_renderTextureInitialized = true;
+
+    if(!m_renderTexture.create(m_window->getSize().x, m_window->getSize().y))
+    {
+
+        m_renderTextureInitialized = false;
+    }
+
+    m_renderSprite = std::make_unique<sf::Sprite>(m_renderTexture.getTexture());
 }
 
 void Game::initMenu()
@@ -48,8 +66,10 @@ Game::Game()
     : m_fontLoaded{false}
 {
     printf("game start\n");fflush(stdout);
+    this->initFPSLabel();
     this->initValues();
     this->initWindow();
+    this->initRenderTexture();
     this->initMenu();
     this->initPlay();
 }
@@ -105,8 +125,6 @@ void Game::pollEventGame()
     default:
         break;
     }
-
-    m_fpsLabel.event(m)
 }
 
 void Game::pollEvent()
@@ -127,20 +145,40 @@ void Game::pollEvent()
     }
 }
 
+void Game::updateFPSLabel()
+{
+    DeltaTime *dt = DeltaTime::get();
+    if(dt->currentGameTick() % 500 == 0)
+    {
+        int fps = 1.f/dt->value();
+        // if(fps > m_maxFPS) m_maxFPS = fps;
+        if(fps < m_minFPS) m_minFPS = fps;
+
+        char snOut[128];
+        snprintf(snOut, sizeof(snOut), "FPS: %d, min: %llu", fps, m_minFPS);
+        // snprintf(snOut, sizeof(snOut), "frame: %llu, fps: %d, min: %llu", dt->currentGameTick(), fps, m_minFPS);
+        // snprintf(snOut, sizeof(snOut), "frame: %llu, fps: %d, (min: %llu, max: %llu)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
+        m_fpsLabel.setString(sf::String(snOut));
+
+        sf::Vector2f boundsSize = m_fpsLabel.getSize();
+        float newYPosition = m_window->getSize().x - boundsSize.x - 15;
+        static bool firstSet = true;
+        if(firstSet)
+        {
+            m_fpsLabel.setVisible(true);
+            firstSet = false;
+        }
+        m_fpsLabel.setPosition({
+            newYPosition,
+            boundsSize.y
+        });
+
+    }
+}
+
 
 void Game::update()
 {
-    DeltaTime *dt = DeltaTime::get();
-    if(dt->currentGameTick() % 100 == 1)
-    {
-        int fps = 1.f/dt->value();
-        if(fps > m_maxFPS) m_maxFPS = fps;
-        if(fps < m_minFPS) m_minFPS = fps;
-
-        // printf("\r                              \r");
-        // printf("frame: % 9llu, fps: % 6d, (min: %llu, max: %llu)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
-        // fflush(stdout);
-    }
 
     switch (m_gameState) {
     case GameState::Menu: m_menu.update(); break;
@@ -150,10 +188,27 @@ void Game::update()
 
     if(m_menu.hasRequestStateEnd())
         this->changeStateToPlay();
+
+    this->updateFPSLabel();
+}
+
+void Game::renderToTexture()
+{
+
+}
+
+void Game::renderToScreen()
+{
+
 }
 
 void Game::render()
 {
+    if(m_renderTextureInitialized)
+        this->renderToTexture();
+    else
+        this->renderToScreen();
+
     m_window->clear(BACKGROUND_SF_COLOR);
 
     if(m_gameState == GameState::Menu)

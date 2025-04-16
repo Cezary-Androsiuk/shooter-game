@@ -29,6 +29,7 @@ class Game
     void initFPSLabel();
     void initValues();
     void initWindow();
+    void initRenderTexture();
 
     void initMenu();
     void initPlay();
@@ -45,9 +46,12 @@ class Game
     void pollEvent();
 
     /* UPDATE */
+    void updateFPSLabel();
     void update();
 
     /* RENDER */
+    void renderToTexture();
+    void renderToScreen();
     void render();
 
     inline bool running() const noexcept;
@@ -57,6 +61,9 @@ public:
 
 private:
     sf::RenderWindow* m_window;
+    sf::RenderTexture m_renderTexture;
+    std::unique_ptr<sf::Sprite> m_renderSprite;
+    bool m_renderTextureInitialized;
     sf::ContextSettings m_contextSettings;
     sf::Event m_currentEvent;
 

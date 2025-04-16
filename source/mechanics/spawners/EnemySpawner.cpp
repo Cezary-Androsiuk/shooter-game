@@ -33,11 +33,13 @@ void EnemySpawner::update()
 
 std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
 {
+    static int enemiesSpawned = 0;
     if(m_readyToSpawn)
     {
         m_readyToSpawn = false;
-        printf("enemy spawned\n");
-        fflush(stdout);
+        printf("enemy spawned %d\n", ++enemiesSpawned);
+        if(enemiesSpawned % 10 == 0)
+            fflush(stdout);
 
         std::shared_ptr<Enemy> enemy = std::make_shared<Ghost>();
         enemy->setPosition({-100.f, -100.f});

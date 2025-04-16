@@ -56,6 +56,7 @@ namespace sgui{
         const sf::Text& getText() const;
         const sf::Color& getColor() const;
         const bool& getVisible() const;
+        sf::Vector2f getSize() const;
 
         // setters
         void setPosition(const sf::Vector2f& pos);

@@ -97,6 +97,10 @@ const bool& sgui::Label::getVisible() const{
     return this->visible;
 }
 
+sf::Vector2f sgui::Label::getSize() const{
+    return text.getGlobalBounds().getSize();
+}
+
 
 
 
