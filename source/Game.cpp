@@ -1,5 +1,19 @@
 #include "Game.h"
 
+void Game::initFPSLabel()
+{
+    if(!m_fpsFont.loadFromFile(FONT_PATH))
+    {
+        fprintf(stderr, "loading font file failed from %s",  FONT_PATH);
+    }
+    else
+    {
+        m_fontLoaded = true;
+        m_fpsLabel.setFont(m_fpsFont);
+        m_fpsLabel.setString("FPS");
+    }
+}
+
 void Game::initValues()
 {
     // m_gameState = GameState::Menu;
@@ -31,6 +45,7 @@ void Game::initPlay()
 }
 
 Game::Game()
+    : m_fontLoaded{false}
 {
     printf("game start\n");fflush(stdout);
     this->initValues();
@@ -90,6 +105,8 @@ void Game::pollEventGame()
     default:
         break;
     }
+
+    m_fpsLabel.event(m)
 }
 
 void Game::pollEvent()
@@ -157,6 +174,8 @@ void Game::render()
     {
         printf("unknown game state, can't render\n");
     }
+
+    m_fpsLabel.render(m_window);
 
     m_window->display();
 }

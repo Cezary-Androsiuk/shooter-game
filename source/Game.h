@@ -7,11 +7,15 @@
 #include <SFML/Graphics.hpp>
 
 #include "mechanics/DeltaTime.h"
+#include "utils/Constants.h"
 
 #include "enums/GameState.h"
 
 #include "states/Menu.h"
 #include "states/Play.h"
+
+#include "SimpleGUI/Label.hpp"
+using namespace sgui;
 // #include "objects/entities/Enemy.h"
 // #include "mechanics/spawners/EnemySpawner.h"
 
@@ -22,6 +26,7 @@
 class Game
 {
     /* INITIALIZE */
+    void initFPSLabel();
     void initValues();
     void initWindow();
 
@@ -62,7 +67,9 @@ private:
     Menu m_menu;
     Play m_play;
 
-
+    sf::Font m_fpsFont;
+    bool m_fontLoaded;
+    Label m_fpsLabel;
     // EnemySpawner m_enemySpawner;
     // std::vector<Enemy> m_enemies;
 

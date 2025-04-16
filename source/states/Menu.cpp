@@ -4,7 +4,7 @@ void Menu::initFonts()
 {
     if(!m_font.loadFromFile(FONT_PATH))
     {
-        fprintf(stderr, "loading font file failed from " FONT_PATH);
+        fprintf(stderr, "loading font file failed from %s", FONT_PATH);
     }
     else
     {

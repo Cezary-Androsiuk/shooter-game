@@ -32,6 +32,7 @@ add_executable(
 
     # UTILS
     source/utils/RectEdges.h source/utils/RectEdges.cpp
+    source/utils/Constants.h source/utils/Constants.cpp
 
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp

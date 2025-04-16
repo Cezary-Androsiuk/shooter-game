@@ -5,8 +5,7 @@
 #include <SimpleGUI/Button.hpp>
 
 #include "State.h"
-
-#define FONT_PATH "resources/fonts/OpenSans-Regular.ttf"
+#include "utils/Constants.h"
 
 #define ELEMENT_COLOR_IDLE sf::Color(240, 240, 240)
 #define ELEMENT_COLOR_HOVER sf::Color(255, 255, 255)
