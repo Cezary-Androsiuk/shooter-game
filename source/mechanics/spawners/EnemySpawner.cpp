@@ -1,5 +1,4 @@
 #include "EnemySpawner.h"
-#include <iostream>
 
 EnemySpawner::EnemySpawner()
     : m_readyToSpawn{false}
@@ -37,9 +36,11 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
     if(m_readyToSpawn)
     {
         m_readyToSpawn = false;
-        printf("enemy spawned %d\n", ++enemiesSpawned);
-        // if(enemiesSpawned % 10 == 0)
+        if(++enemiesSpawned % 10 == 0)
+        {
+            printf("enemy spawned %d\n", enemiesSpawned);
             fflush(stdout);
+        }
 
         std::shared_ptr<Enemy> enemy = std::make_shared<Ghost>();
         enemy->setPosition({-100.f, -100.f});

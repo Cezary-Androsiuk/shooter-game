@@ -91,9 +91,19 @@ void Enemy::init()
     this->initData();
 }
 
+void Enemy::pollEvent(const sf::Event &event)
+{
+
+}
+
 void Enemy::update()
 {
     this->computeMovementSpeed();
+}
+
+void Enemy::render(sf::RenderTarget *target)
+{
+
 }
 
 void Enemy::setPosition(sf::Vector2f position)

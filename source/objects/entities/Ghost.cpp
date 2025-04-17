@@ -53,7 +53,7 @@ void Ghost::init()
 
 void Ghost::pollEvent(const sf::Event &event)
 {
-
+    Enemy::pollEvent(event);
 }
 
 void Ghost::update()
@@ -75,5 +75,7 @@ void Ghost::update()
 
 void Ghost::render(sf::RenderTarget *target)
 {
+    Enemy::render(target);
+
     target->draw(m_body.bounds);
 }

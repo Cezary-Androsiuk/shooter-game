@@ -6,7 +6,7 @@
 #include "objects/entities/Enemy.h"
 #include "objects/entities/Ghost.h"
 
-#define SPAWN_DELATY_MS 2000 /// 2000 ms
+#define SPAWN_DELATY_MS 20 /// 2000 ms
 
 class EnemySpawner
 {

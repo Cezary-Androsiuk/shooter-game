@@ -46,9 +46,9 @@ protected:
 
 public:
     virtual void init();
-    virtual void pollEvent(const sf::Event &event) = 0;
+    virtual void pollEvent(const sf::Event &event);
     virtual void update();
-    virtual void render(sf::RenderTarget *target) = 0;
+    virtual void render(sf::RenderTarget *target);
 
     void setPosition(sf::Vector2f position);
     void setPlayerPosition(sf::Vector2f position);
