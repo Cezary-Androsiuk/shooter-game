@@ -78,11 +78,11 @@ private:
         struct{
             std::queue<uint> queue;
             uint sumOfLastNValues = 0;
-            const uint maxLastValues = 20;
+            const uint maxLastValues = 10;
         } avgFPSData;
 
         sf::Clock fpsDisplayClock;
-        const int fpsDisplayDelayMS = 200;
+        const int fpsDisplayDelayMS = 100;
     } m_fps;
 
     GameState m_gameState;

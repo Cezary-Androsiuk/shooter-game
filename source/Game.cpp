@@ -149,12 +149,14 @@ void Game::updateFPSLabel()
 {
     // if(dt->currentGameTick() % 100 == 0)
     int elapsedTime = m_fps.fpsDisplayClock.getElapsedTime().asMilliseconds();
-    if(elapsedTime > m_fps.fpsDisplayDelayMS)
+    static bool avgQueueInitialized = false;
+    if(elapsedTime > m_fps.fpsDisplayDelayMS || !avgQueueInitialized)
     {
         m_fps.fpsDisplayClock.restart();
 
         DeltaTime *dt = DeltaTime::get();
         int fps = 1.f/dt->value();
+
 
         // if(fps > m_maxFPS) m_maxFPS = fps;
         if(fps < m_fps.minFPS) m_fps.minFPS = fps;
@@ -162,13 +164,32 @@ void Game::updateFPSLabel()
 
         m_fps.avgFPSData.queue.push(fps);
         m_fps.avgFPSData.sumOfLastNValues += fps;
-        if(m_fps.avgFPSData.queue.size() > m_fps.avgFPSData.maxLastValues)
+        bool avgFPSQueueMaxSizeCrossed = m_fps.avgFPSData.queue.size() > m_fps.avgFPSData.maxLastValues;
+        if(avgFPSQueueMaxSizeCrossed)
         {
             m_fps.avgFPSData.sumOfLastNValues -= m_fps.avgFPSData.queue.front();
             m_fps.avgFPSData.queue.pop();
         }
+        // printf("%u/%u = %u\n", m_fps.avgFPSData.sumOfLastNValues, m_fps.avgFPSData.queue.size(), m_fps.avgFPSData.sumOfLastNValues / m_fps.avgFPSData.queue.size());
         m_fps.avgFPS = m_fps.avgFPSData.sumOfLastNValues / m_fps.avgFPSData.queue.size(); // never division by 0
 
+
+        if(!avgFPSQueueMaxSizeCrossed)
+        {
+            // printf("skip not full\n");
+            return;
+        }
+
+        /// delay print by N new  elements
+        // static int callNumberSinceQueueFilled = 0;
+        // if(callNumberSinceQueueFilled < 5)
+        // {
+        //     // printf("skip %d\n", callNumberSinceQueueFilled);
+        //     ++callNumberSinceQueueFilled;
+        //     return; // skip first N calls due to invalid data
+        // }
+
+        avgQueueInitialized = true;
 
         char snOut[128];
         // snprintf(snOut, sizeof(snOut), "FPS: %u, min: %u", fps, m_fps.minFPS);
