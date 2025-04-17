@@ -6,8 +6,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "mechanics/DeltaTime.h"
 #include "utils/Constants.h"
+#include "utils/Random.h"
+#include "utils/Data.h"
+#include "mechanics/DeltaTime.h"
 
 #include "enums/GameState.h"
 

@@ -113,8 +113,8 @@ void Game::pollEventGame()
     case sf::Event::KeyReleased:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
         {
-            printf("released\n");
-            fflush(stdout);
+            // printf("released\n");
+            // fflush(stdout);
             allowEscapeKey = true;
         }
 #if DEBUG_EXIT_APP

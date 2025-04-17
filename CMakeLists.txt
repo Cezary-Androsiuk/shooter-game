@@ -26,13 +26,14 @@ add_executable(
 
     ${RESOURCE_FILES} # add resources to QtCreator
 
-
     main.cpp
     source/Game.h source/Game.cpp
 
     # UTILS
     source/utils/RectEdges.h source/utils/RectEdges.cpp
     source/utils/Constants.h source/utils/Constants.cpp
+    source/utils/Random.h source/utils/Random.cpp
+    source/utils/json.hpp
 
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp
@@ -71,6 +72,9 @@ add_executable(
     source/SimpleGUI/RadioButton.cpp source/SimpleGUI/RadioButton.hpp
     source/SimpleGUI/Switch.cpp source/SimpleGUI/Switch.hpp
     source/SimpleGUI/TabControl.cpp source/SimpleGUI/TabControl.hpp
+    source/utils/Data.h source/utils/Data.cpp
+
+
 )
 
 file(GLOB RESOURCE_FILES_LIST "${CMAKE_SOURCE_DIR}/resources/*")

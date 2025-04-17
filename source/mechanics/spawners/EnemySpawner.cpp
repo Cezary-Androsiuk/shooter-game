@@ -38,7 +38,7 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
     {
         m_readyToSpawn = false;
         printf("enemy spawned %d\n", ++enemiesSpawned);
-        if(enemiesSpawned % 10 == 0)
+        // if(enemiesSpawned % 10 == 0)
             fflush(stdout);
 
         std::shared_ptr<Enemy> enemy = std::make_shared<Ghost>();
