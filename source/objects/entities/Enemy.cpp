@@ -5,7 +5,13 @@ void Enemy::initData()
     m_position.x = 0.f;
     m_position.y = 0.f;
 
-    m_moveSpeedMultiplier = 1.f;
+    m_movementSpeedDefault = ENEMY_DEFAULT_SPEED;
+    m_movementSpeedMultiplier = 1.f;
+    m_movementSpeedTimeMultiplier = 1.f;
+    m_movementSpeedRandomness = Random::getFloat(
+        ENEMY_SPEED_DECREASE_RANDOMNESS,
+        ENEMY_SPEED_INCREASE_RANDOMNESS
+    );
 }
 
 Enemy::Enemy()
@@ -27,6 +33,15 @@ sf::Vector2f Enemy::calculateNormalizedMovementVector(const sf::Vector2f &curren
         return direction / length;
     }
     return sf::Vector2f(0, 0);
+}
+
+void Enemy::computeMovementSpeed()
+{
+    m_movementSpeedDT = m_movementSpeedDefault *
+                        m_movementSpeedMultiplier *
+                        m_movementSpeedTimeMultiplier *
+                        m_movementSpeedRandomness *
+                        DeltaTime::get()->value();
 }
 
 void Enemy::preventMoveThatEnterBounds(
@@ -67,14 +82,18 @@ void Enemy::performMoveTowardsPlayer()
 {
     m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
 
-    const float dt = DeltaTime::get()->value();
-    m_position.x += m_moveVector.x * m_movementSpeed * dt;
-    m_position.y += m_moveVector.y * m_movementSpeed * dt;
+    m_position.x += m_moveVector.x * m_movementSpeedDT;
+    m_position.y += m_moveVector.y * m_movementSpeedDT;
 }
 
 void Enemy::init()
 {
     this->initData();
+}
+
+void Enemy::update()
+{
+    this->computeMovementSpeed();
 }
 
 void Enemy::setPosition(sf::Vector2f position)

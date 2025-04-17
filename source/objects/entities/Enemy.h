@@ -6,11 +6,16 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "utils/Random.h"
+#include "utils/RectEdges.h"
 #include "mechanics/DeltaTime.h"
 #include "environment/Map.h"
-#include "utils/RectEdges.h"
 
-constexpr float ENEMY_SPEED = 400.f;
+/// speed range will be in range:
+/// [movementSpeed * ENEMY_SPEED_DECREASE_RANDOMNESS, movementSpeed * ENEMY_SPEED_INCREASE_RANDOMNESS]
+constexpr float ENEMY_SPEED_DECREASE_RANDOMNESS = 0.9f;
+constexpr float ENEMY_SPEED_INCREASE_RANDOMNESS = 1.1f;
+constexpr float ENEMY_DEFAULT_SPEED = 300.f;
 
 class Enemy
 {
@@ -27,6 +32,8 @@ protected:
         const sf::Vector2f& currentPosition,
         const sf::Vector2f& targetPosition);
 
+    void computeMovementSpeed();
+
     /* EVENTS */
 
     /* UPDATE */
@@ -40,7 +47,7 @@ protected:
 public:
     virtual void init();
     virtual void pollEvent(const sf::Event &event) = 0;
-    virtual void update() = 0;
+    virtual void update();
     virtual void render(sf::RenderTarget *target) = 0;
 
     void setPosition(sf::Vector2f position);
@@ -50,9 +57,13 @@ public:
 protected:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
-    float m_movementSpeed;
-    float m_moveSpeedMultiplier;
     sf::Vector2f m_moveVector;
+
+    float m_movementSpeedDT;
+    float m_movementSpeedDefault;
+    float m_movementSpeedMultiplier; /// will be increased if needed
+    float m_movementSpeedTimeMultiplier; /// will be increased with time
+    float m_movementSpeedRandomness;
 
     std::shared_ptr<Map> m_map;
 

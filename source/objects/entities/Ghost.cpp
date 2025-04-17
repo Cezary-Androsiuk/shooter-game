@@ -2,7 +2,7 @@
 
 void Ghost::initData()
 {
-    m_movementSpeed = GHOST_SPEED;
+    m_movementSpeedDefault = GHOST_SPEED;
 
     /// Size
     m_size.x = 50.f;
@@ -58,6 +58,8 @@ void Ghost::pollEvent(const sf::Event &event)
 
 void Ghost::update()
 {
+    Enemy::update();
+
     this->performMoveTowardsPlayer();
     this->limitGhostMovementToMap();
 
