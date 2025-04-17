@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include <queue>
 
 #include <SFML/Graphics.hpp>
 
@@ -69,8 +70,20 @@ private:
     sf::ContextSettings m_contextSettings;
     sf::Event m_currentEvent;
 
-    size_t m_minFPS;
-    size_t m_maxFPS;
+    struct{
+        uint minFPS;
+        uint maxFPS;
+
+        uint avgFPS;
+        struct{
+            std::queue<uint> queue;
+            uint sumOfLastNValues = 0;
+            const uint maxLastValues = 20;
+        } avgFPSData;
+
+        sf::Clock fpsDisplayClock;
+        const int fpsDisplayDelayMS = 200;
+    } m_fps;
 
     GameState m_gameState;
     Menu m_menu;

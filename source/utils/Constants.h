@@ -4,5 +4,7 @@
 extern const char *FONT_PATH;
 
 
+typedef unsigned int uint;
+
 
 #endif // CONSTANTS_H

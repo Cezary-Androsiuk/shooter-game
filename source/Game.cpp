@@ -19,9 +19,9 @@ void Game::initFPSLabel()
 void Game::initValues()
 {
     // m_gameState = GameState::Menu;
-    m_gameState = GameState::Menu;
-    m_maxFPS = 0;
-    m_minFPS = (size_t)-1;
+    m_gameState = GameState::Play;
+    m_fps.maxFPS = 0;
+    m_fps.minFPS = (uint)-1;
 }
 
 void Game::initWindow()
@@ -147,17 +147,34 @@ void Game::pollEvent()
 
 void Game::updateFPSLabel()
 {
-    DeltaTime *dt = DeltaTime::get();
-    if(dt->currentGameTick() % 500 == 0)
+    // if(dt->currentGameTick() % 100 == 0)
+    int elapsedTime = m_fps.fpsDisplayClock.getElapsedTime().asMilliseconds();
+    if(elapsedTime > m_fps.fpsDisplayDelayMS)
     {
+        m_fps.fpsDisplayClock.restart();
+
+        DeltaTime *dt = DeltaTime::get();
         int fps = 1.f/dt->value();
+
         // if(fps > m_maxFPS) m_maxFPS = fps;
-        if(fps < m_minFPS) m_minFPS = fps;
+        if(fps < m_fps.minFPS) m_fps.minFPS = fps;
+
+
+        m_fps.avgFPSData.queue.push(fps);
+        m_fps.avgFPSData.sumOfLastNValues += fps;
+        if(m_fps.avgFPSData.queue.size() > m_fps.avgFPSData.maxLastValues)
+        {
+            m_fps.avgFPSData.sumOfLastNValues -= m_fps.avgFPSData.queue.front();
+            m_fps.avgFPSData.queue.pop();
+        }
+        m_fps.avgFPS = m_fps.avgFPSData.sumOfLastNValues / m_fps.avgFPSData.queue.size(); // never division by 0
+
 
         char snOut[128];
-        snprintf(snOut, sizeof(snOut), "FPS: %d, min: %llu", fps, m_minFPS);
-        // snprintf(snOut, sizeof(snOut), "frame: %llu, fps: %d, min: %llu", dt->currentGameTick(), fps, m_minFPS);
-        // snprintf(snOut, sizeof(snOut), "frame: %llu, fps: %d, (min: %llu, max: %llu)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
+        // snprintf(snOut, sizeof(snOut), "FPS: %u, min: %u", fps, m_fps.minFPS);
+        snprintf(snOut, sizeof(snOut), "avgFPS: %u, min: %u", m_fps.avgFPS, m_fps.minFPS);
+        // snprintf(snOut, sizeof(snOut), "frame: %u, fps: %d, min: %u", dt->currentGameTick(), fps, m_minFPS);
+        // snprintf(snOut, sizeof(snOut), "frame: %u, fps: %d, (min: %u, max: %u)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
         m_fpsLabel.setString(sf::String(snOut));
 
         sf::Vector2f boundsSize = m_fpsLabel.getSize();
