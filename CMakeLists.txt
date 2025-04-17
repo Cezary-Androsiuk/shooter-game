@@ -33,6 +33,7 @@ add_executable(
     source/utils/RectEdges.h source/utils/RectEdges.cpp
     source/utils/Constants.h source/utils/Constants.cpp
     source/utils/Random.h source/utils/Random.cpp
+    source/utils/Support.h source/utils/Support.cpp
     source/utils/json.hpp
 
     # ENUMS
