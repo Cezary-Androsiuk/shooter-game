@@ -54,6 +54,7 @@ class Game
 
     /* RENDER */
     void renderObjects(sf::RenderTarget *target);
+    void renderShader();
     void renderUsingTexture();
     void renderRightToScreen();
     void render();

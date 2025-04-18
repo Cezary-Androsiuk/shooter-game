@@ -1,6 +1,6 @@
 {
     "game": {
-        "debug view": false,
+        "debug view": true,
         "debug exit app": true,
         "enabled fps at start": true
     },
@@ -23,6 +23,6 @@
 
     "enemy spawner": {
         "spawn distance to screen": 10.0,
-        "spawn delay ms": 5
+        "spawn delay ms": 500
     }
 }

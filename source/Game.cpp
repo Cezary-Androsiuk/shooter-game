@@ -79,9 +79,16 @@ void Game::initRenderShader()
         return;
     }
 
-    m_renderShader.setUniform("texture", sf::Shader::CurrentTexture);
-    m_renderShader.setUniform("textureSize", sf::Vector2f(m_renderWindow->getSize()));
-    m_renderShader.setUniform("blurRadius", 10.0f);
+    m_renderShader.setUniform("texture", m_renderTexture.getTexture());
+    m_renderShader.setUniform("texSize", sf::Vector2f(m_renderWindow->getSize()));  // sf::Vector2f(width, height)
+    m_renderShader.setUniform("radius", 50.f);                         // promień blur'a
+    m_renderShader.setUniform("direction", sf::Vector2f(1.f, 0.f));   // poziome rozmycie
+
+    // m_renderShader.setUniform("texture", m_renderTexture.getTexture());
+    // m_renderShader.setUniform("blurRadius", 2.5f);  // Im wyższa wartość, silniejsze rozmycie
+    // m_renderShader.setUniform("textureSize", sf::Vector2f(m_renderWindow->getSize()));
+
+    fflush(stderr);
 }
 
 void Game::initMenu()
@@ -298,6 +305,11 @@ void Game::renderObjects(sf::RenderTarget *target)
 
     if(m_fps.displayed)
         m_fps.fpsLabel.render(target);
+}
+
+void Game::renderShader()
+{
+
 }
 
 void Game::renderUsingTexture()
