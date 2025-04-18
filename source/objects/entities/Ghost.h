@@ -23,7 +23,7 @@ private:
     void updateBody();
 
 public:
-    void init();
+    void init() override;
 
     void pollEvent(const sf::Event &event) override;
     void update() override;

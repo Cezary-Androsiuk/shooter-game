@@ -11,8 +11,8 @@ void Player::initData()
     m_size.y = 50.f;
 
     m_points = 0;
-    m_healthPoints = PLAYER_HP;
-    m_ammo = PLAYER_AMMO;
+    m_healthPoints = Data::Player::getHealthPoints();
+    m_ammo = Data::Player::getAmmo();
     m_headCount = 0;
 }
 
@@ -134,8 +134,10 @@ void Player::updateBody()
 
 void Player::updateMovement()
 {
-    const float pss = PLAYER_SPEED_STRAIGHT * DeltaTime::get()->value();
-    const float pso = PLAYER_SPEED_OBLIQUE * DeltaTime::get()->value();
+    static const float straightSpeed = Data::Player::getSpeedStraight();
+    static const float obliqueSpeed = straightSpeed / 1.4142f /* sqrt(2) */;
+    const float pss = straightSpeed * DeltaTime::get()->value();
+    const float pso = obliqueSpeed * DeltaTime::get()->value();
 
     bool pressA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
     bool pressW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);

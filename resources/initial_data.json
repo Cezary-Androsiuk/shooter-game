@@ -1,3 +1,20 @@
 {
-    "test": 123
+    "game": {
+        "debug view": true,
+        "debug exit app": true
+    },
+
+    "player": {
+        "speed straight": 500.0,
+        "health points": 100,
+        "ammo": 50
+    },
+    "enemy" : {
+        "default speed": 300.0,
+        "speed decrease randomness": 0.9,
+        "speed increase randomness": 1.1,
+        "ghost": {
+            "default speed": 200.0
+        }
+    }
 }

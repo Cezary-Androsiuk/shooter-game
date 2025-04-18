@@ -4,22 +4,49 @@
 #include <cstdio>
 #include <fstream>
 
+#include "utils/Constants.h"
 #include "utils/json.hpp"
 #include "utils//Support.h"
-
-extern const char *DATA_FILE_NAME;
 
 using json = nlohmann::json;
 
 class Data
 {
     Data();
-    json::value_type rawReadValue(const char *name);
+    static json::value_type rawReadValue(json jvalue, const char *name);
+    static Data * getObject();
 public:
     json::value_type readValue(const char *name);
-    static Data * getObject();
 
+    class Game{
+        static json::value_type getGame();
+    public:
+        static bool getDebugView();
+        static bool getDebugExitView();
+    };
 
+    class Player{
+        static json::value_type getPlayer();
+    public:
+        static float getSpeedStraight();
+        static int getHealthPoints();
+        static int getAmmo();
+    };
+
+    class Enemy{
+        static json::value_type getEnemy();
+    public:
+
+        static float getDefaultSpeed();
+        static float getSpeedDecreaseRandomness();
+        static float getSpeedIncreaseRandomness();
+
+        class Ghost{
+            static json::value_type getGhost();
+        public:
+            static float getDefaultSpeed();
+        };
+    };
 
 private:
     json json_;

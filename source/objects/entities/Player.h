@@ -6,21 +6,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "utils/Data.h"
 #include "mechanics/DeltaTime.h"
 #include "utils/RectEdges.h"
 #include <environment/Map.h>
-
-// player speed
-constexpr float PLAYER_SPEED_STRAIGHT = 500.f;
-constexpr float PLAYER_SPEED_OBLIQUE = 500.f / 1.4142f /* sqrt(2) */;
-
-// player health points on start
-constexpr int PLAYER_HP = 100;
-
-// player ammo in clip on start
-constexpr int PLAYER_AMMO = 50;
-
-
 
 class Player
 {

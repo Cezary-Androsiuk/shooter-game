@@ -14,8 +14,6 @@ void Game::initFPSLabel()
         m_fpsLabel.setCharacterSize(16);
         m_fpsLabel.setVisible(false);
     }
-
-    int a = Data::getObject()->readValue("testa");
 }
 
 void Game::initValues()
@@ -28,7 +26,10 @@ void Game::initValues()
 
 void Game::initWindow()
 {
-    sf::VideoMode vm = DEBUG_VIEW ? sf::VideoMode(800, 600) : sf::VideoMode::getDesktopMode();
+    sf::VideoMode vm =
+        Data::Game::getDebugView() ?
+                           sf::VideoMode(800, 600) :
+                           sf::VideoMode::getDesktopMode();
     // m_contextSettings
     m_window = new sf::RenderWindow(vm, "Shooter Game", DEBUG_VIEW ? sf::Style::Default : sf::Style::Fullscreen, m_contextSettings);
     // m_window->setFramerateLimit(240);

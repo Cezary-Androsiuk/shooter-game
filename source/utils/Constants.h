@@ -1,6 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+extern const char *DATA_FILE_NAME;
 extern const char *FONT_PATH;
 
 
