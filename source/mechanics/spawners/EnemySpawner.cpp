@@ -43,7 +43,36 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
         }
 
         std::shared_ptr<Enemy> enemy = std::make_shared<Ghost>();
-        enemy->setPosition({-100.f, -100.f});
+
+        // dynamic_cast<Ghost *>(enemy.get())->init();
+        enemy->init();
+
+        const sf::Vector2f &enemySize = enemy->getSize();
+        const float spawnDistanceToScreen = Data::EnemySpawner::getSpawnDistanceToScreen();
+        const int site = Random::getInt(0, 3);
+
+        const float xMin = /*0.f*/      - enemySize.x   - spawnDistanceToScreen;
+        const float xMax = m_mapSize.x  /*+ 0.f*/       + spawnDistanceToScreen;
+        const float yMin = /*0.f*/      - enemySize.y   - spawnDistanceToScreen;
+        const float yMax = m_mapSize.y  /*+ 0.f*/       + spawnDistanceToScreen;
+
+        switch (site) {
+        case 0: /// left
+            enemy->setPosition({xMin, Random::getFloat(yMin, yMax)});
+            break;
+        case 1: /// right
+            enemy->setPosition({xMax, Random::getFloat(yMin, yMax)});
+            break;
+        case 2: /// top
+            enemy->setPosition({Random::getFloat(xMin, xMax), yMin});
+            break;
+        case 3: /// bottom
+            enemy->setPosition({Random::getFloat(xMin, xMax), yMax});
+            break;
+        }
+
+        // printf("%u %u\n", m_mapSize.x, m_mapSize.y);
+
         return enemy;
     }
 

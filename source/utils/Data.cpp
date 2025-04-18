@@ -173,3 +173,13 @@ float Data::Enemy::Ghost::getDefaultSpeed()
 {
     return Data::rawReadValue(Ghost::getGhost(), "default speed");
 }
+
+json::value_type Data::EnemySpawner::getEnemySpawner()
+{
+    return Data::getObject()->readValue("enemy spawner");
+}
+
+float Data::EnemySpawner::getSpawnDistanceToScreen()
+{
+    return Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn distance to screen");
+}

@@ -49,6 +49,12 @@ public:
         };
     };
 
+    class EnemySpawner{
+        static json::value_type getEnemySpawner();
+    public:
+        static float getSpawnDistanceToScreen();
+    };
+
 private:
     json json_;
 };

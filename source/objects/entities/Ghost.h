@@ -3,9 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "utils/Data.h"
 #include "objects/entities/Enemy.h"
-
-constexpr float GHOST_SPEED = 200.f;
 
 class Ghost : public Enemy
 {
@@ -32,6 +31,7 @@ public:
 private:
     struct{
         sf::RectangleShape bounds;
+        sf::RectangleShape boundsShadow;
     } m_body;
 };
 

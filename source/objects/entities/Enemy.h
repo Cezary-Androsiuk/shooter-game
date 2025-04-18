@@ -6,6 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "utils/Data.h"
 #include "utils/Random.h"
 #include "utils/RectEdges.h"
 #include "mechanics/DeltaTime.h"
@@ -49,6 +50,9 @@ public:
     virtual void pollEvent(const sf::Event &event);
     virtual void update();
     virtual void render(sf::RenderTarget *target);
+
+    const sf::Vector2f &getPosition() const;
+    const sf::Vector2f &getSize() const;
 
     void setPosition(sf::Vector2f position);
     void setPlayerPosition(sf::Vector2f position);

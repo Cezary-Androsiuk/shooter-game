@@ -5,12 +5,12 @@ void Enemy::initData()
     m_position.x = 0.f;
     m_position.y = 0.f;
 
-    m_movementSpeedDefault = ENEMY_DEFAULT_SPEED;
+    m_movementSpeedDefault = Data::Enemy::getDefaultSpeed();
     m_movementSpeedMultiplier = 1.f;
     m_movementSpeedTimeMultiplier = 1.f;
     m_movementSpeedRandomness = Random::getFloat(
-        ENEMY_SPEED_DECREASE_RANDOMNESS,
-        ENEMY_SPEED_INCREASE_RANDOMNESS
+        Data::Enemy::getSpeedDecreaseRandomness(),
+        Data::Enemy::getSpeedIncreaseRandomness()
     );
 }
 
@@ -104,6 +104,16 @@ void Enemy::update()
 void Enemy::render(sf::RenderTarget *target)
 {
 
+}
+
+const sf::Vector2f &Enemy::getPosition() const
+{
+    return m_position;
+}
+
+const sf::Vector2f &Enemy::getSize() const
+{
+    return m_size;
 }
 
 void Enemy::setPosition(sf::Vector2f position)

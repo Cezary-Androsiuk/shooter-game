@@ -16,10 +16,16 @@ void Play::initPlayer()
     m_player.setAvailableAreaForPlayer(m_map);
 }
 
+void Play::initEnemySpawner()
+{
+    m_enemySpawner.setMapSize(m_windowSize);
+}
+
 void Play::initObjects()
 {
     this->initMap();
     this->initPlayer();
+    this->initEnemySpawner();
 }
 
 Play::Play()
@@ -49,8 +55,6 @@ void Play::updateEnemySpawner()
 
     enemy->setPlayerPosition(m_player.getPosition());
     enemy->setAvailableAreaForEnemy(m_map);
-
-    enemy->init();
 }
 
 void Play::updateEnemies()

@@ -32,13 +32,15 @@ void Game::initWindow()
     sf::VideoMode vm =
         Data::Game::getDebugView() ?  /// makes window smaller
                            sf::VideoMode(800, 600) :
-                           sf::VideoMode::getDesktopMode();
+                           sf::VideoMode(
+                                sf::VideoMode::getDesktopMode().width -60,
+                                sf::VideoMode::getDesktopMode().height -60);
     // m_contextSettings
     m_window = new sf::RenderWindow(
         vm, "Shooter Game",
         Data::Game::getDebugView() ?
             sf::Style::Default :
-            sf::Style::Fullscreen,
+            sf::Style::None,
         m_contextSettings
     );
     // m_window->setFramerateLimit(240);

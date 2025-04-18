@@ -14,6 +14,7 @@ class Play : public State
 {
     void initMap();
     void initPlayer();
+    void initEnemySpawner();
     void initObjects();
 
 public:
