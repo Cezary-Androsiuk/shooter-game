@@ -30,8 +30,9 @@ class Game
     /* INITIALIZE */
     void initFPSLabel();
     void initValues();
-    void initWindow();
+    void initRenderWindow();
     void initRenderTexture();
+    void initRenderShader();
 
     void initMenu();
     void initPlay();
@@ -52,8 +53,9 @@ class Game
     void update();
 
     /* RENDER */
-    void renderToTexture();
-    void renderToScreen();
+    void renderObjects(sf::RenderTarget *target);
+    void renderUsingTexture();
+    void renderRightToScreen();
     void render();
 
     inline bool running() const noexcept;
@@ -62,9 +64,10 @@ public:
     static void play();
 
 private:
-    sf::RenderWindow* m_window;
+    sf::RenderWindow* m_renderWindow;
     sf::RenderTexture m_renderTexture;
     std::unique_ptr<sf::Sprite> m_renderSprite;
+    sf::Shader m_renderShader;
     bool m_renderTextureInitialized;
     sf::ContextSettings m_contextSettings;
     sf::Event m_currentEvent;

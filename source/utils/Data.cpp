@@ -58,7 +58,7 @@ json::value_type Data::rawReadValue(json jvalue, const char *name)
         int requiredSize = snprintf(
             snOut, sizeof(snOut),
             "Reading key from JSON failed!\n"
-            "Cannot read key '%s'\n"
+            "Cannot read key '%s' from initial data\n"
             "JSON error: \n"
             "%s", name, e.what());
         Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
@@ -71,7 +71,7 @@ json::value_type Data::rawReadValue(json jvalue, const char *name)
         int requiredSize = snprintf(
             snOut, sizeof(snOut),
             "Reading key from JSON failed!\n"
-            "Cannot read key '%s'", name);
+            "Cannot read key '%s' from initial data.", name);
         Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
         Support::displayEndingAppError(snOut);
         exit(1);
@@ -182,4 +182,9 @@ json::value_type Data::EnemySpawner::getEnemySpawner()
 float Data::EnemySpawner::getSpawnDistanceToScreen()
 {
     return Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn distance to screen");
+}
+
+int Data::EnemySpawner::getSpawnDelayMS()
+{
+    return Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn delay ms");
 }

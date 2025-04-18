@@ -8,6 +8,10 @@
 #else // __linux__, __APPLE__ || __MACH__, __FreeBSD__, __unix || __unix__
 #endif
 
+// #define DISPALY_ENDING_APP_ERROR(message) \
+//     Support::displayEndingAppError(snOut, __PRETTY_FUNCTION__);
+// #define INFORM_ABOUT_TO_SMALL_BUFFER(requiredSize, gotSize) \
+//     Support::informAboutToSmallBuffer(requiredSize, gotSize, __PRETTY_FUNCTION__);
 
 class Support
 {

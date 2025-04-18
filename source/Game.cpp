@@ -25,53 +25,75 @@ void Game::initValues()
     m_gameState = GameState::Play;
     m_fps.maxFPS = 0;
     m_fps.minFPS = (uint)-1;
+    m_renderTextureInitialized = false;
 }
 
-void Game::initWindow()
+void Game::initRenderWindow()
 {
     sf::VideoMode vm =
         Data::Game::getDebugView() ?  /// makes window smaller
                            sf::VideoMode(800, 600) :
                            sf::VideoMode(
-                                sf::VideoMode::getDesktopMode().width -60,
-                                sf::VideoMode::getDesktopMode().height -60);
+                                sf::VideoMode::getDesktopMode().width,
+                                sf::VideoMode::getDesktopMode().height);
     // m_contextSettings
-    m_window = new sf::RenderWindow(
+    m_renderWindow = new sf::RenderWindow(
         vm, "Shooter Game",
         Data::Game::getDebugView() ?
             sf::Style::Default :
             sf::Style::None,
         m_contextSettings
     );
-    // m_window->setFramerateLimit(240);
+    // m_renderWindow->setFramerateLimit(240);
 }
 
 void Game::initRenderTexture()
 {
     // printf("max size: %u, ", sf::Texture::getMaximumSize());
-    fflush(stdout);
+    // fflush(stdout);
 
-    m_renderTextureInitialized = true;
-
-    if(!m_renderTexture.create(m_window->getSize().x, m_window->getSize().y))
+    if(!m_renderTexture.create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
     {
-
-        m_renderTextureInitialized = false;
+        fprintf(stderr, "creating render texture failed\n");
+        fflush(stderr);
+        return;
     }
 
     m_renderSprite = std::make_unique<sf::Sprite>(m_renderTexture.getTexture());
+
+    /// flip sprite - default rendering has different coordinates
+    m_renderSprite->setScale(1.f, -1.f); /// vertical flip
+    m_renderSprite->setPosition(0, m_renderWindow->getSize().y);
+
+    m_renderTextureInitialized = true;
+}
+
+void Game::initRenderShader()
+{
+    if (!m_renderShader.loadFromFile("resources/shaders/blur.frag", sf::Shader::Fragment))
+    {
+        // Support::displayEndingAppError("cannot load blur.frag file");
+
+        fprintf(stderr, "loading render shader failed\n");
+        fflush(stderr);
+        return;
+    }
+
+    m_renderShader.setUniform("texture", sf::Shader::CurrentTexture);
+    m_renderShader.setUniform("textureSize", sf::Vector2f(m_renderWindow->getSize()));
+    m_renderShader.setUniform("blurRadius", 10.0f);
 }
 
 void Game::initMenu()
 {
-    m_menu.setWindowSize(m_window->getSize());
+    m_menu.setWindowSize(m_renderWindow->getSize());
 
     m_menu.init();
 }
 
 void Game::initPlay()
 {
-    m_play.setWindowSize(m_window->getSize());
+    m_play.setWindowSize(m_renderWindow->getSize());
 
     m_play.init();
 }
@@ -82,15 +104,16 @@ Game::Game()
 
     this->initFPSLabel();
     this->initValues();
-    this->initWindow();
+    this->initRenderWindow();
     this->initRenderTexture();
+    this->initRenderShader();
     this->initMenu();
     this->initPlay();
 }
 
 Game::~Game()
 {
-    delete m_window;
+    delete m_renderWindow;
 }
 
 void Game::changeStateToPlay()
@@ -110,7 +133,7 @@ void Game::pollEventGame()
 
     switch (m_currentEvent.type){
     case sf::Event::Closed:
-        m_window->close(); // prevent clicking X to close window
+        m_renderWindow->close(); // prevent clicking X to close window
         break;
     case sf::Event::KeyPressed:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
@@ -138,7 +161,7 @@ void Game::pollEventGame()
         if(Data::Game::getDebugExitView())
         {
             if(m_currentEvent.key.code == sf::Keyboard::Grave)
-                m_window->close();
+                m_renderWindow->close();
         }
         break;
     default:
@@ -150,14 +173,14 @@ void Game::pollEvent()
 {
     if(m_gameState == GameState::Play)
     {
-        while(m_window->pollEvent(m_currentEvent)){
+        while(m_renderWindow->pollEvent(m_currentEvent)){
             this->pollEventGame();
             m_play.pollEvent(m_currentEvent);
         }
     }
     else if(m_gameState == GameState::Menu)
     {
-        while(m_window->pollEvent(m_currentEvent)){
+        while(m_renderWindow->pollEvent(m_currentEvent)){
             this->pollEventGame();
             m_menu.pollEvent(m_currentEvent);
         }
@@ -221,7 +244,7 @@ void Game::updateFPSLabel()
         m_fps.fpsLabel.setString(sf::String(snOut));
 
         sf::Vector2f boundsSize = m_fps.fpsLabel.getSize();
-        float newYPosition = m_window->getSize().x - boundsSize.x - 15;
+        float newYPosition = m_renderWindow->getSize().x - boundsSize.x - 15;
         static bool firstSet = true;
         if(firstSet)
         {
@@ -252,38 +275,21 @@ void Game::update()
     this->updateFPSLabel();
 }
 
-void Game::renderToTexture()
+void Game::renderObjects(sf::RenderTarget *target)
 {
-
-}
-
-void Game::renderToScreen()
-{
-
-}
-
-void Game::render()
-{
-    if(m_renderTextureInitialized)
-        this->renderToTexture();
-    else
-        this->renderToScreen();
-
-    m_window->clear(BACKGROUND_SF_COLOR);
-
     if(m_gameState == GameState::Menu)
     {
-        // m_play.render(m_window); // make it background
+        // m_play.render(target); // make it background
 
-        // sf::RectangleShape shape(sf::Vector2f(m_window->getSize().x, m_window->getSize().y));
+        // sf::RectangleShape shape(sf::Vector2f(target->getSize().x, target->getSize().y));
         // shape.setFillColor(sf::Color(30,30,30, 200));
-        // m_window->draw(shape);
+        // target->draw(shape);
 
-        m_menu.render(m_window);
+        m_menu.render(target);
     }
     else if(m_gameState == GameState::Play)
     {
-        m_play.render(m_window);
+        m_play.render(target);
     }
     else
     {
@@ -291,14 +297,85 @@ void Game::render()
     }
 
     if(m_fps.displayed)
-        m_fps.fpsLabel.render(m_window);
+        m_fps.fpsLabel.render(target);
+}
 
-    m_window->display();
+void Game::renderUsingTexture()
+{
+    m_renderTexture.clear(BACKGROUND_SF_COLOR);
+
+    this->renderObjects(&m_renderTexture);
+
+    /// Apply filters
+    /// ################# 1
+    // // Shader usuwający czerwony kanał
+    // const std::string fragmentShader =
+    //     "uniform sampler2D texture;"
+    //     "void main() {"
+    //     "    vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);"
+    //     "    pixel.r = 0.0;"  // Ustawiamy czerwony kanał na 0
+    //     "    gl_FragColor = pixel;"
+    //     "}";
+
+    // sf::Shader shader;
+    // if (shader.loadFromMemory(fragmentShader, sf::Shader::Fragment))
+    // {
+    //     m_renderWindow->draw(*m_renderSprite, &shader);
+    // }
+    // else
+
+    /// ################# 2
+    // sf::Image image = m_renderTexture.getTexture().copyToImage();
+
+    // // Zmodyfikuj każdy piksel
+    // for (unsigned int y = 0; y < image.getSize().y; ++y)
+    // {
+    //     for (unsigned int x = 0; x < image.getSize().x; ++x)
+    //     {
+    //         sf::Color color = image.getPixel(x, y);
+    //         color.r = 0; // Ustaw czerwony na 0
+    //         image.setPixel(x, y, color);
+    //     }
+    // }
+
+    // sf::Texture texture;
+    // texture.loadFromImage(image);
+    // sf::Sprite sprite(texture);
+    // m_renderTexture.draw(sprite);
+
+    if(m_renderShader.isAvailable())
+        m_renderWindow->draw(*m_renderSprite, &m_renderShader);
+    else
+    {
+        m_renderWindow->draw(*m_renderSprite);
+    }
+
+}
+
+void Game::renderRightToScreen()
+{
+    this->renderObjects(m_renderWindow);
+}
+
+void Game::render()
+{
+    m_renderWindow->clear(BACKGROUND_SF_COLOR);
+
+    if(m_renderTextureInitialized)
+    {
+        this->renderUsingTexture();
+    }
+    else
+    {
+        this->renderRightToScreen();
+    }
+
+    m_renderWindow->display();
 }
 
 bool Game::running() const noexcept
 {
-    return m_window->isOpen();
+    return m_renderWindow->isOpen();
 }
 
 void Game::play()

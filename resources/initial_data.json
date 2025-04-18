@@ -17,11 +17,12 @@
         "speed increase randomness": 1.1,
 
         "ghost": {
-            "default speed": 10.0
+            "default speed": 200.0
         }
     },
 
     "enemy spawner": {
-        "spawn distance to screen": 10.0
+        "spawn distance to screen": 10.0,
+        "spawn delay ms": 5
     }
 }

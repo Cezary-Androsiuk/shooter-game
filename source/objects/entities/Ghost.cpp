@@ -44,7 +44,7 @@ void Ghost::limitGhostMovementToMap()
 void Ghost::updateBody()
 {
     m_body.bounds.setPosition(m_position);
-    m_body.boundsShadow.setPosition({m_position.x-10, m_position.y-10});
+    m_body.boundsShadow.setPosition({m_position.x-5, m_position.y-5});
 }
 
 void Ghost::init()

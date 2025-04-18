@@ -53,6 +53,7 @@ public:
         static json::value_type getEnemySpawner();
     public:
         static float getSpawnDistanceToScreen();
+        static int getSpawnDelayMS();
     };
 
 private:

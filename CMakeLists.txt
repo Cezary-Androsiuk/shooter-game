@@ -15,6 +15,7 @@ set(RESOURCE_FILES
     resources/initial_data.json
     resources/fonts/OpenSans-Regular.ttf
     resources/images/default.png
+    resources/shaders/blur.frag
 )
 source_group("Resources" FILES ${RESOURCE_FILES})
 

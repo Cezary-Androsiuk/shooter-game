@@ -3,7 +3,7 @@
 EnemySpawner::EnemySpawner()
     : m_readyToSpawn{false}
 {
-    m_speedDelayMS = SPAWN_DELATY_MS;
+    m_speedDelayMS = Data::EnemySpawner::getSpawnDelayMS();
 }
 
 EnemySpawner::~EnemySpawner()
