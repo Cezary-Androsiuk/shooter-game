@@ -14,6 +14,8 @@ void Game::initFPSLabel()
         m_fpsLabel.setCharacterSize(16);
         m_fpsLabel.setVisible(false);
     }
+
+    int a = Data::getObject()->readValue("testa");
 }
 
 void Game::initValues()
@@ -193,9 +195,10 @@ void Game::updateFPSLabel()
 
         char snOut[128];
         // snprintf(snOut, sizeof(snOut), "FPS: %u, min: %u", fps, m_fps.minFPS);
-        snprintf(snOut, sizeof(snOut), "avgFPS: %u, min: %u", m_fps.avgFPS, m_fps.minFPS);
+        int requiredSize = snprintf(snOut, sizeof(snOut), "avgFPS: %u, min: %u", m_fps.avgFPS, m_fps.minFPS);
         // snprintf(snOut, sizeof(snOut), "frame: %u, fps: %d, min: %u", dt->currentGameTick(), fps, m_minFPS);
         // snprintf(snOut, sizeof(snOut), "frame: %u, fps: %d, (min: %u, max: %u)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
+        Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
         m_fpsLabel.setString(sf::String(snOut));
 
         sf::Vector2f boundsSize = m_fpsLabel.getSize();

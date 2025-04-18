@@ -12,7 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR}/source)
 
 # Add resources (for visualization purposes only)
 set(RESOURCE_FILES
-    resources/data.txt
+    resources/initial_data.json
     resources/fonts/OpenSans-Regular.ttf
     resources/images/default.png
 )
