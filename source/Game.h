@@ -23,8 +23,6 @@ using namespace sgui;
 // #include "objects/entities/Enemy.h"
 // #include "mechanics/spawners/EnemySpawner.h"
 
-#define DEBUG_VIEW true // makes window smaller
-#define DEBUG_EXIT_APP true // if '`' is pressed then exit app
 #define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 
 class Game
@@ -72,6 +70,7 @@ private:
     sf::Event m_currentEvent;
 
     struct{
+        bool displayed;
         uint minFPS;
         uint maxFPS;
 
@@ -84,15 +83,15 @@ private:
 
         sf::Clock fpsDisplayClock;
         const int fpsDisplayDelayMS = 100;
+
+        sf::Font fpsFont;
+        bool fontLoaded;
+        Label fpsLabel;
     } m_fps;
 
     GameState m_gameState;
     Menu m_menu;
     Play m_play;
-
-    sf::Font m_fpsFont;
-    bool m_fontLoaded;
-    Label m_fpsLabel;
     // EnemySpawner m_enemySpawner;
     // std::vector<Enemy> m_enemies;
 

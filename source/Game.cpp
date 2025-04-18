@@ -2,17 +2,20 @@
 
 void Game::initFPSLabel()
 {
-    if(!m_fpsFont.loadFromFile(FONT_PATH))
+    m_fps.fontLoaded = false;
+
+    if(!m_fps.fpsFont.loadFromFile(FONT_PATH))
     {
         fprintf(stderr, "loading font file failed from %s",  FONT_PATH);
     }
     else
     {
-        m_fontLoaded = true;
-        m_fpsLabel.setFont(m_fpsFont);
-        m_fpsLabel.setString("FPS");
-        m_fpsLabel.setCharacterSize(16);
-        m_fpsLabel.setVisible(false);
+        m_fps.fontLoaded = true;
+        m_fps.fpsLabel.setFont(m_fps.fpsFont);
+        m_fps.fpsLabel.setString("FPS");
+        m_fps.fpsLabel.setCharacterSize(16);
+        m_fps.fpsLabel.setVisible(false);
+        m_fps.displayed = Data::Game::getEnabledFPSAtStart();
     }
 }
 
@@ -27,11 +30,17 @@ void Game::initValues()
 void Game::initWindow()
 {
     sf::VideoMode vm =
-        Data::Game::getDebugView() ?
+        Data::Game::getDebugView() ?  /// makes window smaller
                            sf::VideoMode(800, 600) :
                            sf::VideoMode::getDesktopMode();
     // m_contextSettings
-    m_window = new sf::RenderWindow(vm, "Shooter Game", DEBUG_VIEW ? sf::Style::Default : sf::Style::Fullscreen, m_contextSettings);
+    m_window = new sf::RenderWindow(
+        vm, "Shooter Game",
+        Data::Game::getDebugView() ?
+            sf::Style::Default :
+            sf::Style::Fullscreen,
+        m_contextSettings
+    );
     // m_window->setFramerateLimit(240);
 }
 
@@ -66,9 +75,9 @@ void Game::initPlay()
 }
 
 Game::Game()
-    : m_fontLoaded{false}
 {
     printf("game start\n");fflush(stdout);
+
     this->initFPSLabel();
     this->initValues();
     this->initWindow();
@@ -113,6 +122,10 @@ void Game::pollEventGame()
             }
             allowEscapeKey = false;
         }
+        else if(m_currentEvent.key.code == sf::Keyboard::F)
+        {
+            m_fps.displayed = !m_fps.displayed;
+        }
     case sf::Event::KeyReleased:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
         {
@@ -120,10 +133,11 @@ void Game::pollEventGame()
             // fflush(stdout);
             allowEscapeKey = true;
         }
-#if DEBUG_EXIT_APP
-        if(m_currentEvent.key.code == sf::Keyboard::Grave)
-            m_window->close();
-#endif
+        if(Data::Game::getDebugExitView())
+        {
+            if(m_currentEvent.key.code == sf::Keyboard::Grave)
+                m_window->close();
+        }
         break;
     default:
         break;
@@ -176,6 +190,8 @@ void Game::updateFPSLabel()
         // printf("%u/%u = %u\n", m_fps.avgFPSData.sumOfLastNValues, m_fps.avgFPSData.queue.size(), m_fps.avgFPSData.sumOfLastNValues / m_fps.avgFPSData.queue.size());
         m_fps.avgFPS = m_fps.avgFPSData.sumOfLastNValues / m_fps.avgFPSData.queue.size(); // never division by 0
 
+        if(!m_fps.displayed)
+            return;
 
         if(!avgFPSQueueMaxSizeCrossed)
         {
@@ -200,17 +216,17 @@ void Game::updateFPSLabel()
         // snprintf(snOut, sizeof(snOut), "frame: %u, fps: %d, min: %u", dt->currentGameTick(), fps, m_minFPS);
         // snprintf(snOut, sizeof(snOut), "frame: %u, fps: %d, (min: %u, max: %u)", dt->currentGameTick(), fps, m_minFPS, m_maxFPS);
         Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
-        m_fpsLabel.setString(sf::String(snOut));
+        m_fps.fpsLabel.setString(sf::String(snOut));
 
-        sf::Vector2f boundsSize = m_fpsLabel.getSize();
+        sf::Vector2f boundsSize = m_fps.fpsLabel.getSize();
         float newYPosition = m_window->getSize().x - boundsSize.x - 15;
         static bool firstSet = true;
         if(firstSet)
         {
-            m_fpsLabel.setVisible(true);
+            m_fps.fpsLabel.setVisible(true);
             firstSet = false;
         }
-        m_fpsLabel.setPosition({
+        m_fps.fpsLabel.setPosition({
             newYPosition,
             boundsSize.y
         });
@@ -272,7 +288,8 @@ void Game::render()
         printf("unknown game state, can't render\n");
     }
 
-    m_fpsLabel.render(m_window);
+    if(m_fps.displayed)
+        m_fps.fpsLabel.render(m_window);
 
     m_window->display();
 }

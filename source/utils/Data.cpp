@@ -108,6 +108,11 @@ bool Data::Game::getDebugExitView()
     return Data::rawReadValue(Game::getGame(), "debug exit app");
 }
 
+bool Data::Game::getEnabledFPSAtStart()
+{
+    return Data::rawReadValue(Game::getGame(), "enabled fps at start");
+}
+
 
 
 

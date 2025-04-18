@@ -1,7 +1,8 @@
 {
     "game": {
         "debug view": true,
-        "debug exit app": true
+        "debug exit app": true,
+        "enabled fps at start": true
     },
 
     "player": {
@@ -9,6 +10,7 @@
         "health points": 100,
         "ammo": 50
     },
+
     "enemy" : {
         "default speed": 300.0,
         "speed decrease randomness": 0.9,

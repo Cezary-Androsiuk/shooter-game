@@ -23,6 +23,7 @@ public:
     public:
         static bool getDebugView();
         static bool getDebugExitView();
+        static bool getEnabledFPSAtStart();
     };
 
     class Player{
