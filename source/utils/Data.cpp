@@ -117,6 +117,11 @@ bool Data::Game::getApplyShaders()
     return Data::rawReadValue(Game::getGame(), "apply shaders");
 }
 
+bool Data::Game::getEnableLaggingTests()
+{
+    return Data::rawReadValue(Game::getGame(), "enable lagging tests");
+}
+
 
 
 

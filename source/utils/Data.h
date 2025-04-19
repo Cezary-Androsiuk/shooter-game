@@ -25,6 +25,7 @@ public:
         static bool getDebugExitView();
         static bool getEnabledFPSAtStart();
         static bool getApplyShaders();
+        static bool getEnableLaggingTests();
     };
 
     class Player{

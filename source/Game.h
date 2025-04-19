@@ -71,6 +71,8 @@ private:
     sf::ContextSettings m_contextSettings;
     sf::Event m_currentEvent;
 
+    bool m_enableLaggingTests;
+
     struct{
         bool displayed;
         uint minFPS;

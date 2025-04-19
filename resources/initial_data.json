@@ -3,7 +3,8 @@
         "debug view": true,
         "apply shaders": false,
         "debug exit app": true,
-        "enabled fps at start": true
+        "enabled fps at start": true,
+        "enable lagging tests": true
     },
 
     "player": {

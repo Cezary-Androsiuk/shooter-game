@@ -105,8 +105,8 @@ void Enemy::updateDamageDelay()
         else
             m_damageLagIncrease = 0.f;
 
-        printf("can deal damage: %g\n", m_damage + m_damageLagIncrease);
-        fflush(stdout);
+        // printf("can deal damage: %g\n", m_damage + m_damageLagIncrease);
+        // fflush(stdout);
 
         m_canDealDamage = true;
         m_damageDelay = m_damageDelayConstant;

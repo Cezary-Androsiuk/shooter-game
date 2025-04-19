@@ -27,6 +27,7 @@ void Game::initValues()
     m_fps.minFPS = (uint)-1;
     m_renderTextureInitialized = false;
     m_applyShaders = Data::Game::getApplyShaders();
+    m_enableLaggingTests = Data::Game::getEnableLaggingTests();
 }
 
 void Game::initRenderWindow()
@@ -155,14 +156,35 @@ void Game::pollEventGame()
             }
             allowEscapeKey = false;
         }
-        if(m_currentEvent.key.code == sf::Keyboard::L)
-        {
-            Support::emulateLag(100);
-        }
         else if(m_currentEvent.key.code == sf::Keyboard::F)
         {
             m_fps.displayed = !m_fps.displayed;
         }
+
+        if(m_enableLaggingTests)
+        {
+            static int lagDelay = 100;
+            if(m_currentEvent.key.code == sf::Keyboard::L)
+            {
+                Support::emulateLag(lagDelay);
+            }
+            else if(m_currentEvent.key.code == sf::Keyboard::Semicolon)
+            {
+                if(lagDelay > 0)
+                    lagDelay -= 20;
+                printf("lag delay decreased to: %d\n", lagDelay);
+                fflush(stdout);
+            }
+            else if(m_currentEvent.key.code == sf::Keyboard::Apostrophe)
+            {
+                lagDelay += 20;
+                printf("lag delay increased to: %d\n", lagDelay);
+                fflush(stdout);
+            }
+        }
+
+        // printf("event key code: %d\n", m_currentEvent.key.code);
+        // fflush(stdout);
     case sf::Event::KeyReleased:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
         {
