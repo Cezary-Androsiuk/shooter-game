@@ -1,5 +1,7 @@
 #include "DeltaTime.h"
 
+sf::Clock DeltaTime::printDelayer;
+
 DeltaTime::DeltaTime() {}
 
 DeltaTime *DeltaTime::get()
@@ -16,6 +18,16 @@ float DeltaTime::value() const
 size_t DeltaTime::currentGameTick() const
 {
     return m_currentGameTick;
+}
+
+bool DeltaTime::canPrint()
+{
+    if(printDelayer.getElapsedTime().asMilliseconds() >= PRINT_DELAY_MS)
+    {
+        printDelayer.restart();
+        return true;
+    }
+    return false;
 }
 
 void DeltaTime::update()

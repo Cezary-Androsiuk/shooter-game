@@ -3,6 +3,8 @@
 
 #include <SFML/System/Clock.hpp>
 
+#define PRINT_DELAY_MS 200
+
 typedef unsigned long long size_t;
 
 class DeltaTime
@@ -18,12 +20,17 @@ public:
     float value() const;
     size_t currentGameTick() const;
 
+    /// delays prints
+    static bool canPrint();
+
     void update();
 
 private:
     sf::Clock m_deltaTimeClock;
     float m_dt;
     size_t m_currentGameTick;
+
+    static sf::Clock printDelayer;
 };
 
 #endif // DELTATIME_H
