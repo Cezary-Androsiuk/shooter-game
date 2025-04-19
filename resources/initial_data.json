@@ -7,6 +7,8 @@
         "enable lagging tests": true
     },
 
+    "collision roughness": 0.7,
+
     "player": {
         "speed straight": 500.0,
         "health points": 100,

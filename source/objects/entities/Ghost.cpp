@@ -56,7 +56,6 @@ void Ghost::update()
 {
     Enemy::update();
 
-    this->performMoveTowardsPlayer();
     this->limitGhostMovementToMap();
 
     this->updateBody();

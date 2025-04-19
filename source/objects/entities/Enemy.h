@@ -63,6 +63,7 @@ protected:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
     sf::Vector2f m_playerPosition;
+    sf::Vector2f m_moveVector;
     float m_health;
     float m_damage;
     float m_damageLagIncrease;
@@ -77,6 +78,7 @@ protected:
         float msMultiplier; /// will be increased if needed
         float msTimeMultiplier; /// will be increased with time
         float msRandomness;
+        float collisionRoughness;
     }m_movementSpeedAddons;
 
     std::shared_ptr<Map> m_map;

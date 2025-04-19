@@ -14,6 +14,7 @@ void Enemy::initData()
         Data::Enemy::getSpeedDecreaseRandomness(),
         Data::Enemy::getSpeedIncreaseRandomness()
     );
+    m_movementSpeedAddons.collisionRoughness = 0.99; // Data
 
     m_damageDelayConstant = Data::Enemy::getDealDamageDelay();
     m_damageDelay = m_damageDelayConstant;
@@ -70,25 +71,32 @@ void Enemy::preventMoveThatEnterBounds(
         if (minOverlap == overlapLeft)
         {
             m_position.x = obstacleBounds.left - m_size.x;
+            /// decrease movement in available direction due to collision roughnes
+            m_position.y -= m_moveVector.y * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
         }
         else if (minOverlap == overlapRight)
         {
             m_position.x = obstacleBounds.right;
+            /// decrease movement in available direction due to collision roughnes
+            m_position.y -= m_moveVector.y * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
         }
         else if (minOverlap == overlapTop)
         {
             m_position.y = obstacleBounds.top - m_size.y;
+            /// decrease movement in available direction due to collision roughnes
+            m_position.x -= m_moveVector.x * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
         }
         else if (minOverlap == overlapBottom)
         {
             m_position.y = obstacleBounds.bottom;
+            m_position.x -= m_moveVector.x * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
         }
     }
 }
 
 void Enemy::performMoveTowardsPlayer()
 {
-    sf::Vector2f m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
+    m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
 
     m_position.x += m_moveVector.x * m_movementSpeed;
     m_position.y += m_moveVector.y * m_movementSpeed;
@@ -127,6 +135,8 @@ void Enemy::update()
 {
     this->computeMovementSpeed();
     this->updateDamageDelay();
+
+    this->performMoveTowardsPlayer();
 }
 
 void Enemy::render(sf::RenderTarget *target)

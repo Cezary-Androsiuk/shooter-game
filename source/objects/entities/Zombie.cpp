@@ -62,7 +62,6 @@ void Zombie::update()
 {
     Enemy::update();
 
-    this->performMoveTowardsPlayer();
     this->limitZombieMovementToMap();
 
     this->updateBody();
