@@ -79,15 +79,22 @@ json::value_type Data::rawReadValue(json jvalue, const char *name)
     return value;
 }
 
+Data *Data::getObject()
+{
+    static Data data;
+    return &data;
+}
+
 json::value_type Data::readValue(const char *name)
 {
     return rawReadValue(json_, name);
 }
 
-Data *Data::getObject()
+float Data::getCollisionRoughness()
 {
-    static Data data;
-    return &data;
+    static const float value =
+        Data::getObject()->readValue("collision roughness");
+    return value;
 }
 
 
@@ -95,31 +102,43 @@ Data *Data::getObject()
 
 json::value_type Data::Game::getGame()
 {
-    return Data::getObject()->readValue("game");
+    static const json::value_type game =
+        Data::getObject()->readValue("game");
+    return game;
 }
 
 bool Data::Game::getDebugView()
 {
-    return Data::rawReadValue(Game::getGame(), "debug view");
+    static const bool value =
+        Data::rawReadValue(Game::getGame(), "debug view");
+    return value;
 }
 
 bool Data::Game::getDebugExitView()
 {
-    return Data::rawReadValue(Game::getGame(), "debug exit app");
+    static const bool value =
+        Data::rawReadValue(Game::getGame(), "debug exit app");
+    return value;
 }
 
 bool Data::Game::getEnabledFPSAtStart()
 {
-    return Data::rawReadValue(Game::getGame(), "enabled fps at start");
+    static const bool value =
+        Data::rawReadValue(Game::getGame(), "enabled fps at start");
+    return value;
 }
 bool Data::Game::getApplyShaders()
 {
-    return Data::rawReadValue(Game::getGame(), "apply shaders");
+    static const bool value =
+        Data::rawReadValue(Game::getGame(), "apply shaders");
+    return value;
 }
 
 bool Data::Game::getEnableLaggingTests()
 {
-    return Data::rawReadValue(Game::getGame(), "enable lagging tests");
+    static const bool value =
+        Data::rawReadValue(Game::getGame(), "enable lagging tests");
+    return value;
 }
 
 
@@ -128,22 +147,30 @@ bool Data::Game::getEnableLaggingTests()
 
 json::value_type Data::Player::getPlayer()
 {
-    return Data::getObject()->readValue("player");
+    static const json::value_type player =
+        Data::getObject()->readValue("player");
+    return player;
 }
 
 float Data::Player::getSpeedStraight()
 {
-    return Data::rawReadValue(Player::getPlayer(), "speed straight");
+    static const float value =
+        Data::rawReadValue(Player::getPlayer(), "speed straight");
+    return value;
 }
 
 int Data::Player::getHealthPoints()
 {
-    return Data::rawReadValue(Player::getPlayer(), "health points");
+    static const int value =
+        Data::rawReadValue(Player::getPlayer(), "health points");
+    return value;
 }
 
 int Data::Player::getAmmo()
 {
-    return Data::rawReadValue(Player::getPlayer(), "ammo");
+    static const int value =
+        Data::rawReadValue(Player::getPlayer(), "ammo");
+    return value;
 }
 
 
@@ -151,27 +178,37 @@ int Data::Player::getAmmo()
 
 json::value_type Data::Enemy::getEnemy()
 {
-    return Data::getObject()->readValue("enemy");
+    static const json::value_type enemy =
+        Data::getObject()->readValue("enemy");
+    return enemy;
 }
 
 float Data::Enemy::getSpeedDecreaseRandomness()
 {
-    return Data::rawReadValue(Enemy::getEnemy(), "speed decrease randomness");
+    static const float value =
+        Data::rawReadValue(Enemy::getEnemy(), "speed decrease randomness");
+    return value;
 }
 
 float Data::Enemy::getSpeedIncreaseRandomness()
 {
-    return Data::rawReadValue(Enemy::getEnemy(), "speed increase randomness");
+    static const float value =
+        Data::rawReadValue(Enemy::getEnemy(), "speed increase randomness");
+    return value;
 }
 
 float Data::Enemy::getDealDamageDelay()
 {
-    return Data::rawReadValue(Enemy::getEnemy(), "deal damage delay units");
+    static const float value =
+        Data::rawReadValue(Enemy::getEnemy(), "deal damage delay units");
+    return value;
 }
 
 float Data::Enemy::getDealDamageLagDeterminer()
 {
-    return Data::rawReadValue(Enemy::getEnemy(), "deal damage lag determiner");
+    static const float value =
+        Data::rawReadValue(Enemy::getEnemy(), "deal damage lag determiner");
+    return value;
 }
 
 
@@ -180,55 +217,83 @@ float Data::Enemy::getDealDamageLagDeterminer()
 
 json::value_type Data::Enemy::Ghost::getGhost()
 {
-    return Data::rawReadValue(Enemy::getEnemy(), "ghost");
+    static const json::value_type ghost =
+        Data::rawReadValue(Enemy::getEnemy(), "ghost");
+    return ghost;
 }
 
 float Data::Enemy::Ghost::getMovementSpeed()
 {
-    return Data::rawReadValue(Ghost::getGhost(), "movement speed");
+    static const float value =
+        Data::rawReadValue(Ghost::getGhost(), "movement speed");
+    return value;
 }
 
 float Data::Enemy::Ghost::getDamage()
 {
-    return Data::rawReadValue(Ghost::getGhost(), "damage");
+    static const float value =
+        Data::rawReadValue(Ghost::getGhost(), "damage");
+    return value;
 }
 
 float Data::Enemy::Ghost::getHealth()
 {
-    return Data::rawReadValue(Ghost::getGhost(), "health");
+    static const float value =
+        Data::rawReadValue(Ghost::getGhost(), "health");
+    return value;
 }
+
+
 
 json::value_type Data::EnemySpawner::getEnemySpawner()
 {
-    return Data::getObject()->readValue("enemy spawner");
+    static const json::value_type enemySpawner =
+        Data::getObject()->readValue("enemy spawner");
+    return enemySpawner;
 }
 
 float Data::EnemySpawner::getSpawnDistanceToScreen()
 {
-    return Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn distance to screen");
+    static const float value =
+        Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn distance to screen");
+    return value;
 }
 
 int Data::EnemySpawner::getSpawnDelayMS()
 {
-    return Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn delay ms");
+    static const int value =
+        Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn delay ms");
+    return value;
 }
+
+
+
+
 
 json::value_type Data::Enemy::Zombie::getZombie()
 {
-    return Data::rawReadValue(Enemy::getEnemy(), "zombie");
+    static const json::value_type zombie =
+        Data::rawReadValue(Enemy::getEnemy(), "zombie");
+    return zombie;
 }
 
 float Data::Enemy::Zombie::getMovementSpeed()
 {
-    return Data::rawReadValue(Zombie::getZombie(), "movement speed");
+    static const float value =
+        Data::rawReadValue(Zombie::getZombie(), "movement speed");
+    return value;
 }
 
 float Data::Enemy::Zombie::getDamage()
 {
-    return Data::rawReadValue(Zombie::getZombie(), "damage");
+    static const float value =
+        Data::rawReadValue(Zombie::getZombie(), "damage");
+    return value;
 }
 
 float Data::Enemy::Zombie::getHealth()
 {
-    return Data::rawReadValue(Zombie::getZombie(), "health");
+    static const float value =
+        Data::rawReadValue(Zombie::getZombie(), "health");
+    return value;
 }

@@ -18,6 +18,8 @@ class Data
 public:
     json::value_type readValue(const char *name);
 
+    static float getCollisionRoughness();
+
     class Game{
         static json::value_type getGame();
     public:
