@@ -125,7 +125,7 @@ void Player::limitMoveThatEnterEnemy(
     const float overlapTop    = playerBounds.bottom - enemyBounds.top;
     const float overlapBottom = enemyBounds.bottom - playerBounds.top;
 
-    bool p = DeltaTime::canPrint();
+    // bool p = DeltaTime::canPrint();
 
     const float dt = DeltaTime::get()->value();
     const float enemyNewtons = enemy->getSize().x *

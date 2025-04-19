@@ -102,7 +102,12 @@ void Enemy::preventMoveThatEnterBounds(
 
 void Enemy::performMoveTowardsPlayer()
 {
-    m_moveVector = calculateNormalizedMovementVector(m_position, m_playerBounds->getPosition());
+    sf::Vector2f playerCenter(m_position.x + m_size.x/2, m_position.y + m_size.y/2);
+    sf::Vector2f enemyCenter(
+        m_playerBounds->left + m_playerBounds->width/2,
+        m_playerBounds->top + m_playerBounds->height/2);
+
+    m_moveVector = calculateNormalizedMovementVector(playerCenter, enemyCenter);
 
     // float directionSum
     // m_moveDirectionRatio =
