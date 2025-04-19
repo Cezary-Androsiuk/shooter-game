@@ -40,9 +40,19 @@ public:
     public:
         static float getSpeedDecreaseRandomness();
         static float getSpeedIncreaseRandomness();
+        static float getDealDamageDelay();
+        static float getDealDamageLagDeterminer();
 
         class Ghost{
             static json::value_type getGhost();
+        public:
+            static float getMovementSpeed();
+            static float getDamage();
+            static float getHealth();
+        };
+
+        class Zombie{
+            static json::value_type getZombie();
         public:
             static float getMovementSpeed();
             static float getDamage();

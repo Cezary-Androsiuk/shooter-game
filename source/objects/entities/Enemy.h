@@ -42,6 +42,7 @@ protected:
         const FloatRectEdges &playerBounds,
         const FloatRectEdges &obstacleBounds);
     void performMoveTowardsPlayer();
+    void updateDamageDelay();
 
     /* RENDER */
 
@@ -64,6 +65,11 @@ protected:
     sf::Vector2f m_playerPosition;
     float m_health;
     float m_damage;
+    float m_damageLagIncrease;
+    float m_damageDelay;
+    float m_damageDelayConstant;
+    bool m_canDealDamage;
+    float m_damageLagDeterminer;
 
     float m_movementSpeed; /// calculated after every update from dt and movement speed addons
     struct{

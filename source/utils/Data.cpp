@@ -159,6 +159,16 @@ float Data::Enemy::getSpeedIncreaseRandomness()
     return Data::rawReadValue(Enemy::getEnemy(), "speed increase randomness");
 }
 
+float Data::Enemy::getDealDamageDelay()
+{
+    return Data::rawReadValue(Enemy::getEnemy(), "deal damage delay units");
+}
+
+float Data::Enemy::getDealDamageLagDeterminer()
+{
+    return Data::rawReadValue(Enemy::getEnemy(), "deal damage lag determiner");
+}
+
 
 
 
@@ -196,4 +206,24 @@ float Data::EnemySpawner::getSpawnDistanceToScreen()
 int Data::EnemySpawner::getSpawnDelayMS()
 {
     return Data::rawReadValue(EnemySpawner::getEnemySpawner(), "spawn delay ms");
+}
+
+json::value_type Data::Enemy::Zombie::getZombie()
+{
+    return Data::rawReadValue(Enemy::getEnemy(), "zombie");
+}
+
+float Data::Enemy::Zombie::getMovementSpeed()
+{
+    return Data::rawReadValue(Zombie::getZombie(), "movement speed");
+}
+
+float Data::Enemy::Zombie::getDamage()
+{
+    return Data::rawReadValue(Zombie::getZombie(), "damage");
+}
+
+float Data::Enemy::Zombie::getHealth()
+{
+    return Data::rawReadValue(Zombie::getZombie(), "health");
 }

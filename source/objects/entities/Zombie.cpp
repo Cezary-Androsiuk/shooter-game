@@ -14,11 +14,11 @@ void Zombie::initData()
 void Zombie::initBody()
 {
     m_body.bounds.setPosition(m_position);
-    m_body.bounds.setFillColor(sf::Color(180, 40, 40));
+    m_body.bounds.setFillColor(sf::Color(40, 180, 40));
     m_body.bounds.setSize(m_size);
 
     m_body.boundsShadow.setPosition({m_position.x-5, m_position.y-5});
-    m_body.boundsShadow.setFillColor(sf::Color(130, 20, 20, 180));
+    m_body.boundsShadow.setFillColor(sf::Color(20, 130, 20, 180));
     m_body.boundsShadow.setSize({m_size.x+10, m_size.y+10});
 }
 
@@ -70,5 +70,8 @@ void Zombie::update()
 
 void Zombie::render(sf::RenderTarget *target)
 {
+    Enemy::render(target);
 
+    target->draw(m_body.bounds);
+    target->draw(m_body.boundsShadow);
 }

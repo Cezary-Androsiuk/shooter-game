@@ -7,6 +7,7 @@
 #include "utils/Data.h"
 #include "objects/entities/Enemy.h"
 #include "objects/entities/Ghost.h"
+#include "objects/entities/Zombie.h"
 
 class EnemySpawner
 {
@@ -18,6 +19,7 @@ public:
 
 private:
     /* OTHER */
+    sf::Vector2f getRandomPositionOutsideScreen(const sf::Vector2f &enemySize) const;
 
     /* EVENTS */
 
@@ -38,8 +40,9 @@ public:
 
 private:
     sf::Clock m_spawnClock;
-    int m_speedDelayMS;
+    int m_spawnDelayMS;
     bool m_readyToSpawn;
+    int m_spawnCountLimit = 1;
 
     sf::Vector2u m_mapSize;
 };

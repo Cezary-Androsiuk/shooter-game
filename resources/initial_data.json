@@ -15,8 +15,16 @@
     "enemy" : {
         "speed decrease randomness": 0.9,
         "speed increase randomness": 1.1,
-
+        "deal damage delay units": 0.4,
+        "deal damage lag determiner": 0.1,
+        
         "ghost": {
+            "movement speed": 200.0,
+            "damage": 10.0,
+            "health": 100
+        },
+
+        "zombie": {
             "movement speed": 200.0,
             "damage": 10.0,
             "health": 100

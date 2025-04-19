@@ -14,6 +14,12 @@ void Enemy::initData()
         Data::Enemy::getSpeedDecreaseRandomness(),
         Data::Enemy::getSpeedIncreaseRandomness()
     );
+
+    m_damageDelayConstant = Data::Enemy::getDealDamageDelay();
+    m_damageDelay = m_damageDelayConstant;
+    m_canDealDamage = true;
+    m_damageLagDeterminer = (-1) * Data::Enemy::getDealDamageLagDeterminer();
+    m_damageLagIncrease = 0.f;
 }
 
 Enemy::Enemy()
@@ -88,6 +94,25 @@ void Enemy::performMoveTowardsPlayer()
     m_position.y += m_moveVector.y * m_movementSpeed;
 }
 
+void Enemy::updateDamageDelay()
+{
+    m_damageDelay -= DeltaTime::get()->value();
+    if(m_damageDelay < 0)
+    {
+        /// if delay was much below 0, then
+        if(m_damageDelay < m_damageLagDeterminer)
+            m_damageLagIncrease = m_damage * m_damageDelay * (-1);
+        else
+            m_damageLagIncrease = 0.f;
+
+        printf("can deal damage: %g\n", m_damage + m_damageLagIncrease);
+        fflush(stdout);
+
+        m_canDealDamage = true;
+        m_damageDelay = m_damageDelayConstant;
+    }
+}
+
 void Enemy::init()
 {
     this->initData();
@@ -101,6 +126,7 @@ void Enemy::pollEvent(const sf::Event &event)
 void Enemy::update()
 {
     this->computeMovementSpeed();
+    this->updateDamageDelay();
 }
 
 void Enemy::render(sf::RenderTarget *target)
