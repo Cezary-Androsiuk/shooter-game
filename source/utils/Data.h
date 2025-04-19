@@ -52,6 +52,7 @@ public:
             static float getMovementSpeed();
             static float getDamage();
             static float getHealth();
+            static float getPlayerMoveSlowDownRatio();
         };
 
         class Zombie{
@@ -60,6 +61,7 @@ public:
             static float getMovementSpeed();
             static float getDamage();
             static float getHealth();
+            static float getPlayerMoveSlowDownRatio();
         };
     };
 

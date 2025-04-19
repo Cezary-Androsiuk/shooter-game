@@ -168,6 +168,11 @@ float Enemy::getMovementSpeed() const
     return m_movementSpeed;
 }
 
+float Enemy::getPlayerMoveSlowDownRatio() const
+{
+    return m_playerMoveSlowDownRatio;
+}
+
 void Enemy::setPosition(sf::Vector2f position)
 {
     m_position = position;

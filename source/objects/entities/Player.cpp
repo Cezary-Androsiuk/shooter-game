@@ -125,23 +125,30 @@ void Player::limitMoveThatEnterEnemy(
     const float overlapTop    = playerBounds.bottom - enemyBounds.top;
     const float overlapBottom = enemyBounds.bottom - playerBounds.top;
 
+    bool p = DeltaTime::canPrint();
+
     const float dt = DeltaTime::get()->value();
     const float enemyNewtons = enemy->getSize().x *
                                enemy->getSize().y *
-                               enemy->getMovementSpeed() / dt;
+                               enemy->getMovementSpeed();
     const float playerNewtons = m_size.x *
                                 m_size.y *
-                                m_movementSpeedStraight / dt;
-    float newtonsDiff = (playerNewtons - enemyNewtons);
-    const float minMovement = playerNewtons * 0.02;
-    newtonsDiff = newtonsDiff < minMovement ? minMovement : newtonsDiff;
-    const float enemyMoveLimit = 1 - newtonsDiff / playerNewtons;
+                                m_movementSpeedStraight;
+    const float enemyNewtonsLimitedImproved = enemyNewtons * enemy->getPlayerMoveSlowDownRatio();
+    const float enemyNewtonsLimited = enemyNewtonsLimitedImproved > playerNewtons ?
+                                          playerNewtons : enemyNewtonsLimitedImproved;
+    const float maxMoveLimit = 0.02;
 
-    // if(DeltaTime::canPrint())
-    // {
-    //     printf("P: %0.2f, E: %0.2f, limit: %0.2f\n", playerNewtons, enemyNewtons, enemyMoveLimit);
+    const float playerToEnemyRatioRaw = (playerNewtons - enemyNewtonsLimited) / playerNewtons;
+    const float playerToEnemyRatioNormalized = playerToEnemyRatioRaw < maxMoveLimit ? maxMoveLimit : playerToEnemyRatioRaw;
+    const float playerToEnemyRatioInverted = 1 - playerToEnemyRatioNormalized;
+    const float playerToEnemyRatioRooted = sqrt(playerToEnemyRatioInverted);
+
+    // if(p)
+    //     printf("P: %0.2f, E: %0.2f, limit: %0.2f\n", playerNewtons, enemyNewtonsLimited, playerToEnemyRatioInverted);
+
+    // if(p)
     //     fflush(stdout);
-    // }
 
     /// test if collision occur
     if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
@@ -151,19 +158,19 @@ void Player::limitMoveThatEnterEnemy(
 
         if (minOverlap == overlapLeft)
         {
-            m_position.x -= m_moveVector.x * enemyMoveLimit;
+            m_position.x -= m_moveVector.x * playerToEnemyRatioRooted;
         }
         else if (minOverlap == overlapRight)
         {
-            m_position.x -= m_moveVector.x * enemyMoveLimit;
+            m_position.x -= m_moveVector.x * playerToEnemyRatioRooted;
         }
         else if (minOverlap == overlapTop)
         {
-            m_position.y -= m_moveVector.y * enemyMoveLimit;
+            m_position.y -= m_moveVector.y * playerToEnemyRatioRooted;
         }
         else if (minOverlap == overlapBottom)
         {
-            m_position.y -= m_moveVector.y * enemyMoveLimit;
+            m_position.y -= m_moveVector.y * playerToEnemyRatioRooted;
         }
     }
 }

@@ -243,6 +243,13 @@ float Data::Enemy::Ghost::getHealth()
     return value;
 }
 
+float Data::Enemy::Ghost::getPlayerMoveSlowDownRatio()
+{
+    static const float value =
+        Data::rawReadValue(Ghost::getGhost(), "player move slow down ratio");
+    return value;
+}
+
 
 
 json::value_type Data::EnemySpawner::getEnemySpawner()
@@ -295,5 +302,12 @@ float Data::Enemy::Zombie::getHealth()
 {
     static const float value =
         Data::rawReadValue(Zombie::getZombie(), "health");
+    return value;
+}
+
+float Data::Enemy::Zombie::getPlayerMoveSlowDownRatio()
+{
+    static const float value =
+        Data::rawReadValue(Zombie::getZombie(), "player move slow down ratio");
     return value;
 }

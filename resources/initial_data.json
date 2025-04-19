@@ -24,13 +24,15 @@
         "ghost": {
             "movement speed": 200.0,
             "damage": 10.0,
-            "health": 100
+            "health": 100,
+            "player move slow down ratio": 0.0
         },
 
         "zombie": {
             "movement speed": 200.0,
             "damage": 10.0,
-            "health": 100
+            "health": 100,
+            "player move slow down ratio": 0.7
         }
     },
 

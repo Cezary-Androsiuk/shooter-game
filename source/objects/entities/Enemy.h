@@ -56,6 +56,7 @@ public:
     const sf::Vector2f &getSize() const;
     sf::FloatRect getBounds() const;
     float getMovementSpeed() const;
+    float getPlayerMoveSlowDownRatio() const;
 
     void setPosition(sf::Vector2f position);
     void setAvailableAreaForEnemy(std::shared_ptr<Map> map);
@@ -84,6 +85,7 @@ protected:
         float msRandomness;
         float collisionRoughness;
     }m_movementSpeedAddons;
+    float m_playerMoveSlowDownRatio;
 
     std::shared_ptr<Map> m_map;
 };
