@@ -14,7 +14,8 @@ void Enemy::initData()
         Data::Enemy::getSpeedDecreaseRandomness(),
         Data::Enemy::getSpeedIncreaseRandomness()
     );
-    m_movementSpeedAddons.collisionRoughness = 0.99; // Data
+
+    m_movementSpeedAddons.collisionRoughness = 0.8; //Data::getCollisionRoughness();
 
     m_damageDelayConstant = Data::Enemy::getDealDamageDelay();
     m_damageDelay = m_damageDelayConstant;
@@ -37,6 +38,7 @@ sf::Vector2f Enemy::calculateNormalizedMovementVector(const sf::Vector2f &curren
 {
     sf::Vector2f direction = targetPosition - currentPosition;
     float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+    // printf("%0.4f, %0.4f, L: %0.2f\n", direction.x, direction.y, length);
 
     if (length > 0) {
         return direction / length;
@@ -51,6 +53,9 @@ void Enemy::computeMovementSpeed()
                       m_movementSpeedAddons.msTimeMultiplier *
                       m_movementSpeedAddons.msRandomness *
                       DeltaTime::get()->value();
+
+    m_movementSpeedWithRoughness = m_movementSpeed *
+                                   m_movementSpeedAddons.collisionRoughness;
 }
 
 void Enemy::preventMoveThatEnterBounds(
@@ -72,24 +77,25 @@ void Enemy::preventMoveThatEnterBounds(
         {
             m_position.x = obstacleBounds.left - m_size.x;
             /// decrease movement in available direction due to collision roughnes
-            m_position.y -= m_moveVector.y * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
+            m_position.y -= m_moveVector.y * m_movementSpeedWithRoughness;
         }
         else if (minOverlap == overlapRight)
         {
             m_position.x = obstacleBounds.right;
             /// decrease movement in available direction due to collision roughnes
-            m_position.y -= m_moveVector.y * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
+            m_position.y -= m_moveVector.y * m_movementSpeedWithRoughness;
         }
         else if (minOverlap == overlapTop)
         {
             m_position.y = obstacleBounds.top - m_size.y;
             /// decrease movement in available direction due to collision roughnes
-            m_position.x -= m_moveVector.x * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
+            m_position.x -= m_moveVector.x * m_movementSpeedWithRoughness;
         }
         else if (minOverlap == overlapBottom)
         {
             m_position.y = obstacleBounds.bottom;
-            m_position.x -= m_moveVector.x * m_movementSpeed * m_movementSpeedAddons.collisionRoughness;
+            /// decrease movement in available direction due to collision roughnes
+            m_position.x -= m_moveVector.x * m_movementSpeedWithRoughness;
         }
     }
 }
@@ -97,6 +103,9 @@ void Enemy::preventMoveThatEnterBounds(
 void Enemy::performMoveTowardsPlayer()
 {
     m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
+
+    // float directionSum
+    // m_moveDirectionRatio =
 
     m_position.x += m_moveVector.x * m_movementSpeed;
     m_position.y += m_moveVector.y * m_movementSpeed;

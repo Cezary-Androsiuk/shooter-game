@@ -7,7 +7,7 @@
         "enable lagging tests": true
     },
 
-    "collision roughness": 0.7,
+    "collision roughness": 0.8,
 
     "player": {
         "speed straight": 500.0,

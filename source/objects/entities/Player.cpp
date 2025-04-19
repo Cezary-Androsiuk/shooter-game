@@ -105,6 +105,10 @@ void Player::preventMoveThatEnterBounds(
         else if (minOverlap == overlapBottom)
         {
             m_position.y = obstacleBounds.bottom;
+            /// decrease movement in available direction due to collision roughnes
+            // m_position.x -= m_moveVector.x *
+            //                 m_movementSpeed *
+            //                 m_movementSpeedAddons.collisionRoughness;
         }
     }
 }

@@ -64,6 +64,7 @@ protected:
     sf::Vector2f m_size;
     sf::Vector2f m_playerPosition;
     sf::Vector2f m_moveVector;
+    sf::Vector2f m_moveDirectionRatio;
     float m_health;
     float m_damage;
     float m_damageLagIncrease;
@@ -73,6 +74,7 @@ protected:
     float m_damageLagDeterminer;
 
     float m_movementSpeed; /// calculated after every update from dt and movement speed addons
+    float m_movementSpeedWithRoughness;
     struct{
         float msDefault;
         float msMultiplier; /// will be increased if needed
