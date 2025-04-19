@@ -112,6 +112,10 @@ bool Data::Game::getEnabledFPSAtStart()
 {
     return Data::rawReadValue(Game::getGame(), "enabled fps at start");
 }
+bool Data::Game::getApplyShaders()
+{
+    return Data::rawReadValue(Game::getGame(), "apply shaders");
+}
 
 
 
@@ -145,11 +149,6 @@ json::value_type Data::Enemy::getEnemy()
     return Data::getObject()->readValue("enemy");
 }
 
-float Data::Enemy::getDefaultSpeed()
-{
-    return Data::rawReadValue(Enemy::getEnemy(), "default speed");
-}
-
 float Data::Enemy::getSpeedDecreaseRandomness()
 {
     return Data::rawReadValue(Enemy::getEnemy(), "speed decrease randomness");
@@ -169,9 +168,19 @@ json::value_type Data::Enemy::Ghost::getGhost()
     return Data::rawReadValue(Enemy::getEnemy(), "ghost");
 }
 
-float Data::Enemy::Ghost::getDefaultSpeed()
+float Data::Enemy::Ghost::getMovementSpeed()
 {
-    return Data::rawReadValue(Ghost::getGhost(), "default speed");
+    return Data::rawReadValue(Ghost::getGhost(), "movement speed");
+}
+
+float Data::Enemy::Ghost::getDamage()
+{
+    return Data::rawReadValue(Ghost::getGhost(), "damage");
+}
+
+float Data::Enemy::Ghost::getHealth()
+{
+    return Data::rawReadValue(Ghost::getGhost(), "health");
 }
 
 json::value_type Data::EnemySpawner::getEnemySpawner()

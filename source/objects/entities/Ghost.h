@@ -1,8 +1,6 @@
 #ifndef GHOST_H
 #define GHOST_H
 
-#include <SFML/Graphics.hpp>
-
 #include "utils/Data.h"
 #include "objects/entities/Enemy.h"
 
@@ -16,7 +14,6 @@ public:
     Ghost();
 
 private:
-
     /* UPDATE */
     void limitGhostMovementToMap();
     void updateBody();

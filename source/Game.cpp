@@ -26,6 +26,7 @@ void Game::initValues()
     m_fps.maxFPS = 0;
     m_fps.minFPS = (uint)-1;
     m_renderTextureInitialized = false;
+    m_applyShaders = Data::Game::getApplyShaders();
 }
 
 void Game::initRenderWindow()
@@ -307,55 +308,13 @@ void Game::renderObjects(sf::RenderTarget *target)
         m_fps.fpsLabel.render(target);
 }
 
-void Game::renderShader()
-{
-
-}
-
 void Game::renderUsingTexture()
 {
     m_renderTexture.clear(BACKGROUND_SF_COLOR);
 
     this->renderObjects(&m_renderTexture);
 
-    /// Apply filters
-    /// ################# 1
-    // // Shader usuwający czerwony kanał
-    // const std::string fragmentShader =
-    //     "uniform sampler2D texture;"
-    //     "void main() {"
-    //     "    vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);"
-    //     "    pixel.r = 0.0;"  // Ustawiamy czerwony kanał na 0
-    //     "    gl_FragColor = pixel;"
-    //     "}";
-
-    // sf::Shader shader;
-    // if (shader.loadFromMemory(fragmentShader, sf::Shader::Fragment))
-    // {
-    //     m_renderWindow->draw(*m_renderSprite, &shader);
-    // }
-    // else
-
-    /// ################# 2
-    // sf::Image image = m_renderTexture.getTexture().copyToImage();
-
-    // // Zmodyfikuj każdy piksel
-    // for (unsigned int y = 0; y < image.getSize().y; ++y)
-    // {
-    //     for (unsigned int x = 0; x < image.getSize().x; ++x)
-    //     {
-    //         sf::Color color = image.getPixel(x, y);
-    //         color.r = 0; // Ustaw czerwony na 0
-    //         image.setPixel(x, y, color);
-    //     }
-    // }
-
-    // sf::Texture texture;
-    // texture.loadFromImage(image);
-    // sf::Sprite sprite(texture);
-    // m_renderTexture.draw(sprite);
-
-    if(m_renderShader.isAvailable())
+    if(m_renderShader.isAvailable() && m_applyShaders)
         m_renderWindow->draw(*m_renderSprite, &m_renderShader);
     else
     {

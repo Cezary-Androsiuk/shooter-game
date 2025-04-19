@@ -54,7 +54,6 @@ class Game
 
     /* RENDER */
     void renderObjects(sf::RenderTarget *target);
-    void renderShader();
     void renderUsingTexture();
     void renderRightToScreen();
     void render();
@@ -69,6 +68,7 @@ private:
     sf::RenderTexture m_renderTexture;
     std::unique_ptr<sf::Sprite> m_renderSprite;
     sf::Shader m_renderShader;
+    bool m_applyShaders;
     bool m_renderTextureInitialized;
     sf::ContextSettings m_contextSettings;
     sf::Event m_currentEvent;

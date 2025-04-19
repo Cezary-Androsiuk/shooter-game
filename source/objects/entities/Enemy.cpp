@@ -5,10 +5,12 @@ void Enemy::initData()
     m_position.x = 0.f;
     m_position.y = 0.f;
 
-    m_movementSpeedDefault = Data::Enemy::getDefaultSpeed();
-    m_movementSpeedMultiplier = 1.f;
-    m_movementSpeedTimeMultiplier = 1.f;
-    m_movementSpeedRandomness = Random::getFloat(
+    m_movementSpeedAddons.msDefault = 100.f; /// need to be overrited
+    m_health = 100.f; /// need to be overrited
+    m_damage = 10.f; /// need to be overrited
+    m_movementSpeedAddons.msMultiplier = 1.f;
+    m_movementSpeedAddons.msTimeMultiplier = 1.f;
+    m_movementSpeedAddons.msRandomness = Random::getFloat(
         Data::Enemy::getSpeedDecreaseRandomness(),
         Data::Enemy::getSpeedIncreaseRandomness()
     );
@@ -37,11 +39,11 @@ sf::Vector2f Enemy::calculateNormalizedMovementVector(const sf::Vector2f &curren
 
 void Enemy::computeMovementSpeed()
 {
-    m_movementSpeedDT = m_movementSpeedDefault *
-                        m_movementSpeedMultiplier *
-                        m_movementSpeedTimeMultiplier *
-                        m_movementSpeedRandomness *
-                        DeltaTime::get()->value();
+    m_movementSpeed = m_movementSpeedAddons.msDefault *
+                      m_movementSpeedAddons.msMultiplier *
+                      m_movementSpeedAddons.msTimeMultiplier *
+                      m_movementSpeedAddons.msRandomness *
+                      DeltaTime::get()->value();
 }
 
 void Enemy::preventMoveThatEnterBounds(
@@ -80,10 +82,10 @@ void Enemy::preventMoveThatEnterBounds(
 
 void Enemy::performMoveTowardsPlayer()
 {
-    m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
+    sf::Vector2f m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
 
-    m_position.x += m_moveVector.x * m_movementSpeedDT;
-    m_position.y += m_moveVector.y * m_movementSpeedDT;
+    m_position.x += m_moveVector.x * m_movementSpeed;
+    m_position.y += m_moveVector.y * m_movementSpeed;
 }
 
 void Enemy::init()
@@ -123,7 +125,6 @@ void Enemy::setPosition(sf::Vector2f position)
 
 void Enemy::setPlayerPosition(sf::Vector2f position)
 {
-    m_lastPlayerPosition = m_playerPosition;
     m_playerPosition = position;
 }
 

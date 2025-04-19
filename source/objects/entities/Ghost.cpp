@@ -2,7 +2,9 @@
 
 void Ghost::initData()
 {
-    m_movementSpeedDefault = Data::Enemy::Ghost::getDefaultSpeed();
+    m_movementSpeedAddons.msDefault = Data::Enemy::Ghost::getMovementSpeed();
+    m_health = Data::Enemy::Ghost::getHealth();
+    m_damage = Data::Enemy::Ghost::getDamage();
 
     /// Size
     m_size.x = 50.f;
@@ -14,7 +16,7 @@ void Ghost::initBody()
     m_body.bounds.setPosition(m_position);
     m_body.bounds.setFillColor(sf::Color(180, 40, 40));
     m_body.bounds.setSize(m_size);
-    // m_body.bounds.setOrigin(sf::Vector2f(m_size.x/2, m_size.y/2));
+
     m_body.boundsShadow.setPosition({m_position.x-5, m_position.y-5});
     m_body.boundsShadow.setFillColor(sf::Color(130, 20, 20, 180));
     m_body.boundsShadow.setSize({m_size.x+10, m_size.y+10});
@@ -29,16 +31,6 @@ Ghost::Ghost()
 void Ghost::limitGhostMovementToMap()
 {
     /// ghosts are not affected by obstacles
-
-    // FloatRectEdges playerEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
-    // float windowSizeX = static_cast<float>(m_map->getMapSize().x);
-    // float windowSizeY = static_cast<float>(m_map->getMapSize().y);
-    // FloatRectEdges windowEgdes(0.f, 0.f, windowSizeX, windowSizeY);
-
-    // this->preventMoveThatExitBounds(playerEdges, windowEgdes);
-
-    // for(Obstacle *obstacle : m_map->getObstacles())
-    //     this->preventMoveThatEnterBounds(playerEdges, obstacle->getBounds());
 }
 
 void Ghost::updateBody()

@@ -24,6 +24,7 @@ public:
         static bool getDebugView();
         static bool getDebugExitView();
         static bool getEnabledFPSAtStart();
+        static bool getApplyShaders();
     };
 
     class Player{
@@ -37,15 +38,15 @@ public:
     class Enemy{
         static json::value_type getEnemy();
     public:
-
-        static float getDefaultSpeed();
         static float getSpeedDecreaseRandomness();
         static float getSpeedIncreaseRandomness();
 
         class Ghost{
             static json::value_type getGhost();
         public:
-            static float getDefaultSpeed();
+            static float getMovementSpeed();
+            static float getDamage();
+            static float getHealth();
         };
     };
 

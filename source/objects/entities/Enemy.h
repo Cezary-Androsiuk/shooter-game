@@ -61,18 +61,19 @@ public:
 protected:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
-    sf::Vector2f m_moveVector;
+    sf::Vector2f m_playerPosition;
+    float m_health;
+    float m_damage;
 
-    float m_movementSpeedDT;
-    float m_movementSpeedDefault;
-    float m_movementSpeedMultiplier; /// will be increased if needed
-    float m_movementSpeedTimeMultiplier; /// will be increased with time
-    float m_movementSpeedRandomness;
+    float m_movementSpeed; /// calculated after every update from dt and movement speed addons
+    struct{
+        float msDefault;
+        float msMultiplier; /// will be increased if needed
+        float msTimeMultiplier; /// will be increased with time
+        float msRandomness;
+    }m_movementSpeedAddons;
 
     std::shared_ptr<Map> m_map;
-
-    sf::Vector2f m_lastPlayerPosition;
-    sf::Vector2f m_playerPosition;
 };
 
 #endif // ENEMY_H

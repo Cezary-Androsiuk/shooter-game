@@ -1,6 +1,7 @@
 {
     "game": {
         "debug view": true,
+        "apply shaders": false,
         "debug exit app": true,
         "enabled fps at start": true
     },
@@ -12,12 +13,13 @@
     },
 
     "enemy" : {
-        "default speed": 300.0,
         "speed decrease randomness": 0.9,
         "speed increase randomness": 1.1,
 
         "ghost": {
-            "default speed": 200.0
+            "movement speed": 200.0,
+            "damage": 10.0,
+            "health": 100
         }
     },
 
