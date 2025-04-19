@@ -14,6 +14,9 @@ void Player::initData()
     m_healthPoints = Data::Player::getHealthPoints();
     m_ammo = Data::Player::getAmmo();
     m_headCount = 0;
+
+    m_movementSpeedAddons.msStraightDefault = Data::Player::getSpeedStraight();
+    m_movementSpeedAddons.msMultiplier = 1.0;
 }
 
 void Player::initBody()
@@ -35,20 +38,23 @@ Player::~Player()
 
 }
 
-void Player::move(float xmove, float ymove)
+void Player::move(float moveX, float moveY)
 {
+    m_moveVector.x = moveX;
+    m_moveVector.y = moveY;
+
     m_position = sf::Vector2f(
-        m_position.x + xmove,
-        m_position.y + ymove
+        m_position.x + moveX,
+        m_position.y + moveY
     );
 }
 
-void Player::move(sf::Vector2f move)
+void Player::computeMovementSpeed()
 {
-    m_position = sf::Vector2f(
-        m_position.x + move.x,
-        m_position.y + move.y
-    );
+    m_movementSpeedStraight = m_movementSpeedAddons.msStraightDefault *
+                              m_movementSpeedAddons.msMultiplier *
+                              DeltaTime::get()->value();
+    m_movementSpeedOblique = m_movementSpeedStraight / 1.4142f /* sqrt(2) */;
 }
 
 void Player::preventMoveThatExitBounds(const FloatRectEdges &playerBounds, const FloatRectEdges &obstacleBounds)
@@ -105,10 +111,59 @@ void Player::preventMoveThatEnterBounds(
         else if (minOverlap == overlapBottom)
         {
             m_position.y = obstacleBounds.bottom;
-            /// decrease movement in available direction due to collision roughnes
-            // m_position.x -= m_moveVector.x *
-            //                 m_movementSpeed *
-            //                 m_movementSpeedAddons.collisionRoughness;
+        }
+    }
+}
+
+void Player::limitMoveThatEnterEnemy(
+    const FloatRectEdges &playerBounds, std::shared_ptr<Enemy> enemy)
+{
+    const FloatRectEdges enemyBounds(enemy->getBounds());
+
+    const float overlapLeft   = playerBounds.right - enemyBounds.left;
+    const float overlapRight  = enemyBounds.right - playerBounds.left;
+    const float overlapTop    = playerBounds.bottom - enemyBounds.top;
+    const float overlapBottom = enemyBounds.bottom - playerBounds.top;
+
+    const float dt = DeltaTime::get()->value();
+    const float enemyNewtons = enemy->getSize().x *
+                               enemy->getSize().y *
+                               enemy->getMovementSpeed() / dt;
+    const float playerNewtons = m_size.x *
+                                m_size.y *
+                                m_movementSpeedStraight / dt;
+    float newtonsDiff = (playerNewtons - enemyNewtons);
+    const float minMovement = playerNewtons * 0.02;
+    newtonsDiff = newtonsDiff < minMovement ? minMovement : newtonsDiff;
+    const float enemyMoveLimit = 1 - newtonsDiff / playerNewtons;
+
+    // if(DeltaTime::canPrint())
+    // {
+    //     printf("P: %0.2f, E: %0.2f, limit: %0.2f\n", playerNewtons, enemyNewtons, enemyMoveLimit);
+    //     fflush(stdout);
+    // }
+
+    /// test if collision occur
+    if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
+    {
+        /// test what collision is the smallest - that means this edges are colliding
+        float minOverlap = std::min({overlapLeft, overlapRight, overlapTop, overlapBottom});
+
+        if (minOverlap == overlapLeft)
+        {
+            m_position.x -= m_moveVector.x * enemyMoveLimit;
+        }
+        else if (minOverlap == overlapRight)
+        {
+            m_position.x -= m_moveVector.x * enemyMoveLimit;
+        }
+        else if (minOverlap == overlapTop)
+        {
+            m_position.y -= m_moveVector.y * enemyMoveLimit;
+        }
+        else if (minOverlap == overlapBottom)
+        {
+            m_position.y -= m_moveVector.y * enemyMoveLimit;
         }
     }
 }
@@ -129,6 +184,10 @@ void Player::limitPlayerMovementToMap()
 
     for(Obstacle *obstacle : m_map->getObstacles())
         this->preventMoveThatEnterBounds(playerEdges, obstacle->getBounds());
+
+    for(auto enemy : *m_enemies)
+        this->limitMoveThatEnterEnemy(playerEdges, enemy);
+
 }
 
 void Player::updateBody()
@@ -138,11 +197,6 @@ void Player::updateBody()
 
 void Player::updateMovement()
 {
-    static const float straightSpeed = Data::Player::getSpeedStraight();
-    static const float obliqueSpeed = straightSpeed / 1.4142f /* sqrt(2) */;
-    const float pss = straightSpeed * DeltaTime::get()->value();
-    const float pso = obliqueSpeed * DeltaTime::get()->value();
-
     bool pressA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
     bool pressW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
     bool pressD = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
@@ -160,22 +214,31 @@ void Player::updateMovement()
         pressS = false;
     }
 
-    if(pressA && pressW) this->move(-pso, -pso);        /// move left up
-    else if(pressW && pressD) this->move(pso, -pso);    /// move right up
-    else if(pressD && pressS) this->move(pso, pso);     /// move right down
-    else if(pressS && pressA) this->move(-pso, pso);    /// move left down
-    else if(pressA) this->move(-pss,0.f);               /// move left
-    else if(pressW) this->move(0.f,-pss);               /// move up
-    else if(pressD) this->move(pss,0.f);                /// mvoe down
-    else if(pressS) this->move(0.f,pss);                /// move right
+    const float straightSpeed = m_movementSpeedStraight;
+    const float obliqueSpeed = m_movementSpeedOblique;
+
+    if(pressA && pressW) this->move(-obliqueSpeed, -obliqueSpeed);        /// move left up
+    else if(pressW && pressD) this->move(obliqueSpeed, -obliqueSpeed);    /// move right up
+    else if(pressD && pressS) this->move(obliqueSpeed, obliqueSpeed);     /// move right down
+    else if(pressS && pressA) this->move(-obliqueSpeed, obliqueSpeed);    /// move left down
+    else if(pressA) this->move(-straightSpeed, 0.f);               /// move left
+    else if(pressW) this->move(0.f, -straightSpeed);               /// move up
+    else if(pressD) this->move(straightSpeed, 0.f);                /// mvoe down
+    else if(pressS) this->move(0.f, straightSpeed);                /// move right
+}
+
+void Player::updateBounds()
+{
+    m_bounds = sf::FloatRect(m_position, m_size);
 }
 
 void Player::update()
 {
-
+    this->computeMovementSpeed();
     this->updateMovement();
     this->limitPlayerMovementToMap();
 
+    this->updateBounds();
     this->updateBody();
 }
 
@@ -187,6 +250,16 @@ void Player::render(sf::RenderTarget *target)
 sf::Vector2f Player::getPosition() const
 {
     return m_position;
+}
+
+const sf::FloatRect *Player::getBounds() const
+{
+    return &m_bounds;
+}
+
+void Player::setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies)
+{
+    m_enemies = enemies;
 }
 
 void Player::setPosition(const sf::Vector2f &position)

@@ -9,7 +9,7 @@
 #include "utils/Data.h"
 #include "utils/Random.h"
 #include "utils/RectEdges.h"
-#include "mechanics/DeltaTime.h"
+#include "utils/DeltaTime.h"
 #include "environment/Map.h"
 
 /// speed range will be in range:
@@ -54,17 +54,19 @@ public:
 
     const sf::Vector2f &getPosition() const;
     const sf::Vector2f &getSize() const;
+    sf::FloatRect getBounds() const;
+    float getMovementSpeed() const;
 
     void setPosition(sf::Vector2f position);
-    void setPlayerPosition(sf::Vector2f position);
     void setAvailableAreaForEnemy(std::shared_ptr<Map> map);
+    void setPlayerBounds(const sf::FloatRect *playerBounds);
 
 protected:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
-    sf::Vector2f m_playerPosition;
     sf::Vector2f m_moveVector;
     sf::Vector2f m_moveDirectionRatio;
+    const sf::FloatRect *m_playerBounds;
     float m_health;
     float m_damage;
     float m_damageLagIncrease;

@@ -15,7 +15,7 @@ void Enemy::initData()
         Data::Enemy::getSpeedIncreaseRandomness()
     );
 
-    m_movementSpeedAddons.collisionRoughness = 0.8; //Data::getCollisionRoughness();
+    m_movementSpeedAddons.collisionRoughness = Data::getCollisionRoughness();
 
     m_damageDelayConstant = Data::Enemy::getDealDamageDelay();
     m_damageDelay = m_damageDelayConstant;
@@ -59,13 +59,13 @@ void Enemy::computeMovementSpeed()
 }
 
 void Enemy::preventMoveThatEnterBounds(
-    const FloatRectEdges &playerBounds,
+    const FloatRectEdges &entityBounds,
     const FloatRectEdges &obstacleBounds)
 {
-    float overlapLeft   = playerBounds.right - obstacleBounds.left;
-    float overlapRight  = obstacleBounds.right - playerBounds.left;
-    float overlapTop    = playerBounds.bottom - obstacleBounds.top;
-    float overlapBottom = obstacleBounds.bottom - playerBounds.top;
+    float overlapLeft   = entityBounds.right - obstacleBounds.left;
+    float overlapRight  = obstacleBounds.right - entityBounds.left;
+    float overlapTop    = entityBounds.bottom - obstacleBounds.top;
+    float overlapBottom = obstacleBounds.bottom - entityBounds.top;
 
     /// test if collision occur
     if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
@@ -102,7 +102,7 @@ void Enemy::preventMoveThatEnterBounds(
 
 void Enemy::performMoveTowardsPlayer()
 {
-    m_moveVector = calculateNormalizedMovementVector(m_position, m_playerPosition);
+    m_moveVector = calculateNormalizedMovementVector(m_position, m_playerBounds->getPosition());
 
     // float directionSum
     // m_moveDirectionRatio =
@@ -153,14 +153,19 @@ void Enemy::render(sf::RenderTarget *target)
 
 }
 
-const sf::Vector2f &Enemy::getPosition() const
-{
-    return m_position;
-}
-
 const sf::Vector2f &Enemy::getSize() const
 {
     return m_size;
+}
+
+sf::FloatRect Enemy::getBounds() const
+{
+    return sf::FloatRect(m_position, m_size);
+}
+
+float Enemy::getMovementSpeed() const
+{
+    return m_movementSpeed;
 }
 
 void Enemy::setPosition(sf::Vector2f position)
@@ -168,12 +173,12 @@ void Enemy::setPosition(sf::Vector2f position)
     m_position = position;
 }
 
-void Enemy::setPlayerPosition(sf::Vector2f position)
-{
-    m_playerPosition = position;
-}
-
 void Enemy::setAvailableAreaForEnemy(std::shared_ptr<Map> map)
 {
     m_map = map;
+}
+
+void Enemy::setPlayerBounds(const sf::FloatRect *playerBounds)
+{
+    m_playerBounds = playerBounds;
 }

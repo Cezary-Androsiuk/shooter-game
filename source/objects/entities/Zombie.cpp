@@ -7,8 +7,8 @@ void Zombie::initData()
     m_damage = Data::Enemy::Zombie::getDamage();
 
     /// Size
-    m_size.x = 50.f;
-    m_size.y = 50.f;
+    m_size.x = 120.f;
+    m_size.y = 120.f;
 }
 
 void Zombie::initBody()
@@ -30,13 +30,15 @@ Zombie::Zombie()
 
 void Zombie::limitZombieMovementToMap()
 {
-    FloatRectEdges playerEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
-    float windowSizeX = static_cast<float>(m_map->getMapSize().x);
-    float windowSizeY = static_cast<float>(m_map->getMapSize().y);
-    FloatRectEdges windowEgdes(0.f, 0.f, windowSizeX, windowSizeY);
+    FloatRectEdges entityEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
+    FloatRectEdges playerBounds(
+        m_playerBounds->left, m_playerBounds->top,
+        m_playerBounds->left + m_playerBounds->width, m_playerBounds->top + m_playerBounds->height);
+
+    this->preventMoveThatEnterBounds(entityEdges, playerBounds);
 
     for(Obstacle *obstacle : m_map->getObstacles())
-        this->preventMoveThatEnterBounds(playerEdges, obstacle->getBounds());
+        this->preventMoveThatEnterBounds(entityEdges, obstacle->getBounds());
 }
 
 void Zombie::updateBody()

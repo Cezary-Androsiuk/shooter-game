@@ -31,11 +31,13 @@ add_executable(
     source/Game.h source/Game.cpp
 
     # UTILS
+    source/utils/DeltaTime.h source/utils/DeltaTime.cpp
     source/utils/RectEdges.h source/utils/RectEdges.cpp
     source/utils/Constants.h source/utils/Constants.cpp
     source/utils/Random.h source/utils/Random.cpp
     source/utils/Support.h source/utils/Support.cpp
     source/utils/json.hpp
+    source/utils/Data.h source/utils/Data.cpp
 
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp
@@ -59,7 +61,6 @@ add_executable(
     source/objects/entities/Skeleton.h source/objects/entities/Skeleton.cpp
 
     # MECHANICS
-    source/mechanics/DeltaTime.h source/mechanics/DeltaTime.cpp
     ## SPAWNERS
     source/mechanics/spawners/EnemySpawner.h source/mechanics/spawners/EnemySpawner.cpp
 
@@ -74,7 +75,6 @@ add_executable(
     source/SimpleGUI/RadioButton.cpp source/SimpleGUI/RadioButton.hpp
     source/SimpleGUI/Switch.cpp source/SimpleGUI/Switch.hpp
     source/SimpleGUI/TabControl.cpp source/SimpleGUI/TabControl.hpp
-    source/utils/Data.h source/utils/Data.cpp
 
 
 )

@@ -30,7 +30,14 @@ Ghost::Ghost()
 
 void Ghost::limitGhostMovementToMap()
 {
-    /// ghosts are not affected by obstacles
+    FloatRectEdges entityEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
+    FloatRectEdges playerBounds(
+        m_playerBounds->left, m_playerBounds->top,
+        m_playerBounds->left + m_playerBounds->width, m_playerBounds->top + m_playerBounds->height);
+
+    this->preventMoveThatEnterBounds(entityEdges, playerBounds);
+
+    /// ghosts are not affected by other obstacles
 }
 
 void Ghost::updateBody()

@@ -14,11 +14,13 @@ void Play::initPlayer()
     float height = static_cast<float>(m_windowSize.y);
     m_player.setPosition(sf::Vector2f(width/2.f, height/2.f));
     m_player.setAvailableAreaForPlayer(m_map);
+    m_player.setEnemies(&m_enemies);
 }
 
 void Play::initEnemySpawner()
 {
     m_enemySpawner.setMapSize(m_windowSize);
+
 }
 
 void Play::initObjects()
@@ -53,7 +55,7 @@ void Play::updateEnemySpawner()
 
     m_enemies.push_back(enemy);
 
-    enemy->setPlayerPosition(m_player.getPosition());
+    enemy->setPlayerBounds(m_player.getBounds());
     enemy->setAvailableAreaForEnemy(m_map);
 }
 
@@ -62,7 +64,6 @@ void Play::updateEnemies()
     for(auto enemy : m_enemies)
     {
         enemy->update();
-        enemy->setPlayerPosition(m_player.getPosition());
     }
 }
 
@@ -73,9 +74,10 @@ void Play::pollEvent(const sf::Event &event)
 
 void Play::update()
 {
-    m_player.update();
     this->updateEnemySpawner();
     this->updateEnemies();
+
+    m_player.update();
 }
 
 void Play::render(sf::RenderTarget *target)

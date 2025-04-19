@@ -7,8 +7,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "utils/Data.h"
-#include "mechanics/DeltaTime.h"
+#include "utils/DeltaTime.h"
 #include "utils/RectEdges.h"
+#include "objects/entities/Enemy.h"
 #include <environment/Map.h>
 
 class Player
@@ -23,8 +24,8 @@ public:
 
 private:
     /* OTHER */
-    void move(float xmove, float ymove);
-    void move(sf::Vector2f move);
+    void move(float moveX, float moveY);
+    void computeMovementSpeed();
 
     /* EVENTS */
     // void pollEvent(sf::Event &event);
@@ -37,9 +38,14 @@ private:
     void preventMoveThatEnterBounds(
         const FloatRectEdges &playerBounds,
         const FloatRectEdges &obstacleBounds);
+    void limitMoveThatEnterEnemy(
+        const FloatRectEdges &playerBounds,
+        std::shared_ptr<Enemy> enemy);
     void limitPlayerMovementToMap();
     void updateBody();
     void updateMovement();
+    void updateBounds();
+
 public:
     void update();
 
@@ -51,9 +57,10 @@ public:
 public:
     /* GETTERS */
     sf::Vector2f getPosition() const;
+    const sf::FloatRect *getBounds() const;
 
     /* SETTERS */
-    void setDeltaTimePtr(const float *dt);
+    void setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies);
     void setPosition(const sf::Vector2f &position);
     void setAvailableAreaForPlayer(std::shared_ptr<Map> map);
 
@@ -65,6 +72,8 @@ private:
 
     sf::Vector2f m_position;
     sf::Vector2f m_size;
+    sf::FloatRect m_bounds;
+    sf::Vector2f m_moveVector;
 
     std::shared_ptr<Map> m_map;
 
@@ -72,6 +81,16 @@ private:
     int m_healthPoints;
     int m_ammo;
     int m_headCount;
+
+    const std::vector<std::shared_ptr<Enemy>> *m_enemies;
+
+    float m_movementSpeedStraight; /// calculated after every update from dt and movement speed addons
+    float m_movementSpeedOblique; /// calculated after every update from dt and movement speed addons
+    struct{
+        float msStraightDefault;
+        float msMultiplier; /// will be increased if needed
+    }m_movementSpeedAddons;
+
 
     // int m_healTimer;
     // float playerSize;
