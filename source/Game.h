@@ -20,8 +20,6 @@
 
 #include "SimpleGUI/Label.hpp"
 using namespace sgui;
-// #include "objects/entities/Enemy.h"
-// #include "mechanics/spawners/EnemySpawner.h"
 
 #define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 

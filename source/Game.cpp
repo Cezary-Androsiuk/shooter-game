@@ -71,9 +71,9 @@ void Game::initRenderTexture()
 
 void Game::initRenderShader()
 {
-    if (!m_renderShader.loadFromFile("resources/shaders/blur.frag", sf::Shader::Fragment))
+    if (!m_renderShader.loadFromFile(RENDER_SHADER1_PATH, sf::Shader::Fragment))
     {
-        // Support::displayEndingAppError("cannot load blur.frag file");
+        // Support::displayApplicationError("cannot load blur.frag file");
 
         fprintf(stderr, "loading render shader failed\n");
         fflush(stderr);
@@ -154,6 +154,10 @@ void Game::pollEventGame()
                     this->changeStateToMenu();
             }
             allowEscapeKey = false;
+        }
+        if(m_currentEvent.key.code == sf::Keyboard::L)
+        {
+            Support::emulateLag(100);
         }
         else if(m_currentEvent.key.code == sf::Keyboard::F)
         {

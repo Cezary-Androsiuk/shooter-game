@@ -1,6 +1,6 @@
 #include "Support.h"
 
-void Support::displayEndingAppError(std::string message)
+void Support::displayApplicationError(std::string message)
 {
     fprintf(stderr, "%s\n", message.c_str());
     fflush(stderr);
@@ -30,3 +30,27 @@ void Support::informAboutToSmallBuffer(int requiredSize, int availableSize)
         fflush(stderr);
     }
 }
+
+void Support::emulateLag(int msDelay)
+{
+    printf("Emulating lag (%dms)... ", msDelay);
+    fflush(stdout);
+
+    auto start_time = std::chrono::steady_clock::now();
+    const auto duration = std::chrono::milliseconds(msDelay);
+    volatile double result = 0.0; // volatile prevent compiler optimization
+
+    int timeCheckCounter = 0;
+    while (std::chrono::steady_clock::now() - start_time < duration)
+    {
+        for (int i=0; i<10'000; i++)
+        {
+            result += std::sqrt(std::sin(i) * std::cos(i)) + std::log(i + 1);
+        }
+        timeCheckCounter++;
+    }
+
+    printf("\r""emulated lag (%dms)!\n", msDelay);
+    fflush(stdout);
+}
+

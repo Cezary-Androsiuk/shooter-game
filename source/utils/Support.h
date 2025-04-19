@@ -3,6 +3,8 @@
 
 #include <cstdio>
 #include <string>
+#include <chrono>
+#include <math.h>
 #if defined _WIN32 || defined _WIN64
 #include <windows.h>
 #else // __linux__, __APPLE__ || __MACH__, __FreeBSD__, __unix || __unix__
@@ -16,8 +18,9 @@
 class Support
 {
 public:
-    static void displayEndingAppError(std::string message);
+    static void displayApplicationError(std::string message);
     static void informAboutToSmallBuffer(int requiredSize, int availableSize);
+    static void emulateLag(int msDelay);
 };
 
 #endif // SUPPORT_H

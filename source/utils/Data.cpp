@@ -21,7 +21,7 @@ Data::Data() {
         // for(int i=0; i<snOutSize; i++)
         //     printf("'%c':%d\n", snOut[i], snOut[i]);
         // fflush(stdout);
-        Support::displayEndingAppError(snOut);
+        Support::displayApplicationError(snOut);
         exit(1);
     }
 
@@ -39,7 +39,7 @@ Data::Data() {
             "JSON error: \n"
             "%s", DATA_FILE_NAME, e.what());
         Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
-        Support::displayEndingAppError(snOut);
+        Support::displayApplicationError(snOut);
         exit(1);
     }
 
@@ -62,7 +62,7 @@ json::value_type Data::rawReadValue(json jvalue, const char *name)
             "JSON error: \n"
             "%s", name, e.what());
         Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
-        Support::displayEndingAppError(snOut);
+        Support::displayApplicationError(snOut);
         exit(1);
     }
     if(value.is_null())
@@ -73,7 +73,7 @@ json::value_type Data::rawReadValue(json jvalue, const char *name)
             "Reading key from JSON failed!\n"
             "Cannot read key '%s' from initial data.", name);
         Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
-        Support::displayEndingAppError(snOut);
+        Support::displayApplicationError(snOut);
         exit(1);
     }
     return value;
