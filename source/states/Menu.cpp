@@ -14,7 +14,7 @@ void Menu::initFonts()
 
 void Menu::initExitButton()
 {
-    m_exitButton = new Button();
+    m_exitButton = std::make_unique<Button>();
     m_exitButton->setSize(sf::Vector2f(84.f *wr, 38.f *hr));
     m_exitButton->setPosition(sf::Vector2f(30.f *wr, 30.f *hr));
 

@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <SimpleGUI/Button.hpp>
 
+#include <memory>
+
 #include "State.h"
 #include "utils/Constants.h"
 
@@ -49,7 +51,7 @@ private:
 
     sf::Vector2u m_windowSize;
 
-    Button *m_exitButton;
+    std::unique_ptr<Button> m_exitButton;
 };
 
 #endif // MENU_H
