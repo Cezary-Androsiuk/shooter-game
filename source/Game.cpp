@@ -15,7 +15,7 @@ void Game::initFPSLabel()
         m_fps.fpsLabel.setString("FPS");
         m_fps.fpsLabel.setCharacterSize(16);
         m_fps.fpsLabel.setVisible(false);
-        m_fps.displayed = Data::Game::getEnabledFPSAtStart();
+        m_fps.displayed = InitialData::Game::getEnabledFPSAtStart();
     }
 }
 
@@ -25,14 +25,14 @@ void Game::initValues()
     m_fps.maxFPS = 0;
     m_fps.minFPS = (uint)-1;
     m_renderTextureInitialized = false;
-    m_applyShaders = Data::Game::getApplyShaders();
-    m_enableLaggingTests = Data::Game::getEnableLaggingTests();
+    m_applyShaders = InitialData::Game::getApplyShaders();
+    m_enableLaggingTests = InitialData::Game::getEnableLaggingTests();
 }
 
 void Game::initRenderWindow()
 {
     sf::VideoMode vm =
-        Data::Game::getDebugView() ?  /// makes window smaller
+        InitialData::Game::getDebugView() ?  /// makes window smaller
                            sf::VideoMode(
                                sf::VideoMode::getDesktopMode().width /2,
                                sf::VideoMode::getDesktopMode().height /2) :
@@ -42,7 +42,7 @@ void Game::initRenderWindow()
     // m_contextSettings
     m_renderWindow = new sf::RenderWindow(
         vm, "Shooter Game",
-        Data::Game::getDebugView() ?
+        InitialData::Game::getDebugView() ?
             sf::Style::Default :
             sf::Style::None,
         m_contextSettings
@@ -200,7 +200,7 @@ void Game::pollEventGame()
             // fflush(stdout);
             allowEscapeKey = true;
         }
-        if(Data::Game::getDebugExitView())
+        if(InitialData::Game::getDebugExitView())
         {
             if(m_currentEvent.key.code == sf::Keyboard::Grave)
                 this->exitGame();

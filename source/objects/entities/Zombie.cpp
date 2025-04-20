@@ -2,10 +2,10 @@
 
 void Zombie::initData()
 {
-    m_movementSpeedAddons.msDefault = Data::Enemy::Zombie::getMovementSpeed();
-    m_playerMoveSlowDownRatio = Data::Enemy::Zombie::getPlayerMoveSlowDownRatio();
-    m_health = Data::Enemy::Zombie::getHealth();
-    m_damage = Data::Enemy::Zombie::getDamage();
+    m_movementSpeedAddons.msDefault = InitialData::Enemy::Zombie::getMovementSpeed();
+    m_playerMoveSlowDownRatio = InitialData::Enemy::Zombie::getPlayerMoveSlowDownRatio();
+    m_health = InitialData::Enemy::Zombie::getHealth();
+    m_damage = InitialData::Enemy::Zombie::getDamage();
 
     /// Size
     m_size.x = 50.f;

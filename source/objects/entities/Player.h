@@ -6,7 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "utils/Data.h"
+#include "utils/InitialData.h"
 #include "utils/DeltaTime.h"
 #include "utils/RectEdges.h"
 #include "objects/entities/Enemy.h"

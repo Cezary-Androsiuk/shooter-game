@@ -3,7 +3,7 @@
 EnemySpawner::EnemySpawner()
     : m_readyToSpawn{false}
 {
-    m_spawnDelayMS = Data::EnemySpawner::getSpawnDelayMS();
+    m_spawnDelayMS = InitialData::EnemySpawner::getSpawnDelayMS();
 }
 
 EnemySpawner::~EnemySpawner()
@@ -13,7 +13,7 @@ EnemySpawner::~EnemySpawner()
 
 sf::Vector2f EnemySpawner::getRandomPositionOutsideScreen(const sf::Vector2f &enemySize) const
 {
-    const float spawnDistanceToScreen = Data::EnemySpawner::getSpawnDistanceToScreen();
+    const float spawnDistanceToScreen = InitialData::EnemySpawner::getSpawnDistanceToScreen();
     const int site = Random::getInt(0, 3);
 
     const float xMin = /*0.f*/      - enemySize.x   - spawnDistanceToScreen;

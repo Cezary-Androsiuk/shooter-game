@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "utils/Random.h"
-#include "utils/Data.h"
+#include "utils/InitialData.h"
 #include "objects/entities/Enemy.h"
 #include "objects/entities/Ghost.h"
 #include "objects/entities/Zombie.h"

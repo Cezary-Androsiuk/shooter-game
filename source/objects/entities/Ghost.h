@@ -1,7 +1,7 @@
 #ifndef GHOST_H
 #define GHOST_H
 
-#include "utils/Data.h"
+#include "utils/InitialData.h"
 #include "objects/entities/Enemy.h"
 
 class Ghost : public Enemy

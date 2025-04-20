@@ -1,7 +1,7 @@
 #ifndef ZOMBIE_H
 #define ZOMBIE_H
 
-#include "utils/Data.h"
+#include "utils/InitialData.h"
 #include "objects/entities/Enemy.h"
 
 class Zombie : public Enemy

@@ -11,11 +11,11 @@ void Player::initData()
     m_size.y = 50.f;
 
     m_points = 0;
-    m_healthPoints = Data::Player::getHealthPoints();
-    m_ammo = Data::Player::getAmmo();
+    m_healthPoints = InitialData::Player::getHealthPoints();
+    m_ammo = InitialData::Player::getAmmo();
     m_headCount = 0;
 
-    m_movementSpeedAddons.msStraightDefault = Data::Player::getSpeedStraight();
+    m_movementSpeedAddons.msStraightDefault = InitialData::Player::getSpeedStraight();
     m_movementSpeedAddons.msMultiplier = 1.0;
 }
 

@@ -1,5 +1,5 @@
-#ifndef DATA_H
-#define DATA_H
+#ifndef INITIALDATA_H
+#define INITIALDATA_H
 
 #include <cstdio>
 #include <fstream>
@@ -10,11 +10,11 @@
 
 using json = nlohmann::json;
 
-class Data
+class InitialData
 {
-    Data();
+    InitialData();
     static json::value_type rawReadValue(json jvalue, const char *name);
-    static Data * getObject();
+    static InitialData * getObject();
 public:
     json::value_type readValue(const char *name);
 
@@ -76,4 +76,4 @@ private:
     json json_;
 };
 
-#endif // DATA_H
+#endif // INITIALDATA_H

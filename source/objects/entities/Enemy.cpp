@@ -11,16 +11,16 @@ void Enemy::initData()
     m_movementSpeedAddons.msMultiplier = 1.f;
     m_movementSpeedAddons.msTimeMultiplier = 1.f;
     m_movementSpeedAddons.msRandomness = Random::getFloat(
-        Data::Enemy::getSpeedDecreaseRandomness(),
-        Data::Enemy::getSpeedIncreaseRandomness()
+        InitialData::Enemy::getSpeedDecreaseRandomness(),
+        InitialData::Enemy::getSpeedIncreaseRandomness()
     );
 
-    m_movementSpeedAddons.collisionRoughness = Data::getCollisionRoughness();
+    m_movementSpeedAddons.collisionRoughness = InitialData::getCollisionRoughness();
 
-    m_damageDelayConstant = Data::Enemy::getDealDamageDelay();
+    m_damageDelayConstant = InitialData::Enemy::getDealDamageDelay();
     m_damageDelay = m_damageDelayConstant;
     m_canDealDamage = true;
-    m_damageLagDeterminer = (-1) * Data::Enemy::getDealDamageLagDeterminer();
+    m_damageLagDeterminer = (-1) * InitialData::Enemy::getDealDamageLagDeterminer();
     m_damageLagIncrease = 0.f;
 }
 
