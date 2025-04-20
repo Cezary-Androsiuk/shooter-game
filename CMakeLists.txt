@@ -79,6 +79,7 @@ add_executable(
     source/SimpleGUI/RadioButton.cpp source/SimpleGUI/RadioButton.hpp
     source/SimpleGUI/Switch.cpp source/SimpleGUI/Switch.hpp
     source/SimpleGUI/TabControl.cpp source/SimpleGUI/TabControl.hpp
+    source/states/PlayPauseState.h source/states/PlayPauseState.cpp
 
 
 )

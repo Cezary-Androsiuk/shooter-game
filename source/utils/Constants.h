@@ -3,6 +3,10 @@
 
 #define WINDOW_BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 
+#define ELEMENT_COLOR_IDLE sf::Color(0, 0, 0, 0)
+#define ELEMENT_COLOR_HOVER sf::Color(220, 220, 220, 20)
+#define ELEMENT_COLOR_PRESS sf::Color(220, 220, 220, 40)
+
 namespace FONT_PATH{
     extern const char *OPEN_SANS_REGULAR;
     extern const char *INK_FREE;

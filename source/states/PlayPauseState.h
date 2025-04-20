@@ -1,9 +1,8 @@
-#ifndef MENUSTATE_H
-#define MENUSTATE_H
+#ifndef PLAYPAUSESTATE_H
+#define PLAYPAUSESTATE_H
 
 #include <SFML/Graphics.hpp>
 #include <SimpleGUI/Button.hpp>
-#include <SimpleGUI/ImageBox.hpp>
 
 #include <memory>
 
@@ -11,22 +10,18 @@
 
 using namespace sgui;
 
-class MenuState : public State
+class PlayPauseState : public State
 {
     /* INITIALIZE */
-    void initBackgroundImage();
-    void initStartPlayButton();
-    void initExitGameButton();
+    void initContinueButton();
     void initObjects();
 
 public:
-    MenuState();
-    ~MenuState();
+    PlayPauseState();
+    ~PlayPauseState();
 
     void init();
-    bool requestPlayState();
-
-    bool exitGameRequest();
+    bool continueRequest();
 
     void fflushGui();
 
@@ -41,12 +36,9 @@ public:
 private:
     sf::Vector2u m_windowSize;
     /// allows to scale view
-    float wr, hr; // width ratio, height ratio
+    float wr, hr; /// width ratio, height ratio
 
-    std::unique_ptr<ImageBox> m_backgroundImageBox;
-    std::unique_ptr<Button> m_startPlayButton;
-
-    std::unique_ptr<Button> m_exitButton;
+    std::unique_ptr<Button> m_continueButton;
 };
 
-#endif // MENUSTATE_H
+#endif // PLAYPAUSESTATE_H

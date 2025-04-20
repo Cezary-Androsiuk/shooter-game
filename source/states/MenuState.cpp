@@ -2,10 +2,6 @@
 
 #include "utils/Constants.h"
 
-void MenuState::initFonts()
-{
-}
-
 void MenuState::initBackgroundImage()
 {
     m_backgroundImageBox = std::make_unique<ImageBox>(
@@ -59,7 +55,6 @@ MenuState::~MenuState()
 
 void MenuState::init()
 {
-    this->initFonts();
     this->initObjects();
 }
 
