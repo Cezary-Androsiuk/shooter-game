@@ -58,6 +58,11 @@ const sf::Vector2f &GlobalData::getWindowRatio() const
     return m_windowRatio;
 }
 
+const sf::Vector2f &GlobalData::getMousePosition() const
+{
+    return m_mousePosition;
+}
+
 void GlobalData::setWindowSize(const sf::Vector2f &windowSize)
 {
     m_windowSize = windowSize;
@@ -65,5 +70,10 @@ void GlobalData::setWindowSize(const sf::Vector2f &windowSize)
         m_windowSize.x / InitialData::Game::getTargetWidth(),
         m_windowSize.y / InitialData::Game::getTargetHeight()
     );
-    printf("%0.2f, %0.2f\n", m_windowRatio.x, m_windowRatio.y);
+    // printf("%0.2f, %0.2f\n", m_windowRatio.x, m_windowRatio.y);
+}
+
+void GlobalData::setMousePosition(const sf::Vector2f &mousePosition)
+{
+    m_mousePosition = mousePosition;
 }

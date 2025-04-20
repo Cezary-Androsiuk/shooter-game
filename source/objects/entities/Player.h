@@ -6,8 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "utils/InitialData.h"
-#include "utils/DeltaTime.h"
+#include "utils/Constants.h"
 #include "utils/RectEdges.h"
 #include "objects/entities/Enemy.h"
 #include <environment/Map.h>
@@ -26,11 +25,11 @@ private:
     /* OTHER */
     void move(float moveX, float moveY);
     void computeMovementSpeed();
-
-    /* EVENTS */
-    // void pollEvent(sf::Event &event);
+    static float rotationFromVector(cvFloat originPoint, cvFloat targetPoint);
 
 private:
+    /* EVENTS */
+
     /* UPDATE */
     void preventMoveThatExitBounds(
         const FloatRectEdges &playerBounds,
@@ -44,14 +43,14 @@ private:
     void limitPlayerMovementToMap();
     void updateBody();
     void updateMovement();
+    void updateRotation();
     void updateBounds();
 
-public:
-    void update();
-
-private:
     /* RENDER */
+
 public:
+    // void pollEvent(sf::Event &event);
+    void update();
     void render(sf::RenderTarget *target);
 
 public:
@@ -96,7 +95,6 @@ private:
     // float playerSize;
     // int effect;
     // int randomDirection;
-
 };
 
 #endif // PLAYER_H

@@ -27,8 +27,10 @@ public:
     const sf::Texture &getMainSpriteTexture() const;
     const sf::Vector2f &getWindowSize() const;
     const sf::Vector2f &getWindowRatio() const;
+    const sf::Vector2f &getMousePosition() const;
 
     void setWindowSize(const sf::Vector2f &windowSize);
+    void setMousePosition(const sf::Vector2f &mousePosition);
 
 private:
     sf::Font m_fontOpenSansRegular;
@@ -36,6 +38,8 @@ private:
 
     sf::Vector2f m_windowSize;
     sf::Vector2f m_windowRatio;
+
+    sf::Vector2f m_mousePosition;
 };
 
 #endif // GLOBALDATA_H

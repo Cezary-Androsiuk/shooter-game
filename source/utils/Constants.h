@@ -1,6 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <SFML/Graphics.hpp>
+
 #define WINDOW_BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 
 #define ELEMENT_COLOR_IDLE sf::Color(0, 0, 0, 0)
@@ -19,6 +21,9 @@ extern const char *MAIN_SPRITE_TEXTURE_PATH;
 
 
 typedef unsigned int uint;
+typedef sf::Vector2f vFloat;
+typedef const vFloat &cvFloat;
+
 
 
 #endif // CONSTANTS_H

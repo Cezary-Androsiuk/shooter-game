@@ -33,8 +33,8 @@ void Game::initRenderWindow()
 
     if(InitialData::Game::getDebugView()) /// makes window smaller
     {
-        windowSize.x /= 2;
-        windowSize.y /= 2;
+        windowSize.x *= 0.6;
+        windowSize.y *= 0.6;
     }
 
     sf::VideoMode vm = sf::VideoMode(windowSize.x, windowSize.y);
@@ -213,6 +213,12 @@ void Game::pollEventGame()
 
 void Game::pollEvent()
 {
+    GlobalData::getInstance()->setMousePosition(
+        m_renderWindow->mapPixelToCoords(
+            sf::Mouse::getPosition(*m_renderWindow)
+            )
+        );
+
     if(m_gameState == GameState::Play)
     {
         while(m_renderWindow->pollEvent(m_currentEvent)){
@@ -304,7 +310,6 @@ void Game::updateFPSLabel()
 
 void Game::update()
 {
-
     switch (m_gameState) {
     case GameState::Menu: m_menu.update(); break;
     case GameState::Play: m_play.update(); break;

@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "utils/InitialData.h"
+#include "utils/DeltaTime.h"
 #include "utils/GlobalData.h"
 
 void Player::initData()
@@ -57,6 +59,28 @@ void Player::computeMovementSpeed()
                               m_movementSpeedAddons.msMultiplier *
                               DeltaTime::get()->value();
     m_movementSpeedOblique = m_movementSpeedStraight / 1.4142f /* sqrt(2) */;
+}
+
+float Player::rotationFromVector(cvFloat originPoint, cvFloat targetPoint)
+{
+    /// compute difference
+    float dx = targetPoint.x - originPoint.x;
+    float dy = targetPoint.y - originPoint.y;
+
+    /// compute angle in radians (knowing that axis Y is inverted in SFML)
+    float angleRadians = std::atan2(-dy, dx);
+    // printf("Angle: %.2f  |   Pos: %.2f, %.2f   |   ", angleRadians, dx, dy);
+
+    /// convert radians to degrees
+    float angleDegrees = angleRadians * (180.0f / static_cast<float>(M_PI));
+    angleDegrees = -angleDegrees;
+
+    /// normalize angle [0, 360)
+    if (angleDegrees < 0) {
+        angleDegrees += 360.0f;
+    }
+
+    return angleDegrees;
 }
 
 void Player::preventMoveThatExitBounds(const FloatRectEdges &playerBounds, const FloatRectEdges &obstacleBounds)
@@ -237,6 +261,26 @@ void Player::updateMovement()
     else if(pressS) this->move(0.f, straightSpeed);                /// move right
 }
 
+void Player::updateRotation()
+{
+    const sf::Vector2f &mousePos = GlobalData::getInstance()->getMousePosition();
+
+    float angle = Player::rotationFromVector(
+        {
+            m_position.x + m_size.x/2,
+            m_position.y + m_size.y/2
+        },
+        mousePos
+        );
+
+    if(DeltaTime::canPrint())
+    {
+
+        // printf("Angle: %.2f  |   Pos: %.2f, %.2f\n", angle, mousePos.x, mousePos.y);
+        // fflush(stdout);
+    }
+}
+
 void Player::updateBounds()
 {
     m_bounds = sf::FloatRect(m_position, m_size);
@@ -246,6 +290,7 @@ void Player::update()
 {
     this->computeMovementSpeed();
     this->updateMovement();
+    this->updateRotation();
     this->limitPlayerMovementToMap();
 
     this->updateBounds();
