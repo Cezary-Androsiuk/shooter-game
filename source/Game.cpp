@@ -86,10 +86,12 @@ void Game::initRenderShader()
         return;
     }
 
-    m_renderShader.setUniform("texture", m_renderTexture.getTexture());
-    m_renderShader.setUniform("texSize", sf::Vector2f(m_renderWindow->getSize()));  // sf::Vector2f(width, height)
-    m_renderShader.setUniform("radius", 50.f);                         // promień blur'a
-    m_renderShader.setUniform("direction", sf::Vector2f(1.f, 0.f));   // poziome rozmycie
+    m_renderShader.setUniform("iResolution", GlobalData::getInstance()->getWindowSize());
+
+    // m_renderShader.setUniform("texture", m_renderTexture.getTexture());
+    // m_renderShader.setUniform("texSize", sf::Vector2f(m_renderWindow->getSize()));  // sf::Vector2f(width, height)
+    // m_renderShader.setUniform("radius", 50.f);                         // promień blur'a
+    // m_renderShader.setUniform("direction", sf::Vector2f(1.f, 0.f));   // poziome rozmycie
 
     // m_renderShader.setUniform("texture", m_renderTexture.getTexture());
     // m_renderShader.setUniform("blurRadius", 2.5f);  // Im wyższa wartość, silniejsze rozmycie

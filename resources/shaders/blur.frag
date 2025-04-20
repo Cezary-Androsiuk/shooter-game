@@ -1,27 +1,34 @@
-uniform sampler2D texture;   // tekstura źródłowa
-uniform vec2 direction;      // kierunek rozmycia: (1.0, 0.0) dla poziomego, (0.0, 1.0) dla pionowego
-uniform float radius;        // promień rozmycia (np. 5.0)
-uniform vec2 texSize;        // rozmiar tekstury (potrzebne do przeliczeń UV)
+#version 120
 
-const float pi = 3.14159265359;
+uniform sampler2D texture;
+uniform vec2 iResolution;
 
-float gaussian(float x, float sigma) {
-    return exp(-(x * x) / (2.0 * sigma * sigma)) / (sqrt(2.0 * pi) * sigma);
-}
-
-void main() {
+void main()
+{
+    float Pi = 6.28318530718; // Pi*2
+    
+    // GAUSSIAN BLUR SETTINGS
+    float Directions = 16.0; // BLUR DIRECTIONS
+    float Quality = 5.0; // BLUR QUALITY
+    float Size = 16.0; // BLUR SIZE (Radius)
+   
+    vec2 Radius = Size/iResolution;
+    
+    // Normalized pixel coordinates (from 0 to 1)
     vec2 uv = gl_TexCoord[0].xy;
-    vec4 color = vec4(0.0);
-    float sigma = radius / 2.0;
-    float weightSum = 0.0;
-
-    for (float i = -radius; i <= radius; i++) {
-        float weight = gaussian(i, sigma);
-        vec2 offset = direction * i / texSize;
-        color += texture2D(texture, uv + offset) * weight;
-        weightSum += weight;
+    // Pixel colour
+    vec4 Color = texture2D(texture, uv);
+    
+    // Blur calculations
+    for( float d=0.0; d<Pi; d+=Pi/Directions)
+    {
+        for(float i=1.0/Quality; i<=1.0; i+=1.0/Quality)
+        {
+            Color += texture2D(texture, uv+vec2(cos(d),sin(d))*Radius*i);		
+        }
     }
-
-    gl_FragColor = color / weightSum;
-
+    
+    // Output to screen
+    Color /= Quality * Directions - 15.0;
+    gl_FragColor = Color * gl_Color;
 }
