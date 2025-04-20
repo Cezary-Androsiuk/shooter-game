@@ -18,6 +18,9 @@ public:
     json::value_type readValue(const char *name);
 
     static float getCollisionRoughness();
+    static float getTextureUpdateDelayMS();
+    static float getBoundsThickness();
+    static sf::Color getBoundsColor();
 
     class Game{
         static json::value_type getGame();
@@ -38,6 +41,7 @@ public:
         static float getSpeedStraight();
         static int getHealthPoints();
         static int getAmmo();
+        static bool getShowBounds();
         static sf::Color getDefaultSkinColor();
         static sf::Color getDefaultShirtColor();
         static sf::Color getDefaultBackpackColor();

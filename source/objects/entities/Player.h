@@ -64,13 +64,15 @@ public:
     void setAvailableAreaForPlayer(std::shared_ptr<Map> map);
 
 private:
+    sf::RectangleShape m_boundsShape;
+    bool m_boundsVisible;
+
     struct{
-        // sf::RectangleShape bounds;
-        sf::Sprite bodyBounds;
-        sf::Sprite bodySkin;
-        sf::Sprite bodyShirt;
-        sf::Sprite bodyBakpack;
-    } m_body;
+        sf::Sprite bounds;
+        sf::Sprite skin;
+        sf::Sprite shirt;
+        sf::Sprite bakpack;
+    } m_renderModel;
 
     sf::Vector2f m_position;
     sf::Vector2f m_size;

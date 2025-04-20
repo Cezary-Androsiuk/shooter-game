@@ -10,11 +10,21 @@
     },
 
     "collision roughness": 0.8,
+    "texture update delay ms": 20,
+
+    "bounds color": {
+        "red": 255,
+        "green": 0,
+        "blue": 0,
+        "alpha": 255
+    },
+    "bounds thickness": 1.0,
 
     "player": {
         "speed straight": 500.0,
         "health points": 100,
         "ammo": 50,
+        "show bounds": true,
         "default skin color": {
             "red": 255,
             "green": 224,

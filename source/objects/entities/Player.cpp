@@ -28,9 +28,12 @@ void Player::initData()
 
 void Player::initBody()
 {
-    // m_body.bounds.setPosition(m_position); /// position is (0,0)
-    // m_body.bounds.setFillColor(sf::Color(180, 40, 40));
-    // m_body.bounds.setSize(m_size);
+    // m_renderModel.bounds.setPosition(m_position); /// position is (0,0)
+    m_boundsShape.setFillColor(sf::Color::Transparent);
+    m_boundsShape.setSize(m_size);
+    m_boundsShape.setOutlineColor(InitialData::getBoundsColor());
+    m_boundsShape.setOutlineThickness(InitialData::getBoundsThickness());
+    m_boundsVisible = InitialData::Player::getShowBounds();
 
     const sf::Texture &mainSpriteTexture =
         GlobalData::getInstance()->getMainSpriteTexture();
@@ -38,31 +41,31 @@ void Player::initBody()
     const int frameSize = 40;
     const float spriteScale = 1.68;
 
-    m_body.bodyBounds.setTexture(mainSpriteTexture, false);
-    m_body.bodyBounds.setTextureRect(sf::IntRect(0,0,frameSize,frameSize));
-    m_body.bodyBounds.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
-    m_body.bodyBounds.setScale(spriteScale, spriteScale);
+    m_renderModel.bounds.setTexture(mainSpriteTexture, false);
+    m_renderModel.bounds.setTextureRect(sf::IntRect(0,0,frameSize,frameSize));
+    m_renderModel.bounds.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.bounds.setScale(spriteScale, spriteScale);
 
 
-    m_body.bodySkin.setTexture(mainSpriteTexture, false);
-    m_body.bodySkin.setTextureRect(sf::IntRect(0,frameSize,frameSize,frameSize));
-    m_body.bodySkin.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
-    m_body.bodySkin.setScale(spriteScale, spriteScale);
-    m_body.bodySkin.setColor(InitialData::Player::getDefaultSkinColor());
+    m_renderModel.skin.setTexture(mainSpriteTexture, false);
+    m_renderModel.skin.setTextureRect(sf::IntRect(0,frameSize,frameSize,frameSize));
+    m_renderModel.skin.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.skin.setScale(spriteScale, spriteScale);
+    m_renderModel.skin.setColor(InitialData::Player::getDefaultSkinColor());
 
 
-    m_body.bodyShirt.setTexture(mainSpriteTexture, false);
-    m_body.bodyShirt.setTextureRect(sf::IntRect(0,frameSize*2,frameSize,frameSize));
-    m_body.bodyShirt.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
-    m_body.bodyShirt.setScale(spriteScale, spriteScale);
-    m_body.bodyShirt.setColor(InitialData::Player::getDefaultShirtColor());
+    m_renderModel.shirt.setTexture(mainSpriteTexture, false);
+    m_renderModel.shirt.setTextureRect(sf::IntRect(0,frameSize*2,frameSize,frameSize));
+    m_renderModel.shirt.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.shirt.setScale(spriteScale, spriteScale);
+    m_renderModel.shirt.setColor(InitialData::Player::getDefaultShirtColor());
 
 
-    m_body.bodyBakpack.setTexture(mainSpriteTexture, false);
-    m_body.bodyBakpack.setTextureRect(sf::IntRect(0,frameSize*3,frameSize,frameSize));
-    m_body.bodyBakpack.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
-    m_body.bodyBakpack.setScale(spriteScale, spriteScale);
-    m_body.bodyBakpack.setColor(InitialData::Player::getDefaultBackpackColor());
+    m_renderModel.bakpack.setTexture(mainSpriteTexture, false);
+    m_renderModel.bakpack.setTextureRect(sf::IntRect(0,frameSize*3,frameSize,frameSize));
+    m_renderModel.bakpack.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.bakpack.setScale(spriteScale, spriteScale);
+    m_renderModel.bakpack.setColor(InitialData::Player::getDefaultBackpackColor());
 
 }
 
@@ -261,23 +264,24 @@ void Player::limitPlayerMovementToMap()
 
 void Player::updateBody()
 {
-    // m_body.bounds.setPosition(m_position);
+    if(m_boundsVisible)
+        m_boundsShape.setPosition(m_position);
 
     sf::Vector2f centerPoint(
         m_position.x + m_size.x/2,
         m_position.y + m_size.y/2);
 
-    m_body.bodyBounds.setPosition(centerPoint);
-    m_body.bodyBounds.setRotation(m_rotationAngle);
+    m_renderModel.bounds.setPosition(centerPoint);
+    m_renderModel.bounds.setRotation(m_rotationAngle);
 
-    m_body.bodySkin.setPosition(centerPoint);
-    m_body.bodySkin.setRotation(m_rotationAngle);
+    m_renderModel.skin.setPosition(centerPoint);
+    m_renderModel.skin.setRotation(m_rotationAngle);
 
-    m_body.bodyShirt.setPosition(centerPoint);
-    m_body.bodyShirt.setRotation(m_rotationAngle);
+    m_renderModel.shirt.setPosition(centerPoint);
+    m_renderModel.shirt.setRotation(m_rotationAngle);
 
-    m_body.bodyBakpack.setPosition(centerPoint);
-    m_body.bodyBakpack.setRotation(m_rotationAngle);
+    m_renderModel.bakpack.setPosition(centerPoint);
+    m_renderModel.bakpack.setRotation(m_rotationAngle);
 }
 
 void Player::updateMovement()
@@ -351,12 +355,13 @@ void Player::update()
 
 void Player::render(sf::RenderTarget *target)
 {
-    // target->draw(m_body.bounds);
+    target->draw(m_renderModel.bounds);
+    target->draw(m_renderModel.skin);
+    target->draw(m_renderModel.shirt);
+    target->draw(m_renderModel.bakpack);
 
-    target->draw(m_body.bodyBounds);
-    target->draw(m_body.bodySkin);
-    target->draw(m_body.bodyShirt);
-    target->draw(m_body.bodyBakpack);
+    if(m_boundsVisible)
+        target->draw(m_boundsShape);
 }
 
 sf::Vector2f Player::getPosition() const

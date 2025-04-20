@@ -105,6 +105,33 @@ float InitialData::getCollisionRoughness()
     return value;
 }
 
+float InitialData::getTextureUpdateDelayMS()
+{
+    static const float value =
+        InitialData::getObject()->readValue("texture update delay ms");
+    return value;
+}
+
+float InitialData::getBoundsThickness()
+{
+    static const float value =
+        InitialData::getObject()->readValue("bounds thickness");
+    return value;
+}
+
+sf::Color InitialData::getBoundsColor()
+{
+    static const json::value_type color =
+        InitialData::getObject()->readValue("bounds color");
+
+    static const uint red = color["red"];
+    static const uint green = color["green"];
+    static const uint blue = color["blue"];
+    static const uint alpha = color["alpha"];
+
+    return sf::Color(red, green, blue, alpha);
+}
+
 
 
 
@@ -192,6 +219,13 @@ int InitialData::Player::getAmmo()
 {
     static const int value =
         InitialData::rawReadValue(Player::getPlayer(), "ammo");
+    return value;
+}
+
+bool InitialData::Player::getShowBounds()
+{
+    static const int value =
+        InitialData::rawReadValue(Player::getPlayer(), "show bounds");
     return value;
 }
 
