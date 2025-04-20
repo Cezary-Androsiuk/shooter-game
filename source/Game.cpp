@@ -8,7 +8,7 @@
 
 void Game::initFPSLabel()
 {
-    m_fps.fpsLabel.setFont(*GlobalData::getInstance()->getFontOpenSansRegular());
+    m_fps.fpsLabel.setFont(GlobalData::getInstance()->getFontOpenSansRegular());
     m_fps.fpsLabel.setString("FPS");
     m_fps.fpsLabel.setCharacterSize(16);
     m_fps.fpsLabel.setVisible(false);
@@ -27,23 +27,31 @@ void Game::initValues()
 
 void Game::initRenderWindow()
 {
-    sf::VideoMode vm =
-        InitialData::Game::getDebugView() ?  /// makes window smaller
-                           sf::VideoMode(
-                               sf::VideoMode::getDesktopMode().width /2,
-                               sf::VideoMode::getDesktopMode().height /2) :
-                           sf::VideoMode(
-                                sf::VideoMode::getDesktopMode().width,
-                                sf::VideoMode::getDesktopMode().height);
+    sf::Vector2u windowSize(
+        sf::VideoMode::getDesktopMode().width,
+        sf::VideoMode::getDesktopMode().height);
+
+    if(InitialData::Game::getDebugView()) /// makes window smaller
+    {
+        windowSize.x /= 2;
+        windowSize.y /= 2;
+    }
+
+    sf::VideoMode vm = sf::VideoMode(windowSize.x, windowSize.y);
+
     // m_contextSettings
     m_renderWindow = new sf::RenderWindow(
         vm, "Shooter Game",
         InitialData::Game::getDebugView() ?
-            sf::Style::Default :
-            sf::Style::None,
+            sf::Style::Default : sf::Style::None,
         m_contextSettings
     );
     // m_renderWindow->setFramerateLimit(240);
+
+    GlobalData::getInstance()->setWindowSize({
+        static_cast<float>(windowSize.x),
+        static_cast<float>(windowSize.y)
+    });
 }
 
 void Game::initRenderTexture()
@@ -92,15 +100,11 @@ void Game::initRenderShader()
 
 void Game::initMenu()
 {
-    m_menu.setWindowSize(m_renderWindow->getSize());
-
     m_menu.init();
 }
 
 void Game::initPlay()
 {
-    m_play.setWindowSize(m_renderWindow->getSize());
-
     m_play.init();
 }
 

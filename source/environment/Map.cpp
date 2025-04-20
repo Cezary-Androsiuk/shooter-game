@@ -11,11 +11,6 @@ Map::~Map()
         delete obstacle;
 }
 
-void Map::setMapSize(sf::Vector2u mapSize)
-{
-    m_mapSize = mapSize;
-}
-
 void Map::buildObstacles()
 {
     if(m_obstaclesBuilded) return;
@@ -30,11 +25,6 @@ void Map::render(sf::RenderTarget *target)
 {
     for(Obstacle *obstacle : m_obstacles)
         obstacle->render(target);
-}
-
-const sf::Vector2u &Map::getMapSize()
-{
-    return m_mapSize;
 }
 
 const std::vector<Obstacle *> Map::getObstacles()

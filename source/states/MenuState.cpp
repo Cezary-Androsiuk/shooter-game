@@ -1,19 +1,23 @@
 #include "MenuState.h"
 
+#include "utils/GlobalData.h"
 #include "utils/Constants.h"
 
 void MenuState::initBackgroundImage()
 {
+    const sf::Vector2f &windowSize = GlobalData::getInstance()->getWindowSize();
     m_backgroundImageBox = std::make_unique<ImageBox>(
         MENU_BACKGROUND_IMAGE_PATH,
-        sf::FloatRect(0,0, m_windowSize.x, m_windowSize.y));
+        sf::FloatRect(0,0, windowSize.x, windowSize.y));
 }
 
 void MenuState::initStartPlayButton()
 {
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+
     m_startPlayButton = std::make_unique<Button>();
-    m_startPlayButton->setSize(sf::Vector2f((395.f-10) *wr, (106.f-10) *hr));
-    m_startPlayButton->setPosition(sf::Vector2f((89.f+5) *wr, (320.f+5) *hr));
+    m_startPlayButton->setSize(sf::Vector2f((395.f-10) *windowRatio.x, (106.f-10) *windowRatio.y));
+    m_startPlayButton->setPosition(sf::Vector2f((89.f+5) *windowRatio.x, (320.f+5) *windowRatio.y));
 
     // if(m_fontLoaded)
     //     m_startPlayButton->setText(sf::Text("Start Game", m_font, 20 *wr));
@@ -25,9 +29,11 @@ void MenuState::initStartPlayButton()
 
 void MenuState::initExitGameButton()
 {
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+
     m_exitButton = std::make_unique<Button>();
-    m_exitButton->setSize(sf::Vector2f((395.f-10) *wr, (106.f-10) *hr));
-    m_exitButton->setPosition(sf::Vector2f((89.f+5) *wr, (888.f+5) *hr));
+    m_exitButton->setSize(sf::Vector2f((395.f-10) *windowRatio.x, (106.f-10) *windowRatio.y));
+    m_exitButton->setPosition(sf::Vector2f((89.f+5) *windowRatio.x, (888.f+5) *windowRatio.y));
     m_exitButton->setColor(ELEMENT_COLOR_IDLE);
     m_exitButton->setColorHover(ELEMENT_COLOR_HOVER);
     m_exitButton->setColorPress(ELEMENT_COLOR_PRESS);
@@ -35,9 +41,6 @@ void MenuState::initExitGameButton()
 
 void MenuState::initObjects()
 {
-    this->wr = m_windowSize.x / 1920.f; // width ratio
-    this->hr = m_windowSize.y / 1080.f; // height ratio
-
     this->initBackgroundImage();
     this->initStartPlayButton();
     this->initExitGameButton();
@@ -92,9 +95,4 @@ void MenuState::render(sf::RenderTarget *target)
     m_startPlayButton->render(target);
 
     m_exitButton->render(target);
-}
-
-void MenuState::setWindowSize(const sf::Vector2u &size)
-{
-    m_windowSize = size;
 }

@@ -1,10 +1,12 @@
 {
     "game": {
-        "debug view": true,
+        "debug view": false,
         "apply shaders": false,
         "debug exit app": true,
         "enabled fps at start": true,
-        "enable lagging tests": true
+        "enable lagging tests": true,
+        "target width": 1920.0,
+        "target height": 1080.0
     },
 
     "collision roughness": 0.8,

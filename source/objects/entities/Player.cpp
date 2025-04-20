@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "utils/GlobalData.h"
+
 void Player::initData()
 {
     /// Position
@@ -182,10 +184,11 @@ void Player::limitMoveThatEnterEnemy(
 
 void Player::limitPlayerMovementToMap()
 {
-    FloatRectEdges playerEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
-    float windowSizeX = static_cast<float>(m_map->getMapSize().x);
-    float windowSizeY = static_cast<float>(m_map->getMapSize().y);
-    FloatRectEdges windowEgdes(0.f, 0.f, windowSizeX, windowSizeY);
+    FloatRectEdges playerEdges(
+        m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
+    const sf::Vector2f &windowSize =
+        GlobalData::getInstance()->getWindowSize();
+    FloatRectEdges windowEgdes(0.f, 0.f, windowSize.x, windowSize.y);
 
     this->preventMoveThatExitBounds(playerEdges, windowEgdes);
 

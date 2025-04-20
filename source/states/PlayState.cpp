@@ -1,25 +1,24 @@
 #include "PlayState.h"
 
+#include "utils/GlobalData.h"
 
 void PlayState::initMap()
 {
     m_map = std::make_shared<Map>();
-    m_map->setMapSize(m_windowSize);
     m_map->buildObstacles();
 }
 
 void PlayState::initPlayer()
 {
-    float width = static_cast<float>(m_windowSize.x);
-    float height = static_cast<float>(m_windowSize.y);
-    m_player.setPosition(sf::Vector2f(width/2.f, height/2.f));
+    const sf::Vector2f &windowSize = GlobalData::getInstance()->getWindowSize();
+
+    m_player.setPosition(sf::Vector2f(windowSize.x/2.f, windowSize.y/2.f));
     m_player.setAvailableAreaForPlayer(m_map);
     m_player.setEnemies(&m_enemies);
 }
 
 void PlayState::initEnemySpawner()
 {
-    m_enemySpawner.setMapSize(m_windowSize);
 
 }
 
@@ -86,9 +85,4 @@ void PlayState::render(sf::RenderTarget *target)
     m_player.render(target);
     for(auto enemy : m_enemies)
         enemy->render(target);
-}
-
-void PlayState::setWindowSize(const sf::Vector2u &size)
-{
-    m_windowSize = size;
 }

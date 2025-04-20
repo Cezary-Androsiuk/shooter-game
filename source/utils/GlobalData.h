@@ -23,12 +23,19 @@ public:
     static GlobalData& getInstance(GlobalData&&) = delete;
 
     /// GETTERS
-    const sf::Font *getFontOpenSansRegular() const;
-    const sf::Texture *getMainSpriteTexture() const;
+    const sf::Font &getFontOpenSansRegular() const;
+    const sf::Texture &getMainSpriteTexture() const;
+    const sf::Vector2f &getWindowSize() const;
+    const sf::Vector2f &getWindowRatio() const;
+
+    void setWindowSize(const sf::Vector2f &windowSize);
 
 private:
     sf::Font m_fontOpenSansRegular;
     sf::Texture m_mainSpriteTexture;
+
+    sf::Vector2f m_windowSize;
+    sf::Vector2f m_windowRatio;
 };
 
 #endif // GLOBALDATA_H

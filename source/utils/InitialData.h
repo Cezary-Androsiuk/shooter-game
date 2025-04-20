@@ -25,6 +25,9 @@ public:
         static bool getEnabledFPSAtStart();
         static bool getApplyShaders();
         static bool getEnableLaggingTests();
+
+        static float getTargetWidth();
+        static float getTargetHeight();
     };
 
     class Player{

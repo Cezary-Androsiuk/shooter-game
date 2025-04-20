@@ -1,5 +1,10 @@
 #include "EnemySpawner.h"
 
+#include "utils/GlobalData.h"
+#include "utils/Random.h"
+#include "utils/InitialData.h"
+#include "objects/entities/Zombie.h"
+
 EnemySpawner::EnemySpawner()
     : m_readyToSpawn{false}
 {
@@ -13,13 +18,15 @@ EnemySpawner::~EnemySpawner()
 
 sf::Vector2f EnemySpawner::getRandomPositionOutsideScreen(const sf::Vector2f &enemySize) const
 {
+    const sf::Vector2f &windowSize = GlobalData::getInstance()->getWindowSize();
+
     const float spawnDistanceToScreen = InitialData::EnemySpawner::getSpawnDistanceToScreen();
     const int site = Random::getInt(0, 3);
 
     const float xMin = /*0.f*/      - enemySize.x   - spawnDistanceToScreen;
-    const float xMax = m_mapSize.x  /*+ 0.f*/       + spawnDistanceToScreen;
+    const float xMax = windowSize.x  /*+ 0.f*/       + spawnDistanceToScreen;
     const float yMin = /*0.f*/      - enemySize.y   - spawnDistanceToScreen;
-    const float yMax = m_mapSize.y  /*+ 0.f*/       + spawnDistanceToScreen;
+    const float yMax = windowSize.y  /*+ 0.f*/       + spawnDistanceToScreen;
 
     switch (site) {
     case 0: /// left
@@ -91,9 +98,4 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
     }
 
     return nullptr;
-}
-
-void EnemySpawner::setMapSize(sf::Vector2u mapSize)
-{
-    m_mapSize = mapSize;
 }

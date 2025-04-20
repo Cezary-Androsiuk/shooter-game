@@ -3,11 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "utils/Random.h"
-#include "utils/InitialData.h"
 #include "objects/entities/Enemy.h"
-#include "objects/entities/Ghost.h"
-#include "objects/entities/Zombie.h"
 
 class EnemySpawner
 {
@@ -36,15 +32,11 @@ public:
 
     std::shared_ptr<Enemy> createdEnemy();
 
-    void setMapSize(sf::Vector2u mapSize);
-
 private:
     sf::Clock m_spawnClock;
     int m_spawnDelayMS;
     bool m_readyToSpawn;
     int m_spawnCountLimit = 1;
-
-    sf::Vector2u m_mapSize;
 };
 
 #endif // ENEMYSPAWNER_H

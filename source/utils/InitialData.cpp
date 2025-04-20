@@ -146,6 +146,20 @@ bool InitialData::Game::getEnableLaggingTests()
     return value;
 }
 
+float InitialData::Game::getTargetWidth()
+{
+    static const float value =
+        InitialData::rawReadValue(Game::getGame(), "target width");
+    return value;
+}
+
+float InitialData::Game::getTargetHeight()
+{
+    static const float value =
+        InitialData::rawReadValue(Game::getGame(), "target height");
+    return value;
+}
+
 
 
 

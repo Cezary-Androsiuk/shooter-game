@@ -1,5 +1,6 @@
 #include "GlobalData.h"
 
+#include "utils/InitialData.h"
 #include "utils/Constants.h"
 #include "utils/Support.h"
 
@@ -37,12 +38,32 @@ GlobalData *GlobalData::getInstance()
     return &globalData;
 }
 
-const sf::Font *GlobalData::getFontOpenSansRegular() const
+const sf::Font &GlobalData::getFontOpenSansRegular() const
 {
-    return &m_fontOpenSansRegular;
+    return m_fontOpenSansRegular;
 }
 
-const sf::Texture *GlobalData::getMainSpriteTexture() const
+const sf::Texture &GlobalData::getMainSpriteTexture() const
 {
-    return &m_mainSpriteTexture;
+    return m_mainSpriteTexture;
+}
+
+const sf::Vector2f &GlobalData::getWindowSize() const
+{
+    return m_windowSize;
+}
+
+const sf::Vector2f &GlobalData::getWindowRatio() const
+{
+    return m_windowRatio;
+}
+
+void GlobalData::setWindowSize(const sf::Vector2f &windowSize)
+{
+    m_windowSize = windowSize;
+    m_windowRatio = sf::Vector2f(
+        m_windowSize.x / InitialData::Game::getTargetWidth(),
+        m_windowSize.y / InitialData::Game::getTargetHeight()
+    );
+    printf("%0.2f, %0.2f\n", m_windowRatio.x, m_windowRatio.y);
 }

@@ -35,14 +35,7 @@ public:
     void update() override;
     void render(sf::RenderTarget *target) override;
 
-    /// SETTERS
-    void setWindowSize(const sf::Vector2u &size);
-
 private:
-    sf::Vector2u m_windowSize;
-    /// allows to scale view
-    float wr, hr; // width ratio, height ratio
-
     std::unique_ptr<ImageBox> m_backgroundImageBox;
     std::unique_ptr<Button> m_startPlayButton;
 

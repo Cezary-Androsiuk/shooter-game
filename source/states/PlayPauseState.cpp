@@ -2,7 +2,8 @@
 
 void PlayPauseState::initContinueButton()
 {
-
+    m_continueButton = std::make_unique<Button>();
+    // m_continueButton->setSize(sf::Vector2f())
 }
 
 void PlayPauseState::initObjects()
