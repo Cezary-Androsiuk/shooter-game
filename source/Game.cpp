@@ -128,8 +128,9 @@ Game::~Game()
 
 void Game::exitGame()
 {
-
     m_renderWindow->close();
+
+    printf("game end\n");fflush(stdout);
 }
 
 void Game::changeStateToPlay()
