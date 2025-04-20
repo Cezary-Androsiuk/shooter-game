@@ -1,23 +1,15 @@
 #include "MenuState.h"
 
-const char *BACKGROUND_IMAGE_PATH = "resources/images/MenuBackground.png";
+#include "utils/Constants.h"
 
 void MenuState::initFonts()
 {
-    if(!m_font.loadFromFile(FONT_PATH))
-    {
-        fprintf(stderr, "loading font file failed from %s", FONT_PATH);
-    }
-    else
-    {
-        m_fontLoaded = true;
-    }
 }
 
 void MenuState::initBackgroundImage()
 {
     m_backgroundImageBox = std::make_unique<ImageBox>(
-        BACKGROUND_IMAGE_PATH,
+        MENU_BACKGROUND_IMAGE_PATH,
         sf::FloatRect(0,0, m_windowSize.x, m_windowSize.y));
 }
 
@@ -56,7 +48,6 @@ void MenuState::initObjects()
 }
 
 MenuState::MenuState()
-    : m_fontLoaded{false}
 {
 
 }

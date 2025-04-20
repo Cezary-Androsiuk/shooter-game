@@ -2,11 +2,8 @@
 #define INITIALDATA_H
 
 #include <cstdio>
-#include <fstream>
 
-#include "utils/Constants.h"
 #include "utils/json.hpp"
-#include "utils//Support.h"
 
 using json = nlohmann::json;
 

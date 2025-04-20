@@ -14,8 +14,10 @@ include_directories(${CMAKE_SOURCE_DIR}/source)
 set(RESOURCE_FILES
     resources/initial_data.json
     resources/fonts/OpenSans-Regular.ttf
+    resources/fonts/Inkfree.ttf
     resources/images/default.png
     resources/shaders/blur.frag
+    resources/sprites/main_sprite_texture.png
 )
 source_group("Resources" FILES ${RESOURCE_FILES})
 
@@ -37,7 +39,8 @@ add_executable(
     source/utils/Random.h source/utils/Random.cpp
     source/utils/Support.h source/utils/Support.cpp
     source/utils/json.hpp
-    source/utils/Data.h source/utils/Data.cpp
+    source/utils/InitialData.h source/utils/InitialData.cpp
+    source/utils/GlobalData.h source/utils/GlobalData.cpp
 
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp

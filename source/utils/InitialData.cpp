@@ -1,11 +1,16 @@
 #include "InitialData.h"
 
+#include <fstream>
+
+#include "utils/Constants.h"
+#include "utils/Support.h"
+
 InitialData::InitialData() {
 
-    std::ifstream iFile(DATA_FILE_NAME);
+    std::ifstream iFile(INITIAL_DATA_FILE_PATH);
     if(!iFile.good())
     {
-        char snOut[49 + strlen(DATA_FILE_NAME) -2 /* -2 is %s signature */];
+        char snOut[49 + strlen(INITIAL_DATA_FILE_PATH) -2 /* -2 is %s signature */];
         const int snOutSize = sizeof(snOut);
         int requiredSize =
             snprintf(
@@ -13,7 +18,7 @@ InitialData::InitialData() {
                 sizeof(snOut),
                 "Oppening data file failed!\n"
                 "Cannot open file '%s'",
-                DATA_FILE_NAME
+                INITIAL_DATA_FILE_PATH
             );
         Support::informAboutToSmallBuffer(requiredSize, snOutSize);
 
@@ -37,7 +42,7 @@ InitialData::InitialData() {
             "Parse data file to JSON failed!\n"
             "Cannot parse file '%s'\n"
             "JSON error: \n"
-            "%s", DATA_FILE_NAME, e.what());
+            "%s", INITIAL_DATA_FILE_PATH, e.what());
         Support::informAboutToSmallBuffer(requiredSize, sizeof(snOut));
         Support::displayApplicationError(snOut);
         exit(1);

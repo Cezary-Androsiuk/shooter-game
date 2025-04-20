@@ -8,10 +8,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "utils/Constants.h"
-#include "utils/Support.h"
-#include "utils/Random.h"
-#include "utils/InitialData.h"
-#include "utils/DeltaTime.h"
 
 #include "enums/GameState.h"
 
@@ -20,8 +16,6 @@
 
 #include "SimpleGUI/Label.hpp"
 using namespace sgui;
-
-#define BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 
 class Game
 {
@@ -90,8 +84,6 @@ private:
         sf::Clock fpsDisplayClock;
         const int fpsDisplayDelayMS = 100;
 
-        sf::Font fpsFont;
-        bool fontLoaded;
         Label fpsLabel;
     } m_fps;
 

@@ -8,9 +8,6 @@
 #include <memory>
 
 #include "State.h"
-#include "utils/Constants.h"
-
-extern const char *BACKGROUND_IMAGE_PATH;
 
 #define ELEMENT_COLOR_IDLE sf::Color(0, 0, 0, 0)
 #define ELEMENT_COLOR_HOVER sf::Color(220, 220, 220, 20)
@@ -51,9 +48,6 @@ private:
     sf::Vector2u m_windowSize;
     /// allows to scale view
     float wr, hr; // width ratio, height ratio
-
-    sf::Font m_font;
-    bool m_fontLoaded;
 
     std::unique_ptr<ImageBox> m_backgroundImageBox;
     std::unique_ptr<Button> m_startPlayButton;

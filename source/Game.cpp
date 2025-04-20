@@ -1,22 +1,18 @@
 #include "Game.h"
 
+#include "utils/Constants.h"
+#include "utils/Support.h"
+#include "utils/InitialData.h"
+#include "utils/DeltaTime.h"
+#include "utils/GlobalData.h"
+
 void Game::initFPSLabel()
 {
-    m_fps.fontLoaded = false;
-
-    if(!m_fps.fpsFont.loadFromFile(FONT_PATH))
-    {
-        fprintf(stderr, "loading font file failed from %s",  FONT_PATH);
-    }
-    else
-    {
-        m_fps.fontLoaded = true;
-        m_fps.fpsLabel.setFont(m_fps.fpsFont);
-        m_fps.fpsLabel.setString("FPS");
-        m_fps.fpsLabel.setCharacterSize(16);
-        m_fps.fpsLabel.setVisible(false);
-        m_fps.displayed = InitialData::Game::getEnabledFPSAtStart();
-    }
+    m_fps.fpsLabel.setFont(*GlobalData::getInstance()->getFontOpenSansRegular());
+    m_fps.fpsLabel.setString("FPS");
+    m_fps.fpsLabel.setCharacterSize(16);
+    m_fps.fpsLabel.setVisible(false);
+    m_fps.displayed = InitialData::Game::getEnabledFPSAtStart();
 }
 
 void Game::initValues()
@@ -346,7 +342,7 @@ void Game::renderObjects(sf::RenderTarget *target)
 
 void Game::renderUsingTexture()
 {
-    m_renderTexture.clear(BACKGROUND_SF_COLOR);
+    m_renderTexture.clear(WINDOW_BACKGROUND_SF_COLOR);
 
     this->renderObjects(&m_renderTexture);
 
@@ -356,7 +352,6 @@ void Game::renderUsingTexture()
     {
         m_renderWindow->draw(*m_renderSprite);
     }
-
 }
 
 void Game::renderRightToScreen()
@@ -366,7 +361,7 @@ void Game::renderRightToScreen()
 
 void Game::render()
 {
-    m_renderWindow->clear(BACKGROUND_SF_COLOR);
+    m_renderWindow->clear(WINDOW_BACKGROUND_SF_COLOR);
 
     if(m_renderTextureInitialized)
     {
