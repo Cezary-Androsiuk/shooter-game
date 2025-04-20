@@ -13,6 +13,18 @@ void GlobalData::loadFonts()
         Support::displayApplicationError(message);
         exit(1);
     }
+    printf("font: 'OpenSans-Regular' loaded\n");
+
+    if(!m_fontInkFree.loadFromFile(FONT_PATH::INK_FREE))
+    {
+        std::string message = "Cannot load font from path:\n";
+        message += FONT_PATH::INK_FREE;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("font: 'InkFree' loaded\n");
+
+    fflush(stdout);
 }
 
 void GlobalData::loadMainSpriteTexture()
@@ -24,6 +36,9 @@ void GlobalData::loadMainSpriteTexture()
         Support::displayApplicationError(message);
         exit(1);
     }
+    printf("texture: 'main sprite' loaded\n");
+
+    fflush(stdout);
 }
 
 GlobalData::GlobalData()
@@ -41,6 +56,11 @@ GlobalData *GlobalData::getInstance()
 const sf::Font &GlobalData::getFontOpenSansRegular() const
 {
     return m_fontOpenSansRegular;
+}
+
+const sf::Font &GlobalData::getFontInkFree() const
+{
+    return m_fontInkFree;
 }
 
 const sf::Texture &GlobalData::getMainSpriteTexture() const

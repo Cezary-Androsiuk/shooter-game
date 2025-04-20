@@ -25,9 +25,14 @@ void Player::initData()
 
 void Player::initBody()
 {
-    m_body.bounds.setPosition(m_position);
+    // m_body.bounds.setPosition(m_position);
     m_body.bounds.setFillColor(sf::Color(180, 40, 40));
     m_body.bounds.setSize(m_size);
+
+    // m_body.rotation.setPosition(m_position);
+    m_body.rotation.setFillColor(sf::Color(40, 140, 40, 100));
+    m_body.rotation.setSize(m_size);
+    m_body.rotation.setOrigin(m_size.x/2, m_size.y/2);
     // m_body.bounds.setOrigin(sf::Vector2f(m_size.x/2, m_size.y/2));
 }
 
@@ -227,6 +232,10 @@ void Player::limitPlayerMovementToMap()
 void Player::updateBody()
 {
     m_body.bounds.setPosition(m_position);
+    m_body.rotation.setPosition(
+        m_position.x + m_size.x/2,
+        m_position.y + m_size.y/2);
+    m_body.rotation.setRotation(m_rotationAngle);
 }
 
 void Player::updateMovement()
@@ -265,7 +274,7 @@ void Player::updateRotation()
 {
     const sf::Vector2f &mousePos = GlobalData::getInstance()->getMousePosition();
 
-    float angle = Player::rotationFromVector(
+    m_rotationAngle = Player::rotationFromVector(
         {
             m_position.x + m_size.x/2,
             m_position.y + m_size.y/2
@@ -279,6 +288,7 @@ void Player::updateRotation()
         // printf("Angle: %.2f  |   Pos: %.2f, %.2f\n", angle, mousePos.x, mousePos.y);
         // fflush(stdout);
     }
+
 }
 
 void Player::updateBounds()
@@ -300,6 +310,7 @@ void Player::update()
 void Player::render(sf::RenderTarget *target)
 {
     target->draw(m_body.bounds);
+    target->draw(m_body.rotation);
 }
 
 sf::Vector2f Player::getPosition() const
@@ -320,6 +331,9 @@ void Player::setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies)
 void Player::setPosition(const sf::Vector2f &position)
 {
     m_position = sf::Vector2f(position.x - m_size.x/2, position.y - m_size.y/2);
+
+    this->updateBounds();
+    this->updateBody();
 }
 
 void Player::setAvailableAreaForPlayer(std::shared_ptr<Map> map)

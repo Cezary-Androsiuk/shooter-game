@@ -66,13 +66,14 @@ public:
 private:
     struct{
         sf::RectangleShape bounds;
-
+        sf::RectangleShape rotation;
     } m_body;
 
     sf::Vector2f m_position;
     sf::Vector2f m_size;
     sf::FloatRect m_bounds;
     sf::Vector2f m_moveVector;
+    float m_rotationAngle;
 
     std::shared_ptr<Map> m_map;
 

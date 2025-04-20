@@ -24,6 +24,7 @@ public:
 
     /// GETTERS
     const sf::Font &getFontOpenSansRegular() const;
+    const sf::Font &getFontInkFree() const;
     const sf::Texture &getMainSpriteTexture() const;
     const sf::Vector2f &getWindowSize() const;
     const sf::Vector2f &getWindowRatio() const;
@@ -34,6 +35,7 @@ public:
 
 private:
     sf::Font m_fontOpenSansRegular;
+    sf::Font m_fontInkFree;
     sf::Texture m_mainSpriteTexture;
 
     sf::Vector2f m_windowSize;

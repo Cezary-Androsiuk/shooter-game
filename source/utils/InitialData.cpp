@@ -49,6 +49,9 @@ InitialData::InitialData() {
     }
 
     iFile.close();
+
+    printf("initialize data (json) loaded\n");
+    fflush(stdout);
 }
 
 json::value_type InitialData::rawReadValue(json jvalue, const char *name)
