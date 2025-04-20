@@ -65,8 +65,11 @@ public:
 
 private:
     struct{
-        sf::RectangleShape bounds;
-        sf::RectangleShape rotation;
+        // sf::RectangleShape bounds;
+        sf::Sprite bodyBounds;
+        sf::Sprite bodySkin;
+        sf::Sprite bodyShirt;
+        sf::Sprite bodyBakpack;
     } m_body;
 
     sf::Vector2f m_position;

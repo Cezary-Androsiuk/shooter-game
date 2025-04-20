@@ -1,6 +1,6 @@
 {
     "game": {
-        "debug view": true,
+        "debug view": false,
         "apply shaders": false,
         "debug exit app": true,
         "enabled fps at start": true,
