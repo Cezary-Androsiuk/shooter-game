@@ -77,6 +77,7 @@ private:
     sf::FloatRect m_bounds;
     sf::Vector2f m_moveVector;
     float m_rotationAngle;
+    float m_rotationAngleCorrection;
 
     std::shared_ptr<Map> m_map;
 
