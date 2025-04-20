@@ -15,8 +15,8 @@
 
 #include "enums/GameState.h"
 
-#include "states/Menu.h"
-#include "states/Play.h"
+#include "states/MenuState.h"
+#include "states/PlayState.h"
 
 #include "SimpleGUI/Label.hpp"
 using namespace sgui;
@@ -37,6 +37,8 @@ class Game
 
     Game();
     ~Game();
+
+    void exitGame();
 
     /* OTHER */
     void changeStateToPlay();
@@ -94,8 +96,8 @@ private:
     } m_fps;
 
     GameState m_gameState;
-    Menu m_menu;
-    Play m_play;
+    MenuState m_menu;
+    PlayState m_play;
     // EnemySpawner m_enemySpawner;
     // std::vector<Enemy> m_enemies;
 

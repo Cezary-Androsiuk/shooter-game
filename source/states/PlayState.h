@@ -1,5 +1,5 @@
-#ifndef PLAY_H
-#define PLAY_H
+#ifndef PLAYSTATE_H
+#define PLAYSTATE_H
 
 #include <SFML/Graphics.hpp>
 
@@ -10,7 +10,7 @@
 #include "objects/entities/Player.h"
 #include "environment/Map.h"
 
-class Play : public State
+class PlayState : public State
 {
     void initMap();
     void initPlayer();
@@ -18,8 +18,8 @@ class Play : public State
     void initObjects();
 
 public:
-    Play();
-    ~Play();
+    PlayState();
+    ~PlayState();
 
     void init();
 
@@ -52,4 +52,4 @@ private:
     std::vector<std::shared_ptr<Enemy>> m_enemies;
 };
 
-#endif // PLAY_H
+#endif // PLAYSTATE_H

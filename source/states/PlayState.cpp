@@ -1,14 +1,14 @@
-#include "Play.h"
+#include "PlayState.h"
 
 
-void Play::initMap()
+void PlayState::initMap()
 {
     m_map = std::make_shared<Map>();
     m_map->setMapSize(m_windowSize);
     m_map->buildObstacles();
 }
 
-void Play::initPlayer()
+void PlayState::initPlayer()
 {
     float width = static_cast<float>(m_windowSize.x);
     float height = static_cast<float>(m_windowSize.y);
@@ -17,34 +17,34 @@ void Play::initPlayer()
     m_player.setEnemies(&m_enemies);
 }
 
-void Play::initEnemySpawner()
+void PlayState::initEnemySpawner()
 {
     m_enemySpawner.setMapSize(m_windowSize);
 
 }
 
-void Play::initObjects()
+void PlayState::initObjects()
 {
     this->initMap();
     this->initPlayer();
     this->initEnemySpawner();
 }
 
-Play::Play()
+PlayState::PlayState()
 {
 }
 
-Play::~Play()
+PlayState::~PlayState()
 {
 
 }
 
-void Play::init()
+void PlayState::init()
 {
     this->initObjects();
 }
 
-void Play::updateEnemySpawner()
+void PlayState::updateEnemySpawner()
 {
     m_enemySpawner.update();
     std::shared_ptr<Enemy> enemy = m_enemySpawner.createdEnemy();
@@ -59,7 +59,7 @@ void Play::updateEnemySpawner()
     enemy->setAvailableAreaForEnemy(m_map);
 }
 
-void Play::updateEnemies()
+void PlayState::updateEnemies()
 {
     for(auto enemy : m_enemies)
     {
@@ -67,12 +67,12 @@ void Play::updateEnemies()
     }
 }
 
-void Play::pollEvent(const sf::Event &event)
+void PlayState::pollEvent(const sf::Event &event)
 {
     m_enemySpawner.pollEvent(event);
 }
 
-void Play::update()
+void PlayState::update()
 {
     this->updateEnemySpawner();
     this->updateEnemies();
@@ -80,7 +80,7 @@ void Play::update()
     m_player.update();
 }
 
-void Play::render(sf::RenderTarget *target)
+void PlayState::render(sf::RenderTarget *target)
 {
     m_map->render(target);
     m_player.render(target);
@@ -88,7 +88,7 @@ void Play::render(sf::RenderTarget *target)
         enemy->render(target);
 }
 
-void Play::setWindowSize(const sf::Vector2u &size)
+void PlayState::setWindowSize(const sf::Vector2u &size)
 {
     m_windowSize = size;
 }

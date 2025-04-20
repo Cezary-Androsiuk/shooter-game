@@ -49,8 +49,9 @@ add_executable(
     # STATES
     source/states/StateManager.h source/states/StateManager.cpp
     source/states/State.h source/states/State.cpp
-    source/states/Menu.h source/states/Menu.cpp
-    source/states/Play.h source/states/Play.cpp
+    source/states/MenuState.h source/states/MenuState.cpp
+    source/states/PlayState.h source/states/PlayState.cpp
+    source/states/StartState.h source/states/StartState.cpp
 
     # OBJECTS
     ## ENTITIES

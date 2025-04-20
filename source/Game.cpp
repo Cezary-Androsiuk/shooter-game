@@ -21,8 +21,7 @@ void Game::initFPSLabel()
 
 void Game::initValues()
 {
-    // m_gameState = GameState::Menu;
-    m_gameState = GameState::Play;
+    m_gameState = GameState::Menu;
     m_fps.maxFPS = 0;
     m_fps.minFPS = (uint)-1;
     m_renderTextureInitialized = false;
@@ -34,7 +33,9 @@ void Game::initRenderWindow()
 {
     sf::VideoMode vm =
         Data::Game::getDebugView() ?  /// makes window smaller
-                           sf::VideoMode(800, 600) :
+                           sf::VideoMode(
+                               sf::VideoMode::getDesktopMode().width /2,
+                               sf::VideoMode::getDesktopMode().height /2) :
                            sf::VideoMode(
                                 sf::VideoMode::getDesktopMode().width,
                                 sf::VideoMode::getDesktopMode().height);
@@ -125,6 +126,12 @@ Game::~Game()
     delete m_renderWindow;
 }
 
+void Game::exitGame()
+{
+
+    m_renderWindow->close();
+}
+
 void Game::changeStateToPlay()
 {
     m_gameState = GameState::Play;
@@ -142,7 +149,7 @@ void Game::pollEventGame()
 
     switch (m_currentEvent.type){
     case sf::Event::Closed:
-        m_renderWindow->close(); // prevent clicking X to close window
+        this->exitGame();
         break;
     case sf::Event::KeyPressed:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
@@ -195,7 +202,7 @@ void Game::pollEventGame()
         if(Data::Game::getDebugExitView())
         {
             if(m_currentEvent.key.code == sf::Keyboard::Grave)
-                m_renderWindow->close();
+                this->exitGame();
         }
         break;
     default:
@@ -303,8 +310,10 @@ void Game::update()
     default: printf("unknown game state, can't update\n"); break;
     }
 
-    if(m_menu.hasRequestStateEnd())
+    if(m_menu.requestPlayState())
         this->changeStateToPlay();
+    if(m_menu.exitGameRequest())
+        this->exitGame();
 
     this->updateFPSLabel();
 }
