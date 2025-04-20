@@ -14,7 +14,25 @@
     "player": {
         "speed straight": 500.0,
         "health points": 100,
-        "ammo": 50
+        "ammo": 50,
+        "default skin color": {
+            "red": 255,
+            "green": 224,
+            "blue": 189,
+            "alpha": 255
+        },
+        "default shirt color": {
+            "red": 77,
+            "green": 116,
+            "blue": 130,
+            "alpha": 255
+        },
+        "default backpack color": {
+            "red": 140,
+            "green": 136,
+            "blue": 98,
+            "alpha": 255
+        }
     },
 
     "enemy" : {

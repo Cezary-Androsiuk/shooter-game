@@ -45,21 +45,21 @@ void Player::initBody()
     m_body.bodySkin.setTextureRect(sf::IntRect(0,frameSize,frameSize,frameSize));
     m_body.bodySkin.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
     m_body.bodySkin.setScale(spriteScale, spriteScale);
+    m_body.bodySkin.setColor(InitialData::Player::getDefaultSkinColor());
 
 
     m_body.bodyShirt.setTexture(mainSpriteTexture, false);
     m_body.bodyShirt.setTextureRect(sf::IntRect(0,frameSize*2,frameSize,frameSize));
     m_body.bodyShirt.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
     m_body.bodyShirt.setScale(spriteScale, spriteScale);
-    // auto c = m_body.bodyShirt.getColor();
-    // printf("getColor: %u, %u, %u, %u\n", c.r, c.g, c.b, c.a);
-    m_body.bodyShirt.setColor(sf::Color(255, 0, 0, 255));
+    m_body.bodyShirt.setColor(InitialData::Player::getDefaultShirtColor());
 
 
     m_body.bodyBakpack.setTexture(mainSpriteTexture, false);
     m_body.bodyBakpack.setTextureRect(sf::IntRect(0,frameSize*3,frameSize,frameSize));
     m_body.bodyBakpack.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
     m_body.bodyBakpack.setScale(spriteScale, spriteScale);
+    m_body.bodyBakpack.setColor(InitialData::Player::getDefaultBackpackColor());
 
 }
 

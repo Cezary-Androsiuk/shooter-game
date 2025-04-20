@@ -195,6 +195,45 @@ int InitialData::Player::getAmmo()
     return value;
 }
 
+sf::Color InitialData::Player::getDefaultSkinColor()
+{
+    static const json::value_type color =
+        InitialData::rawReadValue(Player::getPlayer(), "default skin color");
+
+    static const uint red = color["red"];
+    static const uint green = color["green"];
+    static const uint blue = color["blue"];
+    static const uint alpha = color["alpha"];
+
+    return sf::Color(red, green, blue, alpha);
+}
+
+sf::Color InitialData::Player::getDefaultShirtColor()
+{
+    static const json::value_type color =
+        InitialData::rawReadValue(Player::getPlayer(), "default shirt color");
+
+    static const uint red = color["red"];
+    static const uint green = color["green"];
+    static const uint blue = color["blue"];
+    static const uint alpha = color["alpha"];
+
+    return sf::Color(red, green, blue, alpha);
+}
+
+sf::Color InitialData::Player::getDefaultBackpackColor()
+{
+    static const json::value_type color =
+        InitialData::rawReadValue(Player::getPlayer(), "default backpack color");
+
+    static const uint red = color["red"];
+    static const uint green = color["green"];
+    static const uint blue = color["blue"];
+    static const uint alpha = color["alpha"];
+
+    return sf::Color(red, green, blue, alpha);
+}
+
 
 
 

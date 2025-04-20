@@ -1,6 +1,8 @@
 #ifndef INITIALDATA_H
 #define INITIALDATA_H
 
+#include <SFML/Graphics.hpp>
+
 #include <cstdio>
 
 #include "utils/json.hpp"
@@ -36,6 +38,9 @@ public:
         static float getSpeedStraight();
         static int getHealthPoints();
         static int getAmmo();
+        static sf::Color getDefaultSkinColor();
+        static sf::Color getDefaultShirtColor();
+        static sf::Color getDefaultBackpackColor();
     };
 
     class Enemy{
