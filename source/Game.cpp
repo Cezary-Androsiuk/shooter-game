@@ -31,7 +31,6 @@ void Game::initRenderWindow()
 
     sf::VideoMode vm = sf::VideoMode(windowSize.x, windowSize.y);
 
-    // m_contextSettings
     m_renderWindow = std::make_unique<sf::RenderWindow>(
         vm, "Shooter Game",
         InitialData::Game::getDebugView() ?
@@ -48,9 +47,6 @@ void Game::initRenderWindow()
 
 void Game::initRenderTexture()
 {
-    // printf("max size: %u, ", sf::Texture::getMaximumSize());
-    // fflush(stdout);
-
     m_renderTexture = std::make_unique<sf::RenderTexture>();
 
     if(!m_renderTexture->create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
@@ -69,39 +65,22 @@ void Game::initRenderTexture()
     m_renderTextureInitialized = true;
 }
 
-void Game::initRenderShader()
+void Game::initBlurShader()
 {
-    m_renderShader = std::make_unique<sf::Shader>();
+    m_blurShader = std::make_unique<sf::Shader>();
 
-    if (!m_renderShader->loadFromFile(RENDER_SHADER1_PATH, sf::Shader::Fragment))
+    if (!m_blurShader->loadFromFile(RENDER_SHADER1_PATH, sf::Shader::Fragment))
     {
         // Support::displayApplicationError("cannot load blur.frag file");
-
         fprintf(stderr, "loading render shader failed\n");
         fflush(stderr);
         return;
     }
 
-    m_renderShader->setUniform("size", GlobalData::getInstance()->getWindowSize());
-    m_renderShader->setUniform("blurDirections", 16.f);
-    m_renderShader->setUniform("blurQuality", 8.f);
-    m_renderShader->setUniform("blurSize", 16.f);
-
-
-    // // GAUSSIAN BLUR SETTINGS
-    // float Directions = 16.0; // BLUR DIRECTIONS
-    // float Quality = 5.0; // BLUR QUALITY
-    // float Size = 16.0; // BLUR SIZE (Radius)
-
-
-    // m_renderShader->setUniform("texture", m_renderTexture->getTexture());
-    // m_renderShader->setUniform("texSize", sf::Vector2f(m_renderWindow->getSize()));  // sf::Vector2f(width, height)
-    // m_renderShader->setUniform("radius", 50.f);                         // promień blur'a
-    // m_renderShader->setUniform("direction", sf::Vector2f(1.f, 0.f));   // poziome rozmycie
-
-    // m_renderShader->setUniform("texture", m_renderTexture->getTexture());
-    // m_renderShader->setUniform("blurRadius", 2.5f);  // Im wyższa wartość, silniejsze rozmycie
-    // m_renderShader->setUniform("textureSize", sf::Vector2f(m_renderWindow->getSize()));
+    m_blurShader->setUniform("size", GlobalData::getInstance()->getWindowSize());
+    m_blurShader->setUniform("blurDirections", 16.f);
+    m_blurShader->setUniform("blurQuality", 8.f);
+    m_blurShader->setUniform("blurSize", 16.f);
 
     fflush(stderr); /// setUniform could produce some errors
 }
@@ -145,12 +124,12 @@ void Game::initPausePlayState()
 
     /// PausePlay state can be started only from the Play state
     /// that means RenderTexture has inside last frame that was displayed (frame from Play state)
-    if(m_renderTextureInitialized)
+    if(m_renderTextureInitialized && InitialData::Game::getApplyShaders())
     {
         sf::RenderTexture renderTexture;
         if(renderTexture.create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
         {
-            renderTexture.draw(*m_renderSprite, m_renderShader.get());
+            renderTexture.draw(*m_renderSprite, m_blurShader.get());
 
             m_pausePlayState->setBlurredPlayBackgroundImage(
                 renderTexture.getTexture().copyToImage());
@@ -174,7 +153,7 @@ Game::Game()
 
     this->initRenderWindow();
     this->initRenderTexture();
-    this->initRenderShader();
+    this->initBlurShader();
     this->initFPSLabel();
 
     this->initPlayer();
@@ -457,13 +436,14 @@ void Game::renderUsingTexture()
 
     this->renderObjects(m_renderTexture.get());
 
-    bool applyShaders = InitialData::Game::getApplyShaders();
-    if(m_renderShader->isAvailable() && applyShaders)
-        m_renderWindow->draw(*m_renderSprite, m_renderShader.get());
-    else
-    {
-        m_renderWindow->draw(*m_renderSprite);
-    }
+    /// Apply shaders
+    // bool applyShaders = InitialData::Game::getApplyShaders();
+    // if(m_blurShader->isAvailable() && applyShaders)
+    //     m_renderWindow->draw(*m_renderSprite, m_blurShader.get());
+    // else
+
+
+    m_renderWindow->draw(*m_renderSprite);
 }
 
 void Game::renderRightToScreen()

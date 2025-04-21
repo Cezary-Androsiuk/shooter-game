@@ -22,7 +22,7 @@ class Game
     void initData();
     void initRenderWindow();
     void initRenderTexture();
-    void initRenderShader();
+    void initBlurShader();
     void initFPSLabel();
     void initPlayer();
 
@@ -68,7 +68,7 @@ private:
     std::unique_ptr<sf::RenderWindow> m_renderWindow;
     std::unique_ptr<sf::RenderTexture> m_renderTexture;
     std::unique_ptr<sf::Sprite> m_renderSprite;
-    std::unique_ptr<sf::Shader> m_renderShader;
+    std::unique_ptr<sf::Shader> m_blurShader;
     bool m_renderTextureInitialized;
 
     sf::ContextSettings m_contextSettings;
