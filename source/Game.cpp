@@ -82,7 +82,17 @@ void Game::initRenderShader()
         return;
     }
 
-    m_renderShader->setUniform("iResolution", GlobalData::getInstance()->getWindowSize());
+    m_renderShader->setUniform("size", GlobalData::getInstance()->getWindowSize());
+    m_renderShader->setUniform("blurDirections", 16.f);
+    m_renderShader->setUniform("blurQuality", 8.f);
+    m_renderShader->setUniform("blurSize", 16.f);
+
+
+    // // GAUSSIAN BLUR SETTINGS
+    // float Directions = 16.0; // BLUR DIRECTIONS
+    // float Quality = 5.0; // BLUR QUALITY
+    // float Size = 16.0; // BLUR SIZE (Radius)
+
 
     // m_renderShader->setUniform("texture", m_renderTexture->getTexture());
     // m_renderShader->setUniform("texSize", sf::Vector2f(m_renderWindow->getSize()));  // sf::Vector2f(width, height)
