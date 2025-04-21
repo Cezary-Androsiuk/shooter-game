@@ -34,10 +34,12 @@ public:
     void render(sf::RenderTarget *target) override;
 
     void setBlurredPlayBackgroundImage(const sf::Image &image);
+    void disableBlurredPlayBackground();
 
 private:
     sf::Texture m_blurredPlayBackgroundTexture;
     std::unique_ptr<sf::Sprite> m_blurredPlayBackgroundSprite;
+    bool m_blurredPlayBackgroundLoaded;
 
     std::unique_ptr<sf::Sprite> m_backgroundSprite;
 

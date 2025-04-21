@@ -5,6 +5,13 @@
 
 void PausePlayState::initBlurredPlayBackgroundSprite()
 {
+    if(!m_blurredPlayBackgroundLoaded)
+    {
+        printf("skipping initialization of blurred play background in PausePlay stage\n");
+        fflush(stdout);
+        return;
+    }
+
     sf::Vector2u textureSize = m_blurredPlayBackgroundTexture.getSize();
     m_blurredPlayBackgroundSprite = std::make_unique<sf::Sprite>(
         m_blurredPlayBackgroundTexture,
@@ -53,6 +60,7 @@ void PausePlayState::initExitPlayButton()
 }
 
 PausePlayState::PausePlayState()
+    : m_blurredPlayBackgroundLoaded{false}
 {
 
 }
@@ -94,7 +102,8 @@ void PausePlayState::update()
 
 void PausePlayState::render(sf::RenderTarget *target)
 {
-    target->draw(*m_blurredPlayBackgroundSprite);
+    if(m_blurredPlayBackgroundLoaded)
+        target->draw(*m_blurredPlayBackgroundSprite);
     target->draw(*m_backgroundSprite);
 
     m_continuePlayButton->render(target);
@@ -107,5 +116,12 @@ void PausePlayState::setBlurredPlayBackgroundImage(const sf::Image &image)
     {
         fprintf(stderr, "failed to load blurred play background from image\n");
         fflush(stderr);
+        m_blurredPlayBackgroundLoaded = false;
     }
+    m_blurredPlayBackgroundLoaded = true;
+}
+
+void PausePlayState::disableBlurredPlayBackground()
+{
+    m_blurredPlayBackgroundLoaded = false;
 }

@@ -147,7 +147,9 @@ void Game::initPausePlayState()
         }
         else
         {
-
+            fprintf(stderr, "failed to create blurred play background image\n");
+            fflush(stderr);
+            m_pausePlayState->disableBlurredPlayBackground();
         }
     }
 
