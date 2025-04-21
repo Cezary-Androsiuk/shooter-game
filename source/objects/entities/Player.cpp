@@ -376,6 +376,12 @@ void Player::updateWeapon()
     m_weapon->setPosition(m_position);
     m_weapon->setRotationAngle(m_rotationAngle);
 
+    static uint weaponIndex = 0;
+    ++weaponIndex;
+    if(weaponIndex >= 900*3)
+        weaponIndex = 0;
+    m_weapon->setWeaponIndex(weaponIndex/(100*3));
+
     m_weapon->update();
 }
 
@@ -397,6 +403,11 @@ void Player::init()
     this->initRenderModel();
 
     this->initEquipment();
+}
+
+void Player::pollEvent(const sf::Event &event)
+{
+    this->m_weapon->pollEvent(event);
 }
 
 void Player::update()
@@ -434,6 +445,11 @@ sf::Vector2f Player::getPosition() const
 const sf::FloatRect *Player::getBounds() const
 {
     return &m_bounds;
+}
+
+Weapon *Player::getWeapon() const
+{
+    return m_weapon.get();
 }
 
 void Player::setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies)

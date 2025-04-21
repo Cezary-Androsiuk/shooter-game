@@ -52,7 +52,7 @@ public:
         static json::value_type getWeapon();
     public:
         static int getAmmo();
-        static bool getShowBounds();
+        static int getShotDelayMS();
     };
 
     class Armor{

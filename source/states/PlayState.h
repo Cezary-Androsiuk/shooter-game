@@ -29,6 +29,7 @@ private:
     /* EVENTS */
 
     /* UPDATE */
+    void updatePlayer();
     void updateEnemySpawner();
     void updateEnemies();
 

@@ -71,7 +71,7 @@ private:
 
 public:
     void init();
-    // void pollEvent(sf::Event &event);
+    void pollEvent(const sf::Event &event);
     void update();
     void render(sf::RenderTarget *target);
 
@@ -79,6 +79,7 @@ public:
     /* GETTERS */
     sf::Vector2f getPosition() const;
     const sf::FloatRect *getBounds() const;
+    Weapon *getWeapon() const;
 
     /* SETTERS */
     void setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies);

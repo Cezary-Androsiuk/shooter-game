@@ -58,6 +58,7 @@ add_executable(
 
     # OBJECTS
     source/objects/Weapon.h source/objects/Weapon.cpp
+    source/objects/Bullet.h source/objects/Bullet.cpp
     source/objects/Armor.h source/objects/Armor.cpp
     ## ENTITIES
     source/objects/entities/Player.h source/objects/entities/Player.cpp

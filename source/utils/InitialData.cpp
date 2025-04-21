@@ -293,10 +293,10 @@ int InitialData::Weapon::getAmmo()
     return value;
 }
 
-bool InitialData::Weapon::getShowBounds()
+int InitialData::Weapon::getShotDelayMS()
 {
-    static const bool value =
-        InitialData::rawReadValue(Weapon::getWeapon(), "show bounds");
+    static const int value =
+        InitialData::rawReadValue(Weapon::getWeapon(), "shot delay ms");
     return value;
 }
 

@@ -34,6 +34,7 @@ void PlayState::initObjects()
 
 PlayState::PlayState()
 {
+
 }
 
 PlayState::~PlayState()
@@ -44,6 +45,16 @@ PlayState::~PlayState()
 void PlayState::init()
 {
     this->initObjects();
+}
+
+void PlayState::updatePlayer()
+{
+    m_player->update();
+    std::unique_ptr<Bullet> bullet = m_player->getWeapon()->getBulletFromShot();
+    if(bullet)
+    {
+
+    }
 }
 
 void PlayState::updateEnemySpawner()
@@ -72,14 +83,14 @@ void PlayState::updateEnemies()
 void PlayState::pollEvent(const sf::Event &event)
 {
     m_enemySpawner.pollEvent(event);
+    m_player->pollEvent(event);
 }
 
 void PlayState::update()
 {
+    this->updatePlayer();
     this->updateEnemySpawner();
     this->updateEnemies();
-
-    m_player->update();
 }
 
 void PlayState::render(sf::RenderTarget *target)

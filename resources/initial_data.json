@@ -47,7 +47,8 @@
     },
 
     "weapon": {
-        "ammo": 50
+        "ammo": 50,
+        "shot delay ms": 200
     },
 
     "armor" :{
