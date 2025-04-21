@@ -21,6 +21,11 @@ void Player::initData()
     m_rotationAngleCorrection = -10;
 }
 
+void Player::deserializeData()
+{
+
+}
+
 void Player::initRenderModel()
 {
     // m_renderModel.bounds.setPosition(m_position); /// position is (0,0)
@@ -64,15 +69,25 @@ void Player::initRenderModel()
 
 }
 
+void Player::serializeData()
+{
+
+}
+
 Player::Player()
 {
-    printf("%p\n", m_weapon.get());
-    fflush(stdout);
+
 }
 
 Player::~Player()
 {
+    this->serializeData();
+}
 
+Player *Player::getInstance()
+{
+    static Player player;
+    return &player;
 }
 
 void Player::move(float moveX, float moveY)
@@ -339,14 +354,8 @@ void Player::updateBounds()
 
 void Player::init()
 {
-    printf("%p\n", m_weapon.get());
-    fflush(stdout);
-    if(!m_weapon)
-    {
-        exit(1);
-    }
-
     this->initData();
+    this->deserializeData();
     this->initRenderModel();
 }
 

@@ -17,11 +17,23 @@ class Player
 {
     /* INITIALIZE */
     void initData();
+    void deserializeData();
     void initRenderModel();
 
-public:
+    /* DESTROY */
+    void serializeData();
+
+private:
     Player();
     ~Player();
+
+    Player(const Player &) = delete;
+    Player(Player &&) = delete;
+    void operator=(const Player &) = delete;
+    void operator=(Player &&) = delete;
+
+public:
+    static Player *getInstance();
 
 private:
     /* OTHER */

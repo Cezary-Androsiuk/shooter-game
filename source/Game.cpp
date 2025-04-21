@@ -97,7 +97,16 @@ void Game::initRenderShader()
     // m_renderShader.setUniform("blurRadius", 2.5f);  // Im wyższa wartość, silniejsze rozmycie
     // m_renderShader.setUniform("textureSize", sf::Vector2f(m_renderWindow->getSize()));
 
-    fflush(stderr);
+    fflush(stderr); /// setUniform could produce some errors
+}
+
+void Game::initPlayer()
+{
+    m_player = Player::getInstance();
+    m_player->setWeapon(std::make_unique<Weapon>());
+    m_player->setArmor(std::make_unique<Armor>());
+
+    m_player->init();
 }
 
 void Game::initMenu()
@@ -121,6 +130,8 @@ Game::Game()
     this->initRenderShader();
     this->initMenu();
     this->initPlay();
+
+    this->initPlayer();
 }
 
 Game::~Game()

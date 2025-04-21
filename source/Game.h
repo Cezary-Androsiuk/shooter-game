@@ -1,20 +1,18 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <vector>
 #include <memory>
 #include <queue>
 
 #include <SFML/Graphics.hpp>
+#include <SimpleGUI/Label.hpp>
 
 #include "utils/Constants.h"
-
 #include "enums/GameState.h"
-
 #include "states/MenuState.h"
 #include "states/PlayState.h"
+#include "objects/entities/Player.h"
 
-#include "SimpleGUI/Label.hpp"
 using namespace sgui;
 
 class Game
@@ -25,6 +23,7 @@ class Game
     void initRenderWindow();
     void initRenderTexture();
     void initRenderShader();
+    void initPlayer();
 
     void initMenu();
     void initPlay();
@@ -90,9 +89,8 @@ private:
     GameState m_gameState;
     MenuState m_menu;
     PlayState m_play;
-    // EnemySpawner m_enemySpawner;
-    // std::vector<Enemy> m_enemies;
 
+    Player *m_player;
 };
 
 #endif // GAME_H

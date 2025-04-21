@@ -41,7 +41,7 @@ public:
 
 private:
     std::shared_ptr<Map> m_map;
-    Player m_player;
+    Player *m_player;
 
     EnemySpawner m_enemySpawner;
     std::vector<std::shared_ptr<Enemy>> m_enemies;
