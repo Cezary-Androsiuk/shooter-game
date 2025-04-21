@@ -33,15 +33,13 @@ public:
     void update() override;
     void render(sf::RenderTarget *target) override;
 
-    void setBlurredPlayBackgroundTexture(const sf::Texture &texture);
+    void setBlurredPlayBackgroundImage(const sf::Image &image);
 
 private:
     sf::Texture m_blurredPlayBackgroundTexture;
     std::unique_ptr<sf::Sprite> m_blurredPlayBackgroundSprite;
-    sf::RectangleShape m_tmp2;
 
     std::unique_ptr<sf::Sprite> m_backgroundSprite;
-    sf::RectangleShape m_tmp;
 
     std::unique_ptr<Button> m_continuePlayButton;
     std::unique_ptr<Button> m_exitPlayButton;

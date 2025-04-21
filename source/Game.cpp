@@ -132,6 +132,19 @@ void Game::initPausePlayState()
 {
     printf("init pause\n");fflush(stdout);
     m_pausePlayState = std::make_unique<PausePlayState>();
+
+    /// PausePlay state can be started only from the Play state
+    /// that means RenderTexture has inside last frame that was displayed (frame from Play state)
+    if(m_renderTextureInitialized)
+    {
+        const sf::Image &image = m_renderTexture->getTexture().copyToImage();
+
+        /// apply blur shader
+
+
+        m_pausePlayState->setBlurredPlayBackgroundImage(image);
+    }
+
     m_pausePlayState->init();
 }
 

@@ -5,19 +5,16 @@
 
 void PausePlayState::initBlurredPlayBackgroundSprite()
 {
-
-    m_tmp2.setSize(GlobalData::getInstance()->getWindowSize());
-    m_tmp2.setFillColor(sf::Color(255, 255, 255));
-
+    sf::Vector2u textureSize = m_blurredPlayBackgroundTexture.getSize();
+    m_blurredPlayBackgroundSprite = std::make_unique<sf::Sprite>(
+        m_blurredPlayBackgroundTexture,
+        sf::IntRect(0,0, textureSize.x, textureSize.y));
+    /// scale not required, because image size if for sure size of the window
 }
 
 void PausePlayState::initBackgroundSprite()
 {
     const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
-
-    m_tmp.setPosition(760 * windowRatio.x, 400 * windowRatio.y);
-    m_tmp.setSize(sf::Vector2f(400 * windowRatio.x, 285 * windowRatio.y));
-    m_tmp.setFillColor(sf::Color(30,30,30,255*0.8));
 
     m_backgroundSprite = std::make_unique<sf::Sprite>(
         GlobalData::getInstance()->getPausePlayStateBackgroundTexture(),
@@ -93,14 +90,18 @@ void PausePlayState::update()
 
 void PausePlayState::render(sf::RenderTarget *target)
 {
-    target->draw(m_tmp2);
+    target->draw(*m_blurredPlayBackgroundSprite);
     target->draw(*m_backgroundSprite);
 
     m_continuePlayButton->render(target);
     m_exitPlayButton->render(target);
 }
 
-void PausePlayState::setBlurredPlayBackgroundTexture(const sf::Texture &texture)
+void PausePlayState::setBlurredPlayBackgroundImage(const sf::Image &image)
 {
-
+    if(!m_blurredPlayBackgroundTexture.loadFromImage(image))
+    {
+        fprintf(stderr, "failed to load blurred play background from image\n");
+        fflush(stderr);
+    }
 }
