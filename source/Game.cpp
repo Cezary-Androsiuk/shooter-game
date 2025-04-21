@@ -137,12 +137,18 @@ void Game::initPausePlayState()
     /// that means RenderTexture has inside last frame that was displayed (frame from Play state)
     if(m_renderTextureInitialized)
     {
-        const sf::Image &image = m_renderTexture->getTexture().copyToImage();
+        sf::RenderTexture renderTexture;
+        if(renderTexture.create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
+        {
+            renderTexture.draw(*m_renderSprite, m_renderShader.get());
 
-        /// apply blur shader
+            m_pausePlayState->setBlurredPlayBackgroundImage(
+                renderTexture.getTexture().copyToImage());
+        }
+        else
+        {
 
-
-        m_pausePlayState->setBlurredPlayBackgroundImage(image);
+        }
     }
 
     m_pausePlayState->init();

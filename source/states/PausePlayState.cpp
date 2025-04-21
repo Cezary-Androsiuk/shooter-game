@@ -10,6 +10,10 @@ void PausePlayState::initBlurredPlayBackgroundSprite()
         m_blurredPlayBackgroundTexture,
         sf::IntRect(0,0, textureSize.x, textureSize.y));
     /// scale not required, because image size if for sure size of the window
+
+    /// but sprite require vertical flip, due to Image mechanic
+    m_blurredPlayBackgroundSprite->setScale(1.f, -1.f);
+    m_blurredPlayBackgroundSprite->setPosition(0, textureSize.y);
 }
 
 void PausePlayState::initBackgroundSprite()
