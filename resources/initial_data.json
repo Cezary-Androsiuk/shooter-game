@@ -17,14 +17,14 @@
         "red": 255,
         "green": 0,
         "blue": 0,
-        "alpha": 255
+        "alpha": 155
     },
     "bounds thickness": 1.0,
 
     "player": {
         "speed straight": 500.0,
         "health points": 100,
-        "show bounds": false,
+        "show bounds": true,
         "default skin color": {
             "red": 255,
             "green": 224,

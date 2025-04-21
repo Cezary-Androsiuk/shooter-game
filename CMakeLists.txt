@@ -54,10 +54,11 @@ add_executable(
     source/states/State.h source/states/State.cpp
     source/states/MenuState.h source/states/MenuState.cpp
     source/states/PlayState.h source/states/PlayState.cpp
-    source/states/StartState.h source/states/StartState.cpp
+    source/states/PausePlayState.h source/states/PausePlayState.cpp
 
     # OBJECTS
     source/objects/Weapon.h source/objects/Weapon.cpp
+    source/objects/Armor.h source/objects/Armor.cpp
     ## ENTITIES
     source/objects/entities/Player.h source/objects/entities/Player.cpp
     source/objects/entities/Enemy.h source/objects/entities/Enemy.cpp
@@ -80,8 +81,7 @@ add_executable(
     source/SimpleGUI/RadioButton.cpp source/SimpleGUI/RadioButton.hpp
     source/SimpleGUI/Switch.cpp source/SimpleGUI/Switch.hpp
     source/SimpleGUI/TabControl.cpp source/SimpleGUI/TabControl.hpp
-    source/states/PlayPauseState.h source/states/PlayPauseState.cpp
-    source/objects/Armor.h source/objects/Armor.cpp
+
 
 
 )

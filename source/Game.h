@@ -11,6 +11,7 @@
 #include "enums/GameState.h"
 #include "states/MenuState.h"
 #include "states/PlayState.h"
+#include "states/PausePlayState.h"
 #include "objects/entities/Player.h"
 
 using namespace sgui;
@@ -25,8 +26,9 @@ class Game
     void initFPSLabel();
     void initPlayer();
 
-    void initMenu();
-    void initPlay();
+    void initMenuState();
+    void initPlayState();
+    void initPausePlayState();
 
     Game();
     ~Game();
@@ -46,8 +48,9 @@ class Game
 
     /* UPDATE */
     void updateFPSLabel();
-    void updateMenu();
-    void updatePlay();
+    void updateMenuState();
+    void updatePlayState();
+    void updatePausePlayState();
     void update();
 
     /* RENDER */
@@ -92,8 +95,9 @@ private:
     } m_fps;
 
     GameState m_gameState;
-    std::unique_ptr<MenuState> m_menu;
-    std::unique_ptr<PlayState> m_play;
+    std::unique_ptr<MenuState> m_menuState;
+    std::unique_ptr<PlayState> m_playState;
+    std::unique_ptr<PausePlayState> m_pausePlayState;
 
     Player *m_player;
 };

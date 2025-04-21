@@ -27,12 +27,26 @@ void GlobalData::loadFonts()
     fflush(stdout);
 }
 
+void GlobalData::loadMenuStateBackgroundTexture()
+{
+    if(!m_menuStateBackgroundTexture.loadFromFile(MENU_BACKGROUND_IMAGE_PATH, sf::IntRect(0,0,1920,1080)))
+    {
+        std::string message = "Cannot load main sprite texture from path:\n";
+        message += MENU_BACKGROUND_IMAGE_PATH;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("texture: 'menu state background' loaded\n");
+
+    fflush(stdout);
+}
+
 void GlobalData::loadMainSpriteTexture()
 {
     if(!m_mainSpriteTexture.loadFromFile(MAIN_SPRITE_TEXTURE_PATH, sf::IntRect(0,0,500,500)))
     {
         std::string message = "Cannot load main sprite texture from path:\n";
-        message += FONT_PATH::OPEN_SANS_REGULAR;
+        message += MAIN_SPRITE_TEXTURE_PATH;
         Support::displayApplicationError(message);
         exit(1);
     }
@@ -41,10 +55,26 @@ void GlobalData::loadMainSpriteTexture()
     fflush(stdout);
 }
 
+void GlobalData::loadPausePlayStateBackgroundTexture()
+{
+    if(!m_pausePlayStateBackgroundTexture.loadFromFile(PAUSE_BACKGROUND_IMAGE_PATH, sf::IntRect(0,0,1920,1080)))
+    {
+        std::string message = "Cannot load main sprite texture from path:\n";
+        message += PAUSE_BACKGROUND_IMAGE_PATH;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("texture: 'pause play state background' loaded\n");
+
+    fflush(stdout);
+}
+
 GlobalData::GlobalData()
 {
     this->loadFonts();
+    this->loadMenuStateBackgroundTexture();
     this->loadMainSpriteTexture();
+    this->loadPausePlayStateBackgroundTexture();
 }
 
 GlobalData *GlobalData::getInstance()
@@ -63,9 +93,19 @@ const sf::Font &GlobalData::getFontInkFree() const
     return m_fontInkFree;
 }
 
+const sf::Texture &GlobalData::getMenuStateBackgroundTexture() const
+{
+    return m_menuStateBackgroundTexture;
+}
+
 const sf::Texture &GlobalData::getMainSpriteTexture() const
 {
     return m_mainSpriteTexture;
+}
+
+const sf::Texture &GlobalData::getPausePlayStateBackgroundTexture() const
+{
+    return m_pausePlayStateBackgroundTexture;
 }
 
 const sf::Vector2f &GlobalData::getWindowSize() const

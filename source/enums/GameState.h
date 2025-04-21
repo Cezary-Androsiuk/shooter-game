@@ -2,8 +2,9 @@
 #define GAMESTATE_H
 
 enum class GameState{
+    Menu,
     Play,
-    Menu
+    PausePlay
 };
 
 #endif // GAMESTATE_H

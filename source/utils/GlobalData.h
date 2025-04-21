@@ -6,7 +6,9 @@
 class GlobalData
 {
     void loadFonts();
+    void loadMenuStateBackgroundTexture();
     void loadMainSpriteTexture();
+    void loadPausePlayStateBackgroundTexture();
 
     GlobalData();
 
@@ -25,7 +27,9 @@ public:
     /// GETTERS
     const sf::Font &getFontOpenSansRegular() const;
     const sf::Font &getFontInkFree() const;
+    const sf::Texture &getMenuStateBackgroundTexture() const;
     const sf::Texture &getMainSpriteTexture() const;
+    const sf::Texture &getPausePlayStateBackgroundTexture() const;
     const sf::Vector2f &getWindowSize() const;
     const sf::Vector2f &getWindowRatio() const;
     const sf::Vector2f &getMousePosition() const;
@@ -36,7 +40,10 @@ public:
 private:
     sf::Font m_fontOpenSansRegular;
     sf::Font m_fontInkFree;
+
+    sf::Texture m_menuStateBackgroundTexture;
     sf::Texture m_mainSpriteTexture;
+    sf::Texture m_pausePlayStateBackgroundTexture;
 
     sf::Vector2f m_windowSize;
     sf::Vector2f m_windowRatio;

@@ -25,8 +25,7 @@ public:
 
     void init();
     bool requestPlayState();
-
-    bool exitGameRequest();
+    bool requestExitGame();
 
     void fflushGui();
 
@@ -36,7 +35,7 @@ public:
     void render(sf::RenderTarget *target) override;
 
 private:
-    std::unique_ptr<ImageBox> m_backgroundImageBox;
+    std::unique_ptr<sf::Sprite> m_backgroundSprite;
     std::unique_ptr<Button> m_startPlayButton;
 
     std::unique_ptr<Button> m_exitButton;

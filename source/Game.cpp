@@ -114,16 +114,25 @@ void Game::initPlayer()
     m_player->init();
 }
 
-void Game::initMenu()
+void Game::initMenuState()
 {
-    m_menu = std::make_unique<MenuState>();
-    m_menu->init();
+    printf("init menu\n");fflush(stdout);
+    m_menuState = std::make_unique<MenuState>();
+    m_menuState->init();
 }
 
-void Game::initPlay()
+void Game::initPlayState()
 {
-    m_play = std::make_unique<PlayState>();
-    m_play->init();
+    printf("init play\n");fflush(stdout);
+    m_playState = std::make_unique<PlayState>();
+    m_playState->init();
+}
+
+void Game::initPausePlayState()
+{
+    printf("init pause\n");fflush(stdout);
+    m_pausePlayState = std::make_unique<PausePlayState>();
+    m_pausePlayState->init();
 }
 
 Game::Game()
@@ -139,7 +148,7 @@ Game::Game()
 
     this->initPlayer();
 
-    this->initMenu();
+    this->initMenuState();
 }
 
 Game::~Game()
@@ -154,35 +163,41 @@ void Game::exitGame()
 
 void Game::changeStateFromMenuToPlay()
 {
-    initPlay();
+    initPlayState();
     m_gameState = GameState::Play;
 }
 
 void Game::changeStateFromPlayToPause()
 {
-
+    initPausePlayState();
+    m_gameState = GameState::PausePlay;
 }
 
 void Game::changeStateFromPauseToPlay()
 {
-
+    m_gameState = GameState::Play;
 }
 
 void Game::changeStateFromPauseToMenu()
 {
-    initMenu();
+    initMenuState();
     m_gameState = GameState::Menu;
 }
 
 void Game::freeUnusedState()
 {
-    if(m_menu && m_gameState != GameState::Menu)
-        m_menu.reset();
-    if(m_play && m_gameState != GameState::Play)
-        m_play.reset();
-    // if(m_menu && m_gameState != GameState::Menu)
-    //     m_menu.reset();
+    if(m_menuState && m_gameState != GameState::Menu)
+        m_menuState.reset();
 
+    /// do not delete play nor pause states while one of them is active
+    bool isNotPlayState = m_gameState != GameState::Play &&
+                          m_gameState != GameState::PausePlay;
+
+    if(m_playState && isNotPlayState)
+        m_playState.reset();
+
+    if(m_pausePlayState && m_gameState != GameState::PausePlay)
+        m_pausePlayState.reset();
 }
 
 void Game::pollEventGame()
@@ -196,7 +211,8 @@ void Game::pollEventGame()
         {
             switch (m_gameState) {
             case GameState::Menu: this->exitGame(); break;
-            case GameState::Play: this->changeStateFromPauseToMenu();/*tmp*/ break;
+            case GameState::Play: this->changeStateFromPlayToPause(); break;
+            case GameState::PausePlay: this->changeStateFromPauseToPlay(); break;
             default:
                 Support::displayApplicationError("unknown game state, can't render");
                 exit(1);
@@ -251,18 +267,26 @@ void Game::pollEvent()
             )
         );
 
-    if(m_gameState == GameState::Play)
+    /// redundant but checking 'if' conditions in loop is not necessary and might be slow
+    if(m_gameState == GameState::Menu)
     {
         while(m_renderWindow->pollEvent(m_currentEvent)){
             this->pollEventGame();
-            m_play->pollEvent(m_currentEvent);
+            m_menuState->pollEvent(m_currentEvent);
         }
     }
-    else if(m_gameState == GameState::Menu)
+    else if(m_gameState == GameState::Play)
     {
         while(m_renderWindow->pollEvent(m_currentEvent)){
             this->pollEventGame();
-            m_menu->pollEvent(m_currentEvent);
+            m_playState->pollEvent(m_currentEvent);
+        }
+    }
+    else if(m_gameState == GameState::PausePlay)
+    {
+        while(m_renderWindow->pollEvent(m_currentEvent)){
+            this->pollEventGame();
+            m_pausePlayState->pollEvent(m_currentEvent);
         }
     }
 }
@@ -339,48 +363,55 @@ void Game::updateFPSLabel()
     }
 }
 
-void Game::updateMenu()
+void Game::updateMenuState()
 {
-    m_menu->update();
+    m_menuState->update();
 
-    if(m_menu->requestPlayState())
+    if(m_menuState->requestPlayState())
         this->changeStateFromMenuToPlay();
-    if(m_menu->exitGameRequest())
+
+    if(m_menuState->requestExitGame())
         this->exitGame();
 }
 
-void Game::updatePlay()
+void Game::updatePlayState()
 {
-    m_play->update();
+    m_playState->update();
 }
 
+void Game::updatePausePlayState()
+{
+    m_pausePlayState->update();
+
+    if(m_pausePlayState->requestContinuePlay())
+        this->changeStateFromPauseToPlay();
+
+    if(m_pausePlayState->requestExitPlay())
+        this->changeStateFromPauseToMenu();
+}
 
 void Game::update()
 {
     switch (m_gameState) {
-    case GameState::Menu: this->updateMenu(); break;
-    case GameState::Play: this->updatePlay(); break;
+    case GameState::Menu: this->updateMenuState(); break;
+    case GameState::Play: this->updatePlayState(); break;
+    case GameState::PausePlay: this->updatePausePlayState(); break;
     default:
         Support::displayApplicationError("unknown game state, can't render");
         exit(1);
     }
 
-    // this->freeUnusedState();
+    this->freeUnusedState();
     this->updateFPSLabel();
 }
 
 void Game::renderObjects(sf::RenderTarget *target)
 {
-    if(m_gameState == GameState::Menu)
-    {
-        m_menu->render(target);
-    }
-    else if(m_gameState == GameState::Play)
-    {
-        m_play->render(target);
-    }
-    else
-    {
+    switch (m_gameState) {
+    case GameState::Menu: m_menuState->render(target); break;
+    case GameState::Play: m_playState->render(target); break;
+    case GameState::PausePlay: m_pausePlayState->render(target); break;
+    default:
         Support::displayApplicationError("unknown game state, can't render");
         exit(1);
     }

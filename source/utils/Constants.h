@@ -16,6 +16,7 @@ namespace FONT_PATH{
 extern const char *INITIAL_DATA_FILE_PATH;
 extern const char *RENDER_SHADER1_PATH;
 extern const char *MENU_BACKGROUND_IMAGE_PATH;
+extern const char *PAUSE_BACKGROUND_IMAGE_PATH;
 
 extern const char *MAIN_SPRITE_TEXTURE_PATH;
 
