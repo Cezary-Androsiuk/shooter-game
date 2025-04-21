@@ -18,11 +18,11 @@ using namespace sgui;
 class Game
 {
     /* INITIALIZE */
-    void initFPSLabel();
-    void initValues();
+    void initData();
     void initRenderWindow();
     void initRenderTexture();
     void initRenderShader();
+    void initFPSLabel();
     void initPlayer();
 
     void initMenu();
@@ -34,8 +34,11 @@ class Game
     void exitGame();
 
     /* OTHER */
-    void changeStateToPlay();
-    void changeStateToMenu();
+    void changeStateFromMenuToPlay();
+    void changeStateFromPlayToPause();
+    void changeStateFromPauseToPlay();
+    void changeStateFromPauseToMenu();
+    void freeUnusedState();
 
     /* EVENTS */
     void pollEventGame();
@@ -43,6 +46,8 @@ class Game
 
     /* UPDATE */
     void updateFPSLabel();
+    void updateMenu();
+    void updatePlay();
     void update();
 
     /* RENDER */
@@ -57,12 +62,12 @@ public:
     static void play();
 
 private:
-    sf::RenderWindow* m_renderWindow;
-    sf::RenderTexture m_renderTexture;
+    std::unique_ptr<sf::RenderWindow> m_renderWindow;
+    std::unique_ptr<sf::RenderTexture> m_renderTexture;
     std::unique_ptr<sf::Sprite> m_renderSprite;
-    sf::Shader m_renderShader;
-    bool m_applyShaders;
+    std::unique_ptr<sf::Shader> m_renderShader;
     bool m_renderTextureInitialized;
+
     sf::ContextSettings m_contextSettings;
     sf::Event m_currentEvent;
 
@@ -87,8 +92,8 @@ private:
     } m_fps;
 
     GameState m_gameState;
-    MenuState m_menu;
-    PlayState m_play;
+    std::unique_ptr<MenuState> m_menu;
+    std::unique_ptr<PlayState> m_play;
 
     Player *m_player;
 };

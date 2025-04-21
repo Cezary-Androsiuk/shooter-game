@@ -5,23 +5,15 @@
 #include "utils/InitialData.h"
 #include "utils/DeltaTime.h"
 #include "utils/GlobalData.h"
+#include "objects/Weapon.h"
+#include "objects/Armor.h"
 
-void Game::initFPSLabel()
-{
-    m_fps.fpsLabel.setFont(GlobalData::getInstance()->getFontOpenSansRegular());
-    m_fps.fpsLabel.setString("FPS");
-    m_fps.fpsLabel.setCharacterSize(16);
-    m_fps.fpsLabel.setVisible(false);
-    m_fps.displayed = InitialData::Game::getEnabledFPSAtStart();
-}
-
-void Game::initValues()
+void Game::initData()
 {
     m_gameState = GameState::Menu;
     m_fps.maxFPS = 0;
     m_fps.minFPS = (uint)-1;
     m_renderTextureInitialized = false;
-    m_applyShaders = InitialData::Game::getApplyShaders();
     m_enableLaggingTests = InitialData::Game::getEnableLaggingTests();
 }
 
@@ -40,7 +32,7 @@ void Game::initRenderWindow()
     sf::VideoMode vm = sf::VideoMode(windowSize.x, windowSize.y);
 
     // m_contextSettings
-    m_renderWindow = new sf::RenderWindow(
+    m_renderWindow = std::make_unique<sf::RenderWindow>(
         vm, "Shooter Game",
         InitialData::Game::getDebugView() ?
             sf::Style::Default : sf::Style::None,
@@ -59,14 +51,16 @@ void Game::initRenderTexture()
     // printf("max size: %u, ", sf::Texture::getMaximumSize());
     // fflush(stdout);
 
-    if(!m_renderTexture.create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
+    m_renderTexture = std::make_unique<sf::RenderTexture>();
+
+    if(!m_renderTexture->create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
     {
         fprintf(stderr, "creating render texture failed\n");
         fflush(stderr);
         return;
     }
 
-    m_renderSprite = std::make_unique<sf::Sprite>(m_renderTexture.getTexture());
+    m_renderSprite = std::make_unique<sf::Sprite>(m_renderTexture->getTexture());
 
     /// flip sprite - default rendering has different coordinates
     m_renderSprite->setScale(1.f, -1.f); /// vertical flip
@@ -77,7 +71,9 @@ void Game::initRenderTexture()
 
 void Game::initRenderShader()
 {
-    if (!m_renderShader.loadFromFile(RENDER_SHADER1_PATH, sf::Shader::Fragment))
+    m_renderShader = std::make_unique<sf::Shader>();
+
+    if (!m_renderShader->loadFromFile(RENDER_SHADER1_PATH, sf::Shader::Fragment))
     {
         // Support::displayApplicationError("cannot load blur.frag file");
 
@@ -86,18 +82,27 @@ void Game::initRenderShader()
         return;
     }
 
-    m_renderShader.setUniform("iResolution", GlobalData::getInstance()->getWindowSize());
+    m_renderShader->setUniform("iResolution", GlobalData::getInstance()->getWindowSize());
 
-    // m_renderShader.setUniform("texture", m_renderTexture.getTexture());
-    // m_renderShader.setUniform("texSize", sf::Vector2f(m_renderWindow->getSize()));  // sf::Vector2f(width, height)
-    // m_renderShader.setUniform("radius", 50.f);                         // promień blur'a
-    // m_renderShader.setUniform("direction", sf::Vector2f(1.f, 0.f));   // poziome rozmycie
+    // m_renderShader->setUniform("texture", m_renderTexture->getTexture());
+    // m_renderShader->setUniform("texSize", sf::Vector2f(m_renderWindow->getSize()));  // sf::Vector2f(width, height)
+    // m_renderShader->setUniform("radius", 50.f);                         // promień blur'a
+    // m_renderShader->setUniform("direction", sf::Vector2f(1.f, 0.f));   // poziome rozmycie
 
-    // m_renderShader.setUniform("texture", m_renderTexture.getTexture());
-    // m_renderShader.setUniform("blurRadius", 2.5f);  // Im wyższa wartość, silniejsze rozmycie
-    // m_renderShader.setUniform("textureSize", sf::Vector2f(m_renderWindow->getSize()));
+    // m_renderShader->setUniform("texture", m_renderTexture->getTexture());
+    // m_renderShader->setUniform("blurRadius", 2.5f);  // Im wyższa wartość, silniejsze rozmycie
+    // m_renderShader->setUniform("textureSize", sf::Vector2f(m_renderWindow->getSize()));
 
     fflush(stderr); /// setUniform could produce some errors
+}
+
+void Game::initFPSLabel()
+{
+    m_fps.fpsLabel.setFont(GlobalData::getInstance()->getFontOpenSansRegular());
+    m_fps.fpsLabel.setString("FPS");
+    m_fps.fpsLabel.setCharacterSize(16);
+    m_fps.fpsLabel.setVisible(false);
+    m_fps.displayed = InitialData::Game::getEnabledFPSAtStart();
 }
 
 void Game::initPlayer()
@@ -111,56 +116,77 @@ void Game::initPlayer()
 
 void Game::initMenu()
 {
-    m_menu.init();
+    m_menu = std::make_unique<MenuState>();
+    m_menu->init();
 }
 
 void Game::initPlay()
 {
-    m_play.init();
+    m_play = std::make_unique<PlayState>();
+    m_play->init();
 }
 
 Game::Game()
 {
     printf("game start\n");fflush(stdout);
 
-    this->initFPSLabel();
-    this->initValues();
+    this->initData();
+
     this->initRenderWindow();
     this->initRenderTexture();
     this->initRenderShader();
-    this->initMenu();
-    this->initPlay();
+    this->initFPSLabel();
 
     this->initPlayer();
+
+    this->initMenu();
 }
 
 Game::~Game()
 {
-    delete m_renderWindow;
+    printf("game end\n");fflush(stdout);
 }
 
 void Game::exitGame()
 {
     m_renderWindow->close();
-
-    printf("game end\n");fflush(stdout);
 }
 
-void Game::changeStateToPlay()
+void Game::changeStateFromMenuToPlay()
 {
+    initPlay();
     m_gameState = GameState::Play;
 }
 
-void Game::changeStateToMenu()
+void Game::changeStateFromPlayToPause()
 {
+
+}
+
+void Game::changeStateFromPauseToPlay()
+{
+
+}
+
+void Game::changeStateFromPauseToMenu()
+{
+    initMenu();
     m_gameState = GameState::Menu;
-    m_menu.fflushGui();
+}
+
+void Game::freeUnusedState()
+{
+    if(m_menu && m_gameState != GameState::Menu)
+        m_menu.reset();
+    if(m_play && m_gameState != GameState::Play)
+        m_play.reset();
+    // if(m_menu && m_gameState != GameState::Menu)
+    //     m_menu.reset();
+
 }
 
 void Game::pollEventGame()
 {
-    static bool allowEscapeKey = true;
-
     switch (m_currentEvent.type){
     case sf::Event::Closed:
         this->exitGame();
@@ -168,14 +194,18 @@ void Game::pollEventGame()
     case sf::Event::KeyPressed:
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
         {
-            if(allowEscapeKey)
-            {
-                if(m_gameState == GameState::Menu)
-                    this->changeStateToPlay();
-                else
-                    this->changeStateToMenu();
+            switch (m_gameState) {
+            case GameState::Menu: this->exitGame(); break;
+            case GameState::Play: this->changeStateFromPauseToMenu();/*tmp*/ break;
+            default:
+                Support::displayApplicationError("unknown game state, can't render");
+                exit(1);
             }
-            allowEscapeKey = false;
+        }
+        else if(InitialData::Game::getDebugExitView())
+        {
+            if(m_currentEvent.key.code == sf::Keyboard::Grave)
+                this->exitGame();
         }
         else if(m_currentEvent.key.code == sf::Keyboard::F)
         {
@@ -207,17 +237,6 @@ void Game::pollEventGame()
         // printf("event key code: %d\n", m_currentEvent.key.code);
         // fflush(stdout);
     case sf::Event::KeyReleased:
-        if(m_currentEvent.key.code == sf::Keyboard::Escape)
-        {
-            // printf("released\n");
-            // fflush(stdout);
-            allowEscapeKey = true;
-        }
-        if(InitialData::Game::getDebugExitView())
-        {
-            if(m_currentEvent.key.code == sf::Keyboard::Grave)
-                this->exitGame();
-        }
         break;
     default:
         break;
@@ -236,14 +255,14 @@ void Game::pollEvent()
     {
         while(m_renderWindow->pollEvent(m_currentEvent)){
             this->pollEventGame();
-            m_play.pollEvent(m_currentEvent);
+            m_play->pollEvent(m_currentEvent);
         }
     }
     else if(m_gameState == GameState::Menu)
     {
         while(m_renderWindow->pollEvent(m_currentEvent)){
             this->pollEventGame();
-            m_menu.pollEvent(m_currentEvent);
+            m_menu->pollEvent(m_currentEvent);
         }
     }
 }
@@ -320,20 +339,33 @@ void Game::updateFPSLabel()
     }
 }
 
+void Game::updateMenu()
+{
+    m_menu->update();
+
+    if(m_menu->requestPlayState())
+        this->changeStateFromMenuToPlay();
+    if(m_menu->exitGameRequest())
+        this->exitGame();
+}
+
+void Game::updatePlay()
+{
+    m_play->update();
+}
+
 
 void Game::update()
 {
     switch (m_gameState) {
-    case GameState::Menu: m_menu.update(); break;
-    case GameState::Play: m_play.update(); break;
-    default: printf("unknown game state, can't update\n"); break;
+    case GameState::Menu: this->updateMenu(); break;
+    case GameState::Play: this->updatePlay(); break;
+    default:
+        Support::displayApplicationError("unknown game state, can't render");
+        exit(1);
     }
 
-    if(m_menu.requestPlayState())
-        this->changeStateToPlay();
-    if(m_menu.exitGameRequest())
-        this->exitGame();
-
+    // this->freeUnusedState();
     this->updateFPSLabel();
 }
 
@@ -341,21 +373,16 @@ void Game::renderObjects(sf::RenderTarget *target)
 {
     if(m_gameState == GameState::Menu)
     {
-        // m_play.render(target); // make it background
-
-        // sf::RectangleShape shape(sf::Vector2f(target->getSize().x, target->getSize().y));
-        // shape.setFillColor(sf::Color(30,30,30, 200));
-        // target->draw(shape);
-
-        m_menu.render(target);
+        m_menu->render(target);
     }
     else if(m_gameState == GameState::Play)
     {
-        m_play.render(target);
+        m_play->render(target);
     }
     else
     {
-        printf("unknown game state, can't render\n");
+        Support::displayApplicationError("unknown game state, can't render");
+        exit(1);
     }
 
     if(m_fps.displayed)
@@ -364,12 +391,13 @@ void Game::renderObjects(sf::RenderTarget *target)
 
 void Game::renderUsingTexture()
 {
-    m_renderTexture.clear(WINDOW_BACKGROUND_SF_COLOR);
+    m_renderTexture->clear(WINDOW_BACKGROUND_SF_COLOR);
 
-    this->renderObjects(&m_renderTexture);
+    this->renderObjects(m_renderTexture.get());
 
-    if(m_renderShader.isAvailable() && m_applyShaders)
-        m_renderWindow->draw(*m_renderSprite, &m_renderShader);
+    bool applyShaders = InitialData::Game::getApplyShaders();
+    if(m_renderShader->isAvailable() && applyShaders)
+        m_renderWindow->draw(*m_renderSprite, m_renderShader.get());
     else
     {
         m_renderWindow->draw(*m_renderSprite);
@@ -378,7 +406,7 @@ void Game::renderUsingTexture()
 
 void Game::renderRightToScreen()
 {
-    this->renderObjects(m_renderWindow);
+    this->renderObjects(m_renderWindow.get());
 }
 
 void Game::render()
@@ -413,5 +441,4 @@ void Game::play()
         game.update();
         game.render();
     }
-    printf("\n");
 }

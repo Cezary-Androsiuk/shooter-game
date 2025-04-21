@@ -1,7 +1,6 @@
 #include "PlayState.h"
 
 #include "utils/GlobalData.h"
-#include "objects/Weapon.h"
 
 void PlayState::initMap()
 {
