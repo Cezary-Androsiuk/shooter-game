@@ -18,7 +18,15 @@ extern const char *RENDER_SHADER1_PATH;
 extern const char *MENU_BACKGROUND_IMAGE_PATH;
 extern const char *PAUSE_BACKGROUND_IMAGE_PATH;
 
-extern const char *MAIN_SPRITE_TEXTURE_PATH;
+namespace MAIN_SPRITE{
+    extern const char *TEXTURE_PATH;
+
+    constexpr int PLAYER_FRAME_SIZE_X = 40;
+    constexpr int PLAYER_FRAME_SIZE_Y = 40;
+
+    constexpr int WEAPON_FRAME_SIZE_X = 50;
+    constexpr int WEAPON_FRAME_SIZE_Y = 20;
+}
 
 
 typedef unsigned int uint;

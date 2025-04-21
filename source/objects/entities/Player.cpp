@@ -7,8 +7,8 @@
 void Player::initData()
 {
     /// Size
-    m_size.x = 70.f;
-    m_size.y = 70.f;
+    m_size.x = 50.f;
+    m_size.y = 50.f;
 
     m_points = 0;
     m_healthPoints = InitialData::Player::getHealthPoints();
@@ -33,40 +33,63 @@ void Player::initRenderModel()
     m_boundsShape.setSize(m_size);
     m_boundsShape.setOutlineColor(InitialData::getBoundsColor());
     m_boundsShape.setOutlineThickness(InitialData::getBoundsThickness());
-    m_boundsVisible = InitialData::Player::getShowBounds();
+    m_boundsVisible = InitialData::Player::getShowBounds() || InitialData::getShowAllBounds();
 
     const sf::Texture &mainSpriteTexture =
         GlobalData::getInstance()->getMainSpriteTexture();
 
-    const int frameSize = 40;
+    const int frameSizeX = MAIN_SPRITE::PLAYER_FRAME_SIZE_X;
+    const int frameSizeY = MAIN_SPRITE::PLAYER_FRAME_SIZE_Y;
     const float spriteScale = InitialData::getSpriteScale();
 
     m_renderModel.bounds.setTexture(mainSpriteTexture, false);
-    m_renderModel.bounds.setTextureRect(sf::IntRect(0,0,frameSize,frameSize));
-    m_renderModel.bounds.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.bounds.setTextureRect(sf::IntRect(0,0,frameSizeX,frameSizeY));
+    m_renderModel.bounds.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.bounds.setScale(spriteScale, spriteScale);
 
 
     m_renderModel.skin.setTexture(mainSpriteTexture, false);
-    m_renderModel.skin.setTextureRect(sf::IntRect(0,frameSize,frameSize,frameSize));
-    m_renderModel.skin.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.skin.setTextureRect(sf::IntRect(0,frameSizeY,frameSizeX,frameSizeY));
+    m_renderModel.skin.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.skin.setScale(spriteScale, spriteScale);
     m_renderModel.skin.setColor(InitialData::Player::getDefaultSkinColor());
 
 
     m_renderModel.shirt.setTexture(mainSpriteTexture, false);
-    m_renderModel.shirt.setTextureRect(sf::IntRect(0,frameSize*2,frameSize,frameSize));
-    m_renderModel.shirt.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.shirt.setTextureRect(sf::IntRect(0,frameSizeY*2,frameSizeX,frameSizeY));
+    m_renderModel.shirt.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.shirt.setScale(spriteScale, spriteScale);
     m_renderModel.shirt.setColor(InitialData::Player::getDefaultShirtColor());
 
 
     m_renderModel.bakpack.setTexture(mainSpriteTexture, false);
-    m_renderModel.bakpack.setTextureRect(sf::IntRect(0,frameSize*3,frameSize,frameSize));
-    m_renderModel.bakpack.setOrigin(frameSize/2 ,frameSize/2); /// position is (0,0)
+    m_renderModel.bakpack.setTextureRect(sf::IntRect(0,frameSizeY*3,frameSizeX,frameSizeY));
+    m_renderModel.bakpack.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.bakpack.setScale(spriteScale, spriteScale);
     m_renderModel.bakpack.setColor(InitialData::Player::getDefaultBackpackColor());
 
+}
+
+void Player::initWeapon()
+{
+    if(!m_weapon)
+        m_weapon = std::make_unique<Weapon>();
+
+    m_weapon->setPlayerSize(m_size);
+    m_weapon->init();
+}
+
+void Player::initArmor()
+{
+    if(!m_armor)
+        m_armor = std::make_unique<Armor>();
+    m_armor->init();
+}
+
+void Player::initEquipment()
+{
+    this->initWeapon();
+    this->initArmor();
 }
 
 void Player::serializeData()
@@ -272,25 +295,33 @@ void Player::limitPlayerMovementToMap()
 
 }
 
+void Player::updateBounds()
+{
+    m_bounds = sf::FloatRect(m_position, m_size);
+}
+
+void Player::updateCenter()
+{
+    m_center = sf::Vector2f(
+        m_position.x + m_size.x/2,
+        m_position.y + m_size.y/2);
+}
+
 void Player::updateRenderModel()
 {
     if(m_boundsVisible)
         m_boundsShape.setPosition(m_position);
 
-    sf::Vector2f centerPoint(
-        m_position.x + m_size.x/2,
-        m_position.y + m_size.y/2);
-
-    m_renderModel.bounds.setPosition(centerPoint);
+    m_renderModel.bounds.setPosition(m_center);
     m_renderModel.bounds.setRotation(m_rotationAngle);
 
-    m_renderModel.skin.setPosition(centerPoint);
+    m_renderModel.skin.setPosition(m_center);
     m_renderModel.skin.setRotation(m_rotationAngle);
 
-    m_renderModel.shirt.setPosition(centerPoint);
+    m_renderModel.shirt.setPosition(m_center);
     m_renderModel.shirt.setRotation(m_rotationAngle);
 
-    m_renderModel.bakpack.setPosition(centerPoint);
+    m_renderModel.bakpack.setPosition(m_center);
     m_renderModel.bakpack.setRotation(m_rotationAngle);
 }
 
@@ -338,18 +369,25 @@ void Player::updateRotation()
         mousePos
         ) + m_rotationAngleCorrection;
 
-    if(DeltaTime::canPrint())
-    {
+}
 
-        // printf("Angle: %.2f  |   Pos: %.2f, %.2f\n", angle, mousePos.x, mousePos.y);
-        // fflush(stdout);
-    }
+void Player::updateWeapon()
+{
+    m_weapon->setPosition(m_position);
+    m_weapon->setRotationAngle(m_rotationAngle);
+
+    m_weapon->update();
+}
+
+void Player::updateArmor()
+{
 
 }
 
-void Player::updateBounds()
+void Player::updateEquipment()
 {
-    m_bounds = sf::FloatRect(m_position, m_size);
+    this->updateWeapon();
+    this->updateArmor();
 }
 
 void Player::init()
@@ -357,6 +395,8 @@ void Player::init()
     this->initData();
     this->deserializeData();
     this->initRenderModel();
+
+    this->initEquipment();
 }
 
 void Player::update()
@@ -367,7 +407,10 @@ void Player::update()
     this->limitPlayerMovementToMap();
 
     this->updateBounds();
+    this->updateCenter();
     this->updateRenderModel();
+
+    this->updateEquipment();
 }
 
 void Player::render(sf::RenderTarget *target)

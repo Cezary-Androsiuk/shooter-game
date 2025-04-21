@@ -9,4 +9,7 @@ const char *RENDER_SHADER1_PATH = "./resources/shaders/blur.frag";
 const char *MENU_BACKGROUND_IMAGE_PATH = "./resources/images/MenuBackground.png";
 const char *PAUSE_BACKGROUND_IMAGE_PATH = "./resources/images/PauseBackground.png";
 
-const char *MAIN_SPRITE_TEXTURE_PATH = "./resources/sprites/main_sprite_texture.png";
+
+namespace MAIN_SPRITE{
+    const char *TEXTURE_PATH = "./resources/sprites/main_sprite_texture.png";
+}

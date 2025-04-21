@@ -139,6 +139,13 @@ sf::Color InitialData::getBoundsColor()
     return sf::Color(red, green, blue, alpha);
 }
 
+bool InitialData::getShowAllBounds()
+{
+    static const bool value =
+        InitialData::getObject()->readValue("show all bounds");
+    return value;
+}
+
 
 
 
@@ -283,6 +290,13 @@ int InitialData::Weapon::getAmmo()
 {
     static const int value =
         InitialData::rawReadValue(Weapon::getWeapon(), "ammo");
+    return value;
+}
+
+bool InitialData::Weapon::getShowBounds()
+{
+    static const bool value =
+        InitialData::rawReadValue(Weapon::getWeapon(), "show bounds");
     return value;
 }
 

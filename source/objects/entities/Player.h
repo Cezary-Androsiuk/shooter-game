@@ -19,6 +19,9 @@ class Player
     void initData();
     void deserializeData();
     void initRenderModel();
+    void initWeapon();
+    void initArmor();
+    void initEquipment();
 
     /* DESTROY */
     void serializeData();
@@ -55,10 +58,14 @@ private:
         const FloatRectEdges &playerBounds,
         std::shared_ptr<Enemy> enemy);
     void limitPlayerMovementToMap();
+    void updateBounds();
+    void updateCenter();
     void updateRenderModel();
     void updateMovement();
     void updateRotation();
-    void updateBounds();
+    void updateWeapon();
+    void updateArmor();
+    void updateEquipment();
 
     /* RENDER */
 
@@ -77,8 +84,8 @@ public:
     void setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies);
     void setPosition(const sf::Vector2f &position);
     void setAvailableAreaForPlayer(std::shared_ptr<Map> map);
-    void setWeapon(std::unique_ptr<Weapon> weapon);
-    void setArmor(std::unique_ptr<Armor> armor);
+    void setWeapon(std::unique_ptr<Weapon> weapon); /// NOT REQUIRED
+    void setArmor(std::unique_ptr<Armor> armor); /// NOT REQUIRED
 
 private:
     sf::RectangleShape m_boundsShape;
@@ -94,6 +101,7 @@ private:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
     sf::FloatRect m_bounds;
+    sf::Vector2f m_center;
     sf::Vector2f m_moveVector;
     float m_rotationAngle;
     float m_rotationAngleCorrection;

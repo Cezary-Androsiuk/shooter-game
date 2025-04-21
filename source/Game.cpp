@@ -97,8 +97,8 @@ void Game::initFPSLabel()
 void Game::initPlayer()
 {
     m_player = Player::getInstance();
-    m_player->setWeapon(std::make_unique<Weapon>());
-    m_player->setArmor(std::make_unique<Armor>());
+    // m_player->setWeapon(std::make_unique<Weapon>());
+    // m_player->setArmor(std::make_unique<Armor>());
 
     m_player->init();
 }

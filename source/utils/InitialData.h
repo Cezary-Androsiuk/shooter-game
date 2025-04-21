@@ -22,6 +22,7 @@ public:
     static float getSpriteScale();
     static float getBoundsThickness();
     static sf::Color getBoundsColor();
+    static bool getShowAllBounds();
 
     class Game{
         static json::value_type getGame();
@@ -51,6 +52,7 @@ public:
         static json::value_type getWeapon();
     public:
         static int getAmmo();
+        static bool getShowBounds();
     };
 
     class Armor{

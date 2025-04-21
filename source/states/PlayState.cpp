@@ -85,7 +85,7 @@ void PlayState::update()
 void PlayState::render(sf::RenderTarget *target)
 {
     m_map->render(target);
-    m_player->render(target);
     for(auto enemy : m_enemies)
         enemy->render(target);
+    m_player->render(target);
 }

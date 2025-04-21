@@ -43,10 +43,10 @@ void GlobalData::loadMenuStateBackgroundTexture()
 
 void GlobalData::loadMainSpriteTexture()
 {
-    if(!m_mainSpriteTexture.loadFromFile(MAIN_SPRITE_TEXTURE_PATH, sf::IntRect(0,0,500,500)))
+    if(!m_mainSpriteTexture.loadFromFile(MAIN_SPRITE::TEXTURE_PATH, sf::IntRect(0,0,500,500)))
     {
         std::string message = "Cannot load main sprite texture from path:\n";
-        message += MAIN_SPRITE_TEXTURE_PATH;
+        message += MAIN_SPRITE::TEXTURE_PATH;
         Support::displayApplicationError(message);
         exit(1);
     }

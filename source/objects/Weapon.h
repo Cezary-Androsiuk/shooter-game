@@ -28,10 +28,18 @@ public:
     void update();
     void render(sf::RenderTarget *target);
 
+    void setPlayerSize(sf::Vector2f playerSize);
+    void setPosition(sf::Vector2f position);
+    void setRotationAngle(float rotationAngle);
+
 private:
     struct{
         sf::Sprite weaponBody;
     } m_renderModel;
+
+    sf::Vector2f m_playerSize;
+    sf::Vector2f m_position;
+    float m_rotationAngle;
 
     int m_ammo;
 };
