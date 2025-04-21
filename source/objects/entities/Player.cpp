@@ -16,9 +16,6 @@ void Player::initData()
 
     m_movementSpeedAddons.msStraightDefault = InitialData::Player::getSpeedStraight();
     m_movementSpeedAddons.msMultiplier = 1.0;
-
-    /// correct character to point directly at mouse
-    m_rotationAngleCorrection = -10;
 }
 
 void Player::deserializeData()
@@ -367,7 +364,7 @@ void Player::updateRotation()
             m_position.y + m_size.y/2
         },
         mousePos
-        ) + m_rotationAngleCorrection;
+        ) + PLAYER_ROTATION_ANGLE_CORRECTION;
 
 }
 

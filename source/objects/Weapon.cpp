@@ -2,12 +2,17 @@
 
 #include "utils/GlobalData.h"
 #include "utils/InitialData.h"
+#include "utils/Support.h"
 
 void Weapon::initData()
 {
     m_setWeaponIndex = 0;
     m_shotDelay = InitialData::Weapon::getShotDelayMS();
     m_shotDelayTimer.restart();
+
+    m_clickCorrection.mouseLButtonClickedWhileInitialization =
+        sf::Mouse::isButtonPressed(sf::Mouse::Left);
+    m_clickCorrection.needCheck = true;
 }
 
 void Weapon::initRenderModel()
@@ -104,11 +109,31 @@ void Weapon::setWeaponIndex(uint index)
     {
         m_setWeaponIndex = index;
     }
-
 }
 
 std::unique_ptr<Bullet> Weapon::getBulletFromShot()
 {
+    if(UNLIKELY(m_clickCorrection.needCheck))
+    {
+        if(m_clickCorrection.mouseLButtonClickedWhileInitialization)
+        {
+            if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            {
+                /// prevent creating new bullets if while creating
+                /// weapon left mouse button is pressed
+                return nullptr;
+            }
+            else
+            {
+                m_clickCorrection.needCheck = false;
+            }
+        }
+        else
+        {
+            m_clickCorrection.needCheck = false;
+        }
+    }
+
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         if(m_shotDelayTimer.getElapsedTime().asMilliseconds() > m_shotDelay)
@@ -117,6 +142,10 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
             m_shotDelayTimer.restart();
             printf("BANG %d %d   \n", i++, m_shotDelay);
             fflush(stdout);
+
+            std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>(i);
+
+            return bullet;
         }
     }
     return nullptr;

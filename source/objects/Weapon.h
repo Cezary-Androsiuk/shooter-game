@@ -48,6 +48,10 @@ private:
     sf::Vector2f m_position;
     float m_rotationAngle;
 
+    struct{
+        bool needCheck;
+        bool mouseLButtonClickedWhileInitialization;
+    } m_clickCorrection;
     sf::Clock m_shotDelayTimer;
     int m_shotDelay;
 

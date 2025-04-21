@@ -2,6 +2,11 @@
 
 #include "utils/GlobalData.h"
 
+void PlayState::initData()
+{
+    m_bullets.reserve(64);
+}
+
 void PlayState::initMap()
 {
     m_map = std::make_shared<Map>();
@@ -50,10 +55,13 @@ void PlayState::init()
 void PlayState::updatePlayer()
 {
     m_player->update();
+
     std::unique_ptr<Bullet> bullet = m_player->getWeapon()->getBulletFromShot();
     if(bullet)
     {
-
+        printf("BANG registered\n");
+        fflush(stdout);
+        m_bullets.push_back(std::unique_ptr<Bullet>(bullet.release()));
     }
 }
 

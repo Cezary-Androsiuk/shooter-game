@@ -8,10 +8,12 @@
 #include "mechanics/spawners/EnemySpawner.h"
 #include "objects/entities/Enemy.h"
 #include "objects/entities/Player.h"
+#include "objects/Bullet.h"
 #include "environment/Map.h"
 
 class PlayState : public State
 {
+    void initData();
     void initMap();
     void initPlayer();
     void initEnemySpawner();
@@ -43,6 +45,7 @@ public:
 private:
     std::shared_ptr<Map> m_map;
     Player *m_player;
+    std::vector<std::unique_ptr<Bullet>> m_bullets;
 
     EnemySpawner m_enemySpawner;
     std::vector<std::shared_ptr<Enemy>> m_enemies;

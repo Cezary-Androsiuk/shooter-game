@@ -28,6 +28,9 @@ namespace MAIN_SPRITE{
     constexpr int WEAPON_FRAME_SIZE_Y = 20;
 }
 
+/// correct character to point directly at mouse
+constexpr int PLAYER_ROTATION_ANGLE_CORRECTION = 0;//-8; /// to match mouse and weapon
+
 
 typedef unsigned int uint;
 typedef sf::Vector2f vFloat;

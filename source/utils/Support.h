@@ -15,6 +15,10 @@
 // #define INFORM_ABOUT_TO_SMALL_BUFFER(requiredSize, gotSize) \
 //     Support::informAboutToSmallBuffer(requiredSize, gotSize, __PRETTY_FUNCTION__);
 
+
+#define LIKELY(expr)    __builtin_expect(!!(expr), true)
+#define UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+
 class Support
 {
 public:
