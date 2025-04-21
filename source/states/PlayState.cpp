@@ -1,6 +1,7 @@
 #include "PlayState.h"
 
 #include "utils/GlobalData.h"
+#include "objects/Weapon.h"
 
 void PlayState::initMap()
 {
@@ -15,6 +16,10 @@ void PlayState::initPlayer()
     m_player.setPosition(sf::Vector2f(windowSize.x/2.f, windowSize.y/2.f));
     m_player.setAvailableAreaForPlayer(m_map);
     m_player.setEnemies(&m_enemies);
+    m_player.setWeapon(std::make_unique<Weapon>());
+    m_player.setArmor(std::make_unique<Armor>());
+
+    m_player.init();
 }
 
 void PlayState::initEnemySpawner()

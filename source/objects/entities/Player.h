@@ -9,13 +9,15 @@
 #include "utils/Constants.h"
 #include "utils/RectEdges.h"
 #include "objects/entities/Enemy.h"
-#include <environment/Map.h>
+#include "environment/Map.h"
+#include "objects/Weapon.h"
+#include "objects/Armor.h"
 
 class Player
 {
     /* INITIALIZE */
     void initData();
-    void initBody();
+    void initRenderModel();
 
 public:
     Player();
@@ -41,7 +43,7 @@ private:
         const FloatRectEdges &playerBounds,
         std::shared_ptr<Enemy> enemy);
     void limitPlayerMovementToMap();
-    void updateBody();
+    void updateRenderModel();
     void updateMovement();
     void updateRotation();
     void updateBounds();
@@ -49,6 +51,7 @@ private:
     /* RENDER */
 
 public:
+    void init();
     // void pollEvent(sf::Event &event);
     void update();
     void render(sf::RenderTarget *target);
@@ -62,6 +65,8 @@ public:
     void setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies);
     void setPosition(const sf::Vector2f &position);
     void setAvailableAreaForPlayer(std::shared_ptr<Map> map);
+    void setWeapon(std::unique_ptr<Weapon> weapon);
+    void setArmor(std::unique_ptr<Armor> armor);
 
 private:
     sf::RectangleShape m_boundsShape;
@@ -85,7 +90,6 @@ private:
 
     int m_points;
     int m_healthPoints;
-    int m_ammo;
     int m_headCount;
 
     const std::vector<std::shared_ptr<Enemy>> *m_enemies;
@@ -97,6 +101,8 @@ private:
         float msMultiplier; /// will be increased if needed
     }m_movementSpeedAddons;
 
+    std::unique_ptr<Weapon> m_weapon;
+    std::unique_ptr<Armor> m_armor;
 
     // int m_healTimer;
     // float playerSize;

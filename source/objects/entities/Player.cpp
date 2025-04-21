@@ -6,17 +6,12 @@
 
 void Player::initData()
 {
-    /// Position
-    m_position.x = 0.f;
-    m_position.y = 0.f;
-
     /// Size
     m_size.x = 70.f;
     m_size.y = 70.f;
 
     m_points = 0;
     m_healthPoints = InitialData::Player::getHealthPoints();
-    m_ammo = InitialData::Player::getAmmo();
     m_headCount = 0;
 
     m_movementSpeedAddons.msStraightDefault = InitialData::Player::getSpeedStraight();
@@ -26,7 +21,7 @@ void Player::initData()
     m_rotationAngleCorrection = -10;
 }
 
-void Player::initBody()
+void Player::initRenderModel()
 {
     // m_renderModel.bounds.setPosition(m_position); /// position is (0,0)
     m_boundsShape.setFillColor(sf::Color::Transparent);
@@ -39,7 +34,7 @@ void Player::initBody()
         GlobalData::getInstance()->getMainSpriteTexture();
 
     const int frameSize = 40;
-    const float spriteScale = 1.68;
+    const float spriteScale = InitialData::getSpriteScale();
 
     m_renderModel.bounds.setTexture(mainSpriteTexture, false);
     m_renderModel.bounds.setTextureRect(sf::IntRect(0,0,frameSize,frameSize));
@@ -71,8 +66,8 @@ void Player::initBody()
 
 Player::Player()
 {
-    this->initData();
-    this->initBody();
+    printf("%p\n", m_weapon.get());
+    fflush(stdout);
 }
 
 Player::~Player()
@@ -262,7 +257,7 @@ void Player::limitPlayerMovementToMap()
 
 }
 
-void Player::updateBody()
+void Player::updateRenderModel()
 {
     if(m_boundsVisible)
         m_boundsShape.setPosition(m_position);
@@ -342,6 +337,19 @@ void Player::updateBounds()
     m_bounds = sf::FloatRect(m_position, m_size);
 }
 
+void Player::init()
+{
+    printf("%p\n", m_weapon.get());
+    fflush(stdout);
+    if(!m_weapon)
+    {
+        exit(1);
+    }
+
+    this->initData();
+    this->initRenderModel();
+}
+
 void Player::update()
 {
     this->computeMovementSpeed();
@@ -350,7 +358,7 @@ void Player::update()
     this->limitPlayerMovementToMap();
 
     this->updateBounds();
-    this->updateBody();
+    this->updateRenderModel();
 }
 
 void Player::render(sf::RenderTarget *target)
@@ -362,6 +370,8 @@ void Player::render(sf::RenderTarget *target)
 
     if(m_boundsVisible)
         target->draw(m_boundsShape);
+
+    m_weapon->render(target);
 }
 
 sf::Vector2f Player::getPosition() const
@@ -384,10 +394,20 @@ void Player::setPosition(const sf::Vector2f &position)
     m_position = sf::Vector2f(position.x - m_size.x/2, position.y - m_size.y/2);
 
     this->updateBounds();
-    this->updateBody();
+    this->updateRenderModel();
 }
 
 void Player::setAvailableAreaForPlayer(std::shared_ptr<Map> map)
 {
     m_map = map;
+}
+
+void Player::setWeapon(std::unique_ptr<Weapon> weapon)
+{
+    m_weapon.swap(weapon);
+}
+
+void Player::setArmor(std::unique_ptr<Armor> armor)
+{
+    m_armor.swap(armor);
 }

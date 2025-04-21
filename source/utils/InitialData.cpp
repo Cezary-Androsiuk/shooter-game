@@ -112,6 +112,13 @@ float InitialData::getTextureUpdateDelayMS()
     return value;
 }
 
+float InitialData::getSpriteScale()
+{
+    static const float value =
+        InitialData::getObject()->readValue("sprite scale");
+    return value;
+}
+
 float InitialData::getBoundsThickness()
 {
     static const float value =
@@ -215,13 +222,6 @@ int InitialData::Player::getHealthPoints()
     return value;
 }
 
-int InitialData::Player::getAmmo()
-{
-    static const int value =
-        InitialData::rawReadValue(Player::getPlayer(), "ammo");
-    return value;
-}
-
 bool InitialData::Player::getShowBounds()
 {
     static const int value =
@@ -267,6 +267,37 @@ sf::Color InitialData::Player::getDefaultBackpackColor()
 
     return sf::Color(red, green, blue, alpha);
 }
+
+
+
+
+
+json::value_type InitialData::Weapon::getWeapon()
+{
+    static const json::value_type weapon =
+        InitialData::getObject()->readValue("weapon");
+    return weapon;
+}
+
+int InitialData::Weapon::getAmmo()
+{
+    static const int value =
+        InitialData::rawReadValue(Weapon::getWeapon(), "ammo");
+    return value;
+}
+
+
+
+
+
+json::value_type InitialData::Armor::getArmor()
+{
+    static const json::value_type armor =
+        InitialData::getObject()->readValue("armor");
+    return armor;
+}
+
+
 
 
 

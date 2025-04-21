@@ -19,6 +19,7 @@ public:
 
     static float getCollisionRoughness();
     static float getTextureUpdateDelayMS();
+    static float getSpriteScale();
     static float getBoundsThickness();
     static sf::Color getBoundsColor();
 
@@ -40,11 +41,21 @@ public:
     public:
         static float getSpeedStraight();
         static int getHealthPoints();
-        static int getAmmo();
         static bool getShowBounds();
         static sf::Color getDefaultSkinColor();
         static sf::Color getDefaultShirtColor();
         static sf::Color getDefaultBackpackColor();
+    };
+
+    class Weapon{
+        static json::value_type getWeapon();
+    public:
+        static int getAmmo();
+    };
+
+    class Armor{
+        static json::value_type getArmor();
+    public:
     };
 
     class Enemy{

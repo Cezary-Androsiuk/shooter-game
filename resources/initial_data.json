@@ -11,6 +11,7 @@
 
     "collision roughness": 0.8,
     "texture update delay ms": 20,
+    "sprite scale": 1.68,
 
     "bounds color": {
         "red": 255,
@@ -23,7 +24,6 @@
     "player": {
         "speed straight": 500.0,
         "health points": 100,
-        "ammo": 50,
         "show bounds": false,
         "default skin color": {
             "red": 255,
@@ -43,6 +43,14 @@
             "blue": 98,
             "alpha": 255
         }
+    },
+
+    "weapon": {
+        "ammo": 50
+    },
+
+    "armor" :{
+
     },
 
     "enemy" : {
