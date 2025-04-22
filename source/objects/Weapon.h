@@ -9,6 +9,7 @@
 
 class Weapon
 {
+    /* INITIALIZE */
     void initData();
     void initRenderModel();
 

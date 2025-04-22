@@ -441,6 +441,13 @@ float InitialData::Enemy::getSpeedIncreaseTimeAmountMultiplier()
     return value;
 }
 
+bool InitialData::Enemy::getShowBounds()
+{
+    static const int value =
+        InitialData::rawReadValue(Enemy::getEnemy(), "show bounds");
+    return value;
+}
+
 
 
 

@@ -89,6 +89,7 @@
         "deal damage lag determiner": 0.06,
         "speed increase time delay ms": 200,
         "speed increase time amount multiplier": 1.005,
+        "show bounds": true,
         
         "ghost": {
             "movement speed": 200.0,

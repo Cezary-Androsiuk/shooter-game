@@ -1,22 +1,28 @@
 #ifndef ZOMBIE_H
 #define ZOMBIE_H
 
-#include "utils/InitialData.h"
 #include "objects/entities/Enemy.h"
 
 class Zombie : public Enemy
 {
     /* INITIALIZE */
     void initData();
-    void initBody();
+    void initRenderModel();
 
 public:
     Zombie();
+    ~Zombie();
 
 private:
+    /* OTHER */
+
+    /* EVENTS */
+
     /* UPDATE */
     void limitZombieMovementToMap();
-    void updateBody();
+    void updateRenderModel();
+
+    /* RENDER */
 
 public:
     void init() override;
@@ -25,11 +31,17 @@ public:
     void update() override;
     void render(sf::RenderTarget *target) override;
 
+    void setType(int type);
+
 private:
+    sf::RectangleShape m_boundsShape;
+    bool m_boundsVisible;
+
     struct{
-        sf::RectangleShape bounds;
-        sf::RectangleShape boundsShadow;
-    } m_body;
+        sf::Sprite body;
+    } m_renderModel;
+
+    int m_type;
 };
 
 #endif // ZOMBIE_H

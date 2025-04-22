@@ -1,5 +1,8 @@
 #include "Zombie.h"
 
+#include "utils/InitialData.h"
+#include "utils/GlobalData.h"
+
 void Zombie::initData()
 {
     m_movementSpeedAddons.msDefault = InitialData::Enemy::Zombie::getMovementSpeed();
@@ -10,23 +13,41 @@ void Zombie::initData()
     /// Size
     m_size.x = 50.f;
     m_size.y = 50.f;
-
-
 }
 
-void Zombie::initBody()
+void Zombie::initRenderModel()
 {
-    m_body.bounds.setPosition(m_position);
-    m_body.bounds.setFillColor(sf::Color(40, 180, 40));
-    m_body.bounds.setSize(m_size);
+    m_boundsShape.setFillColor(sf::Color::Transparent);
+    m_boundsShape.setSize(m_size);
+    m_boundsShape.setOutlineColor(InitialData::getBoundsColor());
+    m_boundsShape.setOutlineThickness(InitialData::getBoundsThickness());
+    m_boundsVisible = InitialData::Enemy::getShowBounds() || InitialData::getShowAllBounds();
 
-    m_body.boundsShadow.setPosition({m_position.x-5, m_position.y-5});
-    m_body.boundsShadow.setFillColor(sf::Color(20, 130, 20, 180));
-    m_body.boundsShadow.setSize({m_size.x+10, m_size.y+10});
+    const sf::Texture &mainSpriteTexture =
+        GlobalData::getInstance()->getMainSpriteTexture();
+
+    const int frameSizeX = MAIN_SPRITE::ENEMY_FRAME_SIZE_X;
+    const int frameSizeY = MAIN_SPRITE::ENEMY_FRAME_SIZE_Y;
+    const int frameOffsetX = MAIN_SPRITE::ENEMY_FRAME_OFFSET_X;
+    const int frameOffsetY = MAIN_SPRITE::ENEMY_FRAME_OFFSET_Y;
+    const float spriteScale = InitialData::getSpriteScale();
+
+    int enemyYPos = frameOffsetY + frameSizeY * m_type;
+    m_renderModel.body.setTexture(mainSpriteTexture, false);
+    m_renderModel.body.setTextureRect(
+        sf::IntRect(frameOffsetX, enemyYPos, frameSizeX, frameSizeY));
+    m_renderModel.body.setOrigin(frameSizeX/2, frameSizeY/2);
+    m_renderModel.body.setScale(spriteScale, spriteScale);
 }
 
 Zombie::Zombie()
     : Enemy()
+    , m_type{0}
+{
+
+}
+
+Zombie::~Zombie()
 {
 
 }
@@ -44,18 +65,26 @@ void Zombie::limitZombieMovementToMap()
         this->preventMoveThatEnterBounds(entityEdges, obstacle->getBounds());
 }
 
-void Zombie::updateBody()
+void Zombie::updateRenderModel()
 {
-    m_body.bounds.setPosition(m_position);
-    m_body.boundsShadow.setPosition({m_position.x-5, m_position.y-5});
+    if(m_boundsVisible)
+        m_boundsShape.setPosition(m_position);
+
+    sf::Vector2f center(
+        m_position.x + m_size.x/2,
+        m_position.y + m_size.y/2);
+
+    m_renderModel.body.setPosition(center);
+    // m_renderModel.body.setRotation(m_rotationAngle);
 }
+
 
 void Zombie::init()
 {
     Enemy::init();
 
     this->initData();
-    this->initBody();
+    this->initRenderModel();
 }
 
 void Zombie::pollEvent(const sf::Event &event)
@@ -69,13 +98,29 @@ void Zombie::update()
 
     this->limitZombieMovementToMap();
 
-    this->updateBody();
+    this->updateRenderModel();
 }
 
 void Zombie::render(sf::RenderTarget *target)
 {
     Enemy::render(target);
 
-    target->draw(m_body.bounds);
-    target->draw(m_body.boundsShadow);
+    target->draw(m_renderModel.body);
+
+    if(m_boundsVisible)
+        target->draw(m_boundsShape);
+}
+
+void Zombie::setType(int type)
+{
+    if(type > 5)
+    {
+        fprintf(stderr, "invalid enemy type, max is 5 and got: %u. (using 5 instead)\n", type);
+        fflush(stderr);
+        m_type = 5;
+    }
+    else
+    {
+        m_type = type;
+    }
 }

@@ -35,6 +35,11 @@ namespace MAIN_SPRITE{
     constexpr int BULLET_FRAME_SIZE_Y = 2;
     constexpr int BULLET_FRAME_OFFSET_X = 290;
     constexpr int BULLET_FRAME_OFFSET_Y = 0;
+
+    constexpr int ENEMY_FRAME_SIZE_X = 40;
+    constexpr int ENEMY_FRAME_SIZE_Y = 40;
+    constexpr int ENEMY_FRAME_OFFSET_X = 300;
+    constexpr int ENEMY_FRAME_OFFSET_Y = 0;
 }
 
 /// correct character to point directly at mouse

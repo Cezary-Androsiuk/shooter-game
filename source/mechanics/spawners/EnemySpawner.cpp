@@ -9,6 +9,8 @@ EnemySpawner::EnemySpawner()
     : m_readyToSpawn{false}
 {
     m_spawnDelayMS = InitialData::EnemySpawner::getSpawnDelayMS();
+    printf("created spawner\n");
+    fflush(stdout);
 }
 
 EnemySpawner::~EnemySpawner()
@@ -88,11 +90,19 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
         ++enemiesSpawned;
 
         std::shared_ptr<Enemy> enemy = std::make_shared<Zombie>();
+
+        Zombie *zombie = dynamic_cast<Zombie*>(enemy.get());
+        if(zombie)
+        {
+            int type = Random::getInt(0, 5);
+            printf("creating with type: %u\n", type);
+            fflush(stdout);
+            zombie->setType(type);
+        }
+        // printf("%u %u\n", m_mapSize.x, m_mapSize.y);
         enemy->init();
 
         enemy->setPosition(this->getRandomPositionOutsideScreen( enemy->getSize() ));
-
-        // printf("%u %u\n", m_mapSize.x, m_mapSize.y);
 
         return enemy;
     }

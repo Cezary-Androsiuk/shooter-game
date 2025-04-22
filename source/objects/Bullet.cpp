@@ -66,7 +66,8 @@ void Bullet::updatePosition()
 
 void Bullet::updateRenderModel()
 {
-    m_boundsShape.setPosition(m_position);
+    if(m_boundsVisible)
+        m_boundsShape.setPosition(m_position);
 
     sf::Vector2f center(
         m_position.x + m_size.x/2,

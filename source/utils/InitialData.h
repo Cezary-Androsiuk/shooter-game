@@ -79,6 +79,7 @@ public:
         static float getDealDamageLagDeterminer();
         static int getSpeedIncreaseTimeDelayMS();
         static float getSpeedIncreaseTimeAmountMultiplier();
+        static bool getShowBounds();
 
         class Ghost{
             static json::value_type getGhost();

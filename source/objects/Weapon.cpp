@@ -7,7 +7,6 @@
 void Weapon::initData()
 {
     m_setWeaponIndex = 0;
-    m_usedWeaponIndex = m_setWeaponIndex;
     m_shotDelay = InitialData::Weapon::getShotDelayMS(m_usedWeaponIndex);
     m_shotDelayTimer.restart();
 
@@ -32,7 +31,7 @@ void Weapon::initRenderModel()
     m_renderModel.body.setTexture(mainSpriteTexture, false);
     m_renderModel.body.setTextureRect(
         sf::IntRect(frameOffsetX, frameOffsetY, frameSizeX, frameSizeY));
-    m_renderModel.body.setOrigin(16, 6); /// position is (0,0)
+    m_renderModel.body.setOrigin(16, 6);
     m_renderModel.body.setScale(spriteScale, spriteScale);
 }
 

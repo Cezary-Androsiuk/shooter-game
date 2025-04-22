@@ -40,6 +40,8 @@ void PlayState::initObjects()
 PlayState::PlayState()
 {
 
+    printf("created playstate\n");
+    fflush(stdout);
 }
 
 PlayState::~PlayState()
