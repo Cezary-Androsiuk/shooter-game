@@ -1,8 +1,22 @@
 #include "Map.h"
 
+#include "utils/Constants.h"
+#include "utils/GlobalData.h"
+
+void Map::initBackground()
+{
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+
+    m_background.setTexture(
+        GlobalData::getInstance()->getPlayBackgroundTexture(), false);
+    m_background.setTextureRect(sf::IntRect(0, 0, 1920, 1080));
+    m_background.setScale(windowRatio);
+}
+
 Map::Map()
     : m_obstaclesBuilded{false}
 {
+    this->initBackground();
 }
 
 Map::~Map()
@@ -23,6 +37,8 @@ void Map::buildObstacles()
 
 void Map::render(sf::RenderTarget *target)
 {
+    target->draw(m_background);
+
     for(Obstacle *obstacle : m_obstacles)
         obstacle->render(target);
 }

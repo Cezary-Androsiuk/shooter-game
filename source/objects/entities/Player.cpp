@@ -65,7 +65,6 @@ void Player::initRenderModel()
     m_renderModel.shirt.setScale(spriteScale, spriteScale);
     m_renderModel.shirt.setColor(InitialData::Player::getDefaultShirtColor());
 
-
     objectYPos += frameSizeY;
     m_renderModel.bakpack.setTexture(mainSpriteTexture, false);
     m_renderModel.bakpack.setTextureRect(

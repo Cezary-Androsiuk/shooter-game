@@ -7,6 +7,7 @@ class GlobalData
 {
     void loadFonts();
     void loadMenuStateBackgroundTexture();
+    void loadPlayBackgroundTexture();
     void loadMainSpriteTexture();
     void loadPausePlayStateBackgroundTexture();
     void loadDefeatStateBackgroundTexture();
@@ -32,6 +33,7 @@ public:
     const sf::Font &getFontInkFree() const;
 
     const sf::Texture &getMenuStateBackgroundTexture() const;
+    const sf::Texture &getPlayBackgroundTexture() const;
     const sf::Texture &getMainSpriteTexture() const;
     const sf::Texture &getPausePlayStateBackgroundTexture() const;
     const sf::Texture &getPlayStatInfoNotchTexture() const;
@@ -51,6 +53,7 @@ private:
     sf::Font m_fontInkFree;
 
     sf::Texture m_menuStateBackgroundTexture;
+    sf::Texture m_playBackgroundTexture;
     sf::Texture m_mainSpriteTexture;
     sf::Texture m_pausePlayStateBackgroundTexture;
     sf::Texture m_defeatStateBackgroundTexture;

@@ -23,8 +23,6 @@ void PlayState::initPlayer()
     m_player->setPosition(sf::Vector2f(windowSize.x/2.f, windowSize.y/2.f));
     m_player->setAvailableAreaForPlayer(m_map);
     m_player->setEnemies(&m_enemies);
-
-    m_player->init();
 }
 
 void PlayState::initEnemySpawner()

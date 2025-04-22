@@ -73,6 +73,10 @@ add_executable(
     ## SPAWNERS
     source/mechanics/spawners/EnemySpawner.h source/mechanics/spawners/EnemySpawner.cpp
 
+    # VIEWS
+    source/views/StartMenuView.h source/views/StartMenuView.cpp
+    source/views/ShopView.h source/views/ShopView.cpp
+
     # ANIMATIONS
     source/animations/Animation.h source/animations/Animation.cpp
     source/animations/GotDamageAnimation.h source/animations/GotDamageAnimation.cpp

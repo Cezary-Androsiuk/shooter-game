@@ -9,6 +9,8 @@
 
 class Map
 {
+    void initBackground();
+
 public:
     Map();
     ~Map();
@@ -23,6 +25,8 @@ public:
     const std::vector<Obstacle *> getObstacles();
 
 private:
+    sf::Sprite m_background;
+
     std::vector<Obstacle *> m_obstacles;
     bool m_obstaclesBuilded;
 };

@@ -41,6 +41,20 @@ void GlobalData::loadMenuStateBackgroundTexture()
     fflush(stdout);
 }
 
+void GlobalData::loadPlayBackgroundTexture()
+{
+    if(!m_playBackgroundTexture.loadFromFile(PLAY_BACKGROUND_IMAGE_PATH, sf::IntRect(0,0,1920,1080)))
+    {
+        std::string message = "Cannot load play background texture from path:\n";
+        message += PLAY_BACKGROUND_IMAGE_PATH;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("texture: 'play background' loaded\n");
+
+    fflush(stdout);
+}
+
 void GlobalData::loadMainSpriteTexture()
 {
     if(!m_mainSpriteTexture.loadFromFile(MAIN_SPRITE::TEXTURE_PATH, sf::IntRect(0,0,500,500)))
@@ -115,6 +129,7 @@ GlobalData::GlobalData()
 {
     this->loadFonts();
     this->loadMenuStateBackgroundTexture();
+    this->loadPlayBackgroundTexture();
     this->loadMainSpriteTexture();
     this->loadPausePlayStateBackgroundTexture();
     this->loadDefeatStateBackgroundTexture();
@@ -141,6 +156,11 @@ const sf::Font &GlobalData::getFontInkFree() const
 const sf::Texture &GlobalData::getMenuStateBackgroundTexture() const
 {
     return m_menuStateBackgroundTexture;
+}
+
+const sf::Texture &GlobalData::getPlayBackgroundTexture() const
+{
+    return m_playBackgroundTexture;
 }
 
 const sf::Texture &GlobalData::getMainSpriteTexture() const
