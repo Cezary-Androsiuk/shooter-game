@@ -23,9 +23,18 @@ namespace MAIN_SPRITE{
 
     constexpr int PLAYER_FRAME_SIZE_X = 40;
     constexpr int PLAYER_FRAME_SIZE_Y = 40;
+    constexpr int PLAYER_FRAME_OFFSET_X = 0;
+    constexpr int PLAYER_FRAME_OFFSET_Y = 0;
 
     constexpr int WEAPON_FRAME_SIZE_X = 50;
     constexpr int WEAPON_FRAME_SIZE_Y = 20;
+    constexpr int WEAPON_FRAME_OFFSET_X = 240;
+    constexpr int WEAPON_FRAME_OFFSET_Y = 0;
+
+    constexpr int BULLET_FRAME_SIZE_X = 2;
+    constexpr int BULLET_FRAME_SIZE_Y = 2;
+    constexpr int BULLET_FRAME_OFFSET_X = 290;
+    constexpr int BULLET_FRAME_OFFSET_Y = 0;
 }
 
 /// correct character to point directly at mouse

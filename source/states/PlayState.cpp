@@ -59,10 +59,9 @@ void PlayState::updatePlayer()
     std::unique_ptr<Bullet> bullet = m_player->getWeapon()->getBulletFromShot();
     if(bullet)
     {
-        printf("BANG registered\n");
-        fflush(stdout);
         m_bullets.push_back(std::unique_ptr<Bullet>(bullet.release()));
     }
+
 }
 
 void PlayState::updateEnemySpawner()
@@ -82,9 +81,23 @@ void PlayState::updateEnemySpawner()
 
 void PlayState::updateEnemies()
 {
-    for(auto enemy : m_enemies)
+    for(const auto &enemy : m_enemies)
     {
         enemy->update();
+    }
+}
+
+void PlayState::updateBullets()
+{
+    for (auto it = m_bullets.begin(); it != m_bullets.end(); ) {
+        (*it)->update();
+
+        /// deletes the object
+        if ((*it)->getReadyToDie()) {
+            it = m_bullets.erase(it);
+        } else {
+            ++it;
+        }
     }
 }
 
@@ -92,6 +105,9 @@ void PlayState::pollEvent(const sf::Event &event)
 {
     m_enemySpawner.pollEvent(event);
     m_player->pollEvent(event);
+
+    for(const auto &bullet : m_bullets)
+        bullet->pollEvent(event);
 }
 
 void PlayState::update()
@@ -99,12 +115,18 @@ void PlayState::update()
     this->updatePlayer();
     this->updateEnemySpawner();
     this->updateEnemies();
+    this->updateBullets();
 }
 
 void PlayState::render(sf::RenderTarget *target)
 {
     m_map->render(target);
-    for(auto enemy : m_enemies)
+
+    for(const auto &enemy : m_enemies)
         enemy->render(target);
+
     m_player->render(target);
+
+    for(const auto &bullet : m_bullets)
+        bullet->render(target);
 }

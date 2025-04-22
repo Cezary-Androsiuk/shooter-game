@@ -55,6 +55,13 @@ public:
         static int getShotDelayMS();
     };
 
+    class Bullet{
+        static json::value_type getBullet();
+    public:
+        static int getMovementSpeed();
+        static float getAliveDistanceFromWindowEdge();
+    };
+
     class Armor{
         static json::value_type getArmor();
     public:

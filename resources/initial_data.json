@@ -20,7 +20,7 @@
         "alpha": 155
     },
     "bounds thickness": 1.0,
-    "show all bounds": false,
+    "show all bounds": true,
 
     "player": {
         "speed straight": 500.0,
@@ -49,6 +49,11 @@
     "weapon": {
         "ammo": 50,
         "shot delay ms": 200
+    },
+
+    "bullet": {
+        "movement speed": 500.0,
+        "alive distance from window edge": 500.0
     },
 
     "armor" :{

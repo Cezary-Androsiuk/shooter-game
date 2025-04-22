@@ -303,6 +303,30 @@ int InitialData::Weapon::getShotDelayMS()
 
 
 
+json::value_type InitialData::Bullet::getBullet()
+{
+    static const json::value_type bullet =
+        InitialData::getObject()->readValue("bullet");
+    return bullet;
+}
+
+int InitialData::Bullet::getMovementSpeed()
+{
+    static const int value =
+        InitialData::rawReadValue(Bullet::getBullet(), "movement speed");
+    return value;
+}
+
+float InitialData::Bullet::getAliveDistanceFromWindowEdge()
+{
+    static const int value =
+        InitialData::rawReadValue(Bullet::getBullet(), "alive distance from window edge");
+    return value;
+}
+
+
+
+
 
 json::value_type InitialData::Armor::getArmor()
 {
@@ -451,3 +475,4 @@ float InitialData::Enemy::Zombie::getPlayerMoveSlowDownRatio()
         InitialData::rawReadValue(Zombie::getZombie(), "player move slow down ratio");
     return value;
 }
+

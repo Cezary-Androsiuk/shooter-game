@@ -34,6 +34,7 @@ private:
     void updatePlayer();
     void updateEnemySpawner();
     void updateEnemies();
+    void updateBullets();
 
     /* RENDER */
 

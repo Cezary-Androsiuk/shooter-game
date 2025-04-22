@@ -18,6 +18,7 @@ public:
 
 private:
     /* OTHER */
+    static sf::Vector2f angleToDirection(float angleDegrees);
 
     /* EVENTS */
 
@@ -41,7 +42,7 @@ public:
 
 private:
     struct{
-        sf::Sprite weaponBody;
+        sf::Sprite body;
     } m_renderModel;
 
     sf::Vector2f m_playerSize;

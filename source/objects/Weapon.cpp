@@ -24,12 +24,15 @@ void Weapon::initRenderModel()
 
     const int frameSizeX = MAIN_SPRITE::WEAPON_FRAME_SIZE_X;
     const int frameSizeY = MAIN_SPRITE::WEAPON_FRAME_SIZE_Y;
+    const int frameOffsetX = MAIN_SPRITE::WEAPON_FRAME_OFFSET_X;
+    const int frameOffsetY = MAIN_SPRITE::WEAPON_FRAME_OFFSET_Y;
     const float spriteScale = InitialData::getSpriteScale();
 
-    m_renderModel.weaponBody.setTexture(mainSpriteTexture, false);
-    m_renderModel.weaponBody.setTextureRect(sf::IntRect(240, 0, frameSizeX, frameSizeY));
-    m_renderModel.weaponBody.setOrigin(16, 6); /// position is (0,0)
-    m_renderModel.weaponBody.setScale(spriteScale, spriteScale);
+    m_renderModel.body.setTexture(mainSpriteTexture, false);
+    m_renderModel.body.setTextureRect(
+        sf::IntRect(frameOffsetX, frameOffsetY, frameSizeX, frameSizeY));
+    m_renderModel.body.setOrigin(16, 6); /// position is (0,0)
+    m_renderModel.body.setScale(spriteScale, spriteScale);
 }
 
 Weapon::Weapon()
@@ -42,22 +45,31 @@ Weapon::~Weapon()
 
 }
 
+sf::Vector2f Weapon::angleToDirection(float angleDegrees)
+{
+    float angleRadians = angleDegrees * M_PI / 180.0f;
+    return sf::Vector2f(std::cos(angleRadians), std::sin(angleRadians));
+}
+
 void Weapon::updateRenderModel()
 {
     if(m_setWeaponIndex != m_usedWeaponIndex)
     {
         const int frameSizeX = MAIN_SPRITE::WEAPON_FRAME_SIZE_X;
         const int frameSizeY = MAIN_SPRITE::WEAPON_FRAME_SIZE_Y;
-        int weaponYPos = frameSizeY * m_setWeaponIndex;
-        m_renderModel.weaponBody.setTextureRect(
-            sf::IntRect(240, weaponYPos, frameSizeX, frameSizeY));
+        const int frameOffsetX = MAIN_SPRITE::WEAPON_FRAME_OFFSET_X;
+        const int frameOffsetY = MAIN_SPRITE::WEAPON_FRAME_OFFSET_Y;
+
+        int weaponYPos = frameOffsetY + frameSizeY * m_setWeaponIndex;
+        m_renderModel.body.setTextureRect(
+            sf::IntRect(frameOffsetX, weaponYPos, frameSizeX, frameSizeY));
         m_usedWeaponIndex = m_setWeaponIndex;
     }
 
-    m_renderModel.weaponBody.setPosition(sf::Vector2f(
+    m_renderModel.body.setPosition(sf::Vector2f(
         m_position.x + m_playerSize.x/2,
         m_position.y + m_playerSize.y/2));
-    m_renderModel.weaponBody.setRotation(m_rotationAngle);
+    m_renderModel.body.setRotation(m_rotationAngle);
 }
 
 void Weapon::init()
@@ -79,7 +91,7 @@ void Weapon::update()
 
 void Weapon::render(sf::RenderTarget *target)
 {
-    target->draw(m_renderModel.weaponBody);
+    target->draw(m_renderModel.body);
 }
 
 void Weapon::setPlayerSize(sf::Vector2f playerSize)
@@ -138,12 +150,15 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
     {
         if(m_shotDelayTimer.getElapsedTime().asMilliseconds() > m_shotDelay)
         {
-            static int i =0;
             m_shotDelayTimer.restart();
-            printf("BANG %d %d   \n", i++, m_shotDelay);
-            fflush(stdout);
 
-            std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>(i);
+            std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
+
+            bullet->setPosition(m_position);
+            bullet->setVelocity(Weapon::angleToDirection(m_rotationAngle));
+            bullet->setWeaponIndex(m_usedWeaponIndex);
+
+            bullet->init();
 
             return bullet;
         }

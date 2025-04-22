@@ -37,30 +37,38 @@ void Player::initRenderModel()
 
     const int frameSizeX = MAIN_SPRITE::PLAYER_FRAME_SIZE_X;
     const int frameSizeY = MAIN_SPRITE::PLAYER_FRAME_SIZE_Y;
+    const int frameOffsetX = MAIN_SPRITE::PLAYER_FRAME_OFFSET_X;
+    const int frameOffsetY = MAIN_SPRITE::PLAYER_FRAME_OFFSET_Y;
     const float spriteScale = InitialData::getSpriteScale();
 
+    int objectYPos = frameOffsetY;
     m_renderModel.bounds.setTexture(mainSpriteTexture, false);
-    m_renderModel.bounds.setTextureRect(sf::IntRect(0,0,frameSizeX,frameSizeY));
+    m_renderModel.bounds.setTextureRect(
+        sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
     m_renderModel.bounds.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.bounds.setScale(spriteScale, spriteScale);
 
-
+    objectYPos += frameSizeY;
     m_renderModel.skin.setTexture(mainSpriteTexture, false);
-    m_renderModel.skin.setTextureRect(sf::IntRect(0,frameSizeY,frameSizeX,frameSizeY));
+    m_renderModel.skin.setTextureRect(
+        sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
     m_renderModel.skin.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.skin.setScale(spriteScale, spriteScale);
     m_renderModel.skin.setColor(InitialData::Player::getDefaultSkinColor());
 
-
+    objectYPos += frameSizeY;
     m_renderModel.shirt.setTexture(mainSpriteTexture, false);
-    m_renderModel.shirt.setTextureRect(sf::IntRect(0,frameSizeY*2,frameSizeX,frameSizeY));
+    m_renderModel.shirt.setTextureRect(
+        sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
     m_renderModel.shirt.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.shirt.setScale(spriteScale, spriteScale);
     m_renderModel.shirt.setColor(InitialData::Player::getDefaultShirtColor());
 
 
+    objectYPos += frameSizeY;
     m_renderModel.bakpack.setTexture(mainSpriteTexture, false);
-    m_renderModel.bakpack.setTextureRect(sf::IntRect(0,frameSizeY*3,frameSizeX,frameSizeY));
+    m_renderModel.bakpack.setTextureRect(
+        sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
     m_renderModel.bakpack.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
     m_renderModel.bakpack.setScale(spriteScale, spriteScale);
     m_renderModel.bakpack.setColor(InitialData::Player::getDefaultBackpackColor());
@@ -428,10 +436,10 @@ void Player::render(sf::RenderTarget *target)
     target->draw(m_renderModel.shirt);
     target->draw(m_renderModel.bakpack);
 
+    m_weapon->render(target);
+
     if(m_boundsVisible)
         target->draw(m_boundsShape);
-
-    m_weapon->render(target);
 }
 
 sf::Vector2f Player::getPosition() const
