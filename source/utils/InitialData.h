@@ -59,6 +59,7 @@ public:
         static json::value_type getBullet();
     public:
         static int getMovementSpeed();
+        static bool getShowBounds();
         static float getAliveDistanceFromWindowEdge();
     };
 

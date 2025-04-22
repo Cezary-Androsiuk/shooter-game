@@ -317,6 +317,13 @@ int InitialData::Bullet::getMovementSpeed()
     return value;
 }
 
+bool InitialData::Bullet::getShowBounds()
+{
+    static const int value =
+        InitialData::rawReadValue(Bullet::getBullet(), "show bounds");
+    return value;
+}
+
 float InitialData::Bullet::getAliveDistanceFromWindowEdge()
 {
     static const int value =

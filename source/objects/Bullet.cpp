@@ -23,7 +23,7 @@ void Bullet::initRenderModel()
     m_boundsShape.setSize(m_size);
     m_boundsShape.setOutlineColor(InitialData::getBoundsColor());
     m_boundsShape.setOutlineThickness(InitialData::getBoundsThickness());
-    // m_boundsVisible = InitialData::Bullet::getShowBounds() || InitialData::getShowAllBounds();
+    m_boundsVisible = InitialData::Bullet::getShowBounds() || InitialData::getShowAllBounds();
 
     const sf::Texture &mainSpriteTexture =
         GlobalData::getInstance()->getMainSpriteTexture();
@@ -38,22 +38,23 @@ void Bullet::initRenderModel()
     m_renderModel.body.setTexture(mainSpriteTexture, false);
     m_renderModel.body.setTextureRect(
         sf::IntRect(frameOffsetX, bulletYPos, frameSizeX, frameSizeY));
-    m_renderModel.body.setOrigin(frameSizeX/2, frameSizeY/2); /// position is (0,0)
+    m_renderModel.body.setOrigin(frameSizeX/2, frameSizeY/2);
     m_renderModel.body.setScale(spriteScale, spriteScale);
+
+    m_renderModel.simpleBody.setSize(sf::Vector2f(frameSizeX, frameSizeY));
+    m_renderModel.simpleBody.setOrigin(frameSizeX/2, frameSizeY/2);
+    m_renderModel.simpleBody.setScale(spriteScale, spriteScale);
+
 }
 
 Bullet::Bullet()
 {
 
-    printf("bullet created\n");
-    fflush(stdout);
 }
 
 Bullet::~Bullet()
 {
 
-    printf("bullet destroyed\n");
-    fflush(stdout);
 }
 
 void Bullet::updatePosition()
@@ -72,6 +73,7 @@ void Bullet::updateRenderModel()
         m_position.y + m_size.y/2);
 
     m_renderModel.body.setPosition(center);
+    m_renderModel.simpleBody.setPosition(center);
 }
 
 void Bullet::updateReadyToDie()
@@ -113,6 +115,7 @@ void Bullet::update()
 void Bullet::render(sf::RenderTarget *target)
 {
     target->draw(m_renderModel.body);
+    target->draw(m_renderModel.simpleBody);
 
     if(m_boundsVisible)
         target->draw(m_boundsShape);
@@ -131,6 +134,11 @@ void Bullet::setVelocity(sf::Vector2f velocity)
 void Bullet::setWeaponIndex(uint index)
 {
     m_weaponIndex = index;
+}
+
+void Bullet::setDamage(float damage)
+{
+
 }
 
 bool Bullet::getReadyToDie()

@@ -44,6 +44,7 @@ private:
 
     struct{
         sf::Sprite body;
+        sf::RectangleShape simpleBody;
     } m_renderModel;
 
     sf::Vector2f m_velocity;

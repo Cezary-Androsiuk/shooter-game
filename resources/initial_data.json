@@ -20,7 +20,7 @@
         "alpha": 155
     },
     "bounds thickness": 1.0,
-    "show all bounds": true,
+    "show all bounds": false,
 
     "player": {
         "speed straight": 500.0,
@@ -48,11 +48,33 @@
 
     "weapon": {
         "ammo": 50,
-        "shot delay ms": 200
+        "shot delay ms": {
+            "weapon 0": 200,
+            "weapon 1": 200,
+            "weapon 2": 200,
+            "weapon 3": 200,
+            "weapon 4": 200,
+            "weapon 5": 200,
+            "weapon 6": 200,
+            "weapon 7": 200,
+            "weapon 8": 200
+        },
+        "damage": {
+            "weapon 0": 200,
+            "weapon 1": 200,
+            "weapon 2": 200,
+            "weapon 3": 200,
+            "weapon 4": 200,
+            "weapon 5": 200,
+            "weapon 6": 200,
+            "weapon 7": 200,
+            "weapon 8": 200
+        }
     },
 
     "bullet": {
-        "movement speed": 500.0,
+        "movement speed": 1000.0,
+        "show bounds": false,
         "alive distance from window edge": 500.0
     },
 
