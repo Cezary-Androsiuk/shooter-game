@@ -23,6 +23,8 @@ extern const char *MENU_BACKGROUND_IMAGE_PATH;
 extern const char *PAUSE_BACKGROUND_IMAGE_PATH;
 extern const char *DEFEAT_BACKGROUND_IMAGE_PATH;
 
+extern const char *GOT_DAMAGE_ANIMATION_TEXTURE;
+
 namespace MAIN_SPRITE{
     extern const char *TEXTURE_PATH;
 

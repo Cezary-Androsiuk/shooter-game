@@ -83,6 +83,20 @@ void GlobalData::loadDefeatStateBackgroundTexture()
     fflush(stdout);
 }
 
+void GlobalData::loadGotDamageAnimationTexture()
+{
+    if(!m_gotDamageAnimationTexture.loadFromFile(GOT_DAMAGE_ANIMATION_TEXTURE, sf::IntRect(0,0,1920,1080)))
+    {
+        std::string message = "Cannot load got damage animation texture from path:\n";
+        message += GOT_DAMAGE_ANIMATION_TEXTURE;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("animation texture: 'got damage' loaded\n");
+
+    fflush(stdout);
+}
+
 GlobalData::GlobalData()
 {
     this->loadFonts();
@@ -90,6 +104,7 @@ GlobalData::GlobalData()
     this->loadMainSpriteTexture();
     this->loadPausePlayStateBackgroundTexture();
     this->loadDefeatStateBackgroundTexture();
+    this->loadGotDamageAnimationTexture();
 }
 
 GlobalData *GlobalData::getInstance()
@@ -121,6 +136,11 @@ const sf::Texture &GlobalData::getMainSpriteTexture() const
 const sf::Texture &GlobalData::getPausePlayStateBackgroundTexture() const
 {
     return m_pausePlayStateBackgroundTexture;
+}
+
+const sf::Texture &GlobalData::getGotDamageAnimationTexture() const
+{
+    return m_gotDamageAnimationTexture;
 }
 
 const sf::Texture &GlobalData::getDefeatStateBackgroundTexture() const

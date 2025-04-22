@@ -1,10 +1,12 @@
 #include "PlayState.h"
 
 #include "utils/GlobalData.h"
+#include "animations/GotDamageAnimation.h"
 
 void PlayState::initData()
 {
     m_bullets.reserve(64);
+    m_animations.reserve(128);
 }
 
 void PlayState::initMap()
@@ -126,6 +128,8 @@ void PlayState::updatePlayerAndEnemiesRelation()
             if(enemy->getReadyToAttack())
             {
                 m_player->dealDamage(enemy->getDamage());
+                m_animations.push_back(
+                    std::make_unique<GotDamageAnimation>());
             }
         }
     }
@@ -178,6 +182,21 @@ void PlayState::updateBulletsAndEnemiesRelation()
     }
 }
 
+void PlayState::updateAnimations()
+{
+    for (auto it = m_animations.begin(); it != m_animations.end(); ) {
+        Animation *animation = (*it).get();
+        (*it)->update();
+
+        /// deletes the object if out side the screen
+        if ((*it)->getFinished()) {
+            it = m_animations.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
 void PlayState::pollEvent(const sf::Event &event)
 {
     m_enemySpawner.pollEvent(event);
@@ -195,6 +214,7 @@ void PlayState::update()
     this->updatePlayerAndEnemiesRelation();
     this->updateBullets();
     this->updateBulletsAndEnemiesRelation();
+    this->updateAnimations();
 }
 
 void PlayState::render(sf::RenderTarget *target)
@@ -208,4 +228,7 @@ void PlayState::render(sf::RenderTarget *target)
         bullet->render(target);
 
     m_player->render(target);
+
+    for(const auto &animation : m_animations)
+        animation->render(target);
 }

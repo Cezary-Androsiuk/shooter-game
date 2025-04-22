@@ -73,6 +73,10 @@ add_executable(
     ## SPAWNERS
     source/mechanics/spawners/EnemySpawner.h source/mechanics/spawners/EnemySpawner.cpp
 
+    # ANIMATIONS
+    source/animations/Animation.h source/animations/Animation.cpp
+    source/animations/GotDamageAnimation.h source/animations/GotDamageAnimation.cpp
+
     # SFML SimpleGUI
     source/SimpleGUI/common.hpp
     source/SimpleGUI/SguiObject.cpp source/SimpleGUI/SguiObject.hpp

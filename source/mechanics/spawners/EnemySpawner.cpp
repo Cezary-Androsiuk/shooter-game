@@ -89,7 +89,6 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
         /// draw what zombie should spawn
         float randNumber = Random::getFloat(0.f, sum);
         int zombieType = ZOMBIE_TYPES_COUNT-1;
-        printf("%.4f\n", randNumber);
         fflush(stdout);
         sum = 0;
         #pragma unroll

@@ -10,6 +10,7 @@ class GlobalData
     void loadMainSpriteTexture();
     void loadPausePlayStateBackgroundTexture();
     void loadDefeatStateBackgroundTexture();
+    void loadGotDamageAnimationTexture();
 
     GlobalData();
 
@@ -28,9 +29,13 @@ public:
     /// GETTERS
     const sf::Font &getFontOpenSansRegular() const;
     const sf::Font &getFontInkFree() const;
+
     const sf::Texture &getMenuStateBackgroundTexture() const;
     const sf::Texture &getMainSpriteTexture() const;
     const sf::Texture &getPausePlayStateBackgroundTexture() const;
+
+    const sf::Texture &getGotDamageAnimationTexture() const;
+
     const sf::Texture &getDefeatStateBackgroundTexture() const;
     const sf::Vector2f &getWindowSize() const;
     const sf::Vector2f &getWindowRatio() const;
@@ -47,6 +52,8 @@ private:
     sf::Texture m_mainSpriteTexture;
     sf::Texture m_pausePlayStateBackgroundTexture;
     sf::Texture m_defeatStateBackgroundTexture;
+
+    sf::Texture m_gotDamageAnimationTexture;
 
     sf::Vector2f m_windowSize;
     sf::Vector2f m_windowRatio;

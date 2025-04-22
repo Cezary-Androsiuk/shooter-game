@@ -10,6 +10,7 @@ const char *MENU_BACKGROUND_IMAGE_PATH = "./resources/images/MenuBackground.png"
 const char *PAUSE_BACKGROUND_IMAGE_PATH = "./resources/images/PauseBackground.png";
 const char *DEFEAT_BACKGROUND_IMAGE_PATH = "./resources/images/DefeatBackground.png";
 
+const char *GOT_DAMAGE_ANIMATION_TEXTURE = "./resources/animations/static/damageOutline.png";
 
 namespace MAIN_SPRITE{
     const char *TEXTURE_PATH = "./resources/sprites/main_sprite_texture.png";

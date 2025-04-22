@@ -7,10 +7,11 @@
 
 #include "mechanics/spawners/EnemySpawner.h"
 #include "objects/entities/Enemy.h"
-#include "objects/entities/Zombie.h"
 #include "objects/entities/Player.h"
 #include "objects/Bullet.h"
 #include "environment/Map.h"
+
+#include "animations/Animation.h"
 
 class PlayState : public State
 {
@@ -41,6 +42,8 @@ private:
     void updateBullets();
     void updateBulletsAndEnemiesRelation();
 
+    void updateAnimations();
+
     /* RENDER */
 
 public:
@@ -55,6 +58,8 @@ private:
 
     EnemySpawner m_enemySpawner;
     std::vector<std::shared_ptr<Enemy>> m_enemies;
+
+    std::vector<std::unique_ptr<Animation>> m_animations;
 };
 
 #endif // PLAYSTATE_H
