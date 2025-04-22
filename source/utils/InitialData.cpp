@@ -208,6 +208,26 @@ float InitialData::Game::getTargetHeight()
 
 
 
+json::value_type InitialData::Play::getPlay()
+{
+    static const json::value_type play =
+        InitialData::getObject()->readValue("play");
+    return play;
+}
+
+float InitialData::Play::getMaxDealtDamageHandledByDamageAnimation()
+{
+    static const float value =
+        InitialData::rawReadValue(Play::getPlay(), "max dealt damage handled by damage animation");
+    return value;
+}
+
+
+
+
+
+
+
 json::value_type InitialData::Player::getPlayer()
 {
     static const json::value_type player =
@@ -628,4 +648,3 @@ float InitialData::Enemy::Zombie::getSpawnChance(uint zombieType)
 
     return values[zombieType];
 }
-

@@ -38,6 +38,12 @@ public:
         static float getTargetHeight();
     };
 
+    class Play{
+        static json::value_type getPlay();
+    public:
+        static float getMaxDealtDamageHandledByDamageAnimation();
+    };
+
     class Player{
         static json::value_type getPlayer();
     public:

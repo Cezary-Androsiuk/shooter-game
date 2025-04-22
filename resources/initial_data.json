@@ -9,6 +9,10 @@
         "target height": 1080.0
     },
 
+    "play":{
+        "max dealt damage handled by damage animation": 200.0
+    },
+
     "collision roughness": 0.8,
     "texture update delay ms": 20,
     "sprite scale": 1.68,
