@@ -60,15 +60,15 @@
             "weapon 8": 64
         },
         "damage": {
-            "weapon 0": 200,
-            "weapon 1": 200,
-            "weapon 2": 200,
-            "weapon 3": 200,
-            "weapon 4": 200,
-            "weapon 5": 200,
-            "weapon 6": 200,
-            "weapon 7": 200,
-            "weapon 8": 200
+            "weapon 0": 10,
+            "weapon 1": 20,
+            "weapon 2": 30,
+            "weapon 3": 46,
+            "weapon 4": 58,
+            "weapon 5": 70,
+            "weapon 6": 84,
+            "weapon 7": 90,
+            "weapon 8": 110
         }
     },
 
@@ -101,7 +101,7 @@
             "movement speed": 200.0,
             "damage": 10.0,
             "health": 100,
-            "player move slow down ratio": 0.7
+            "player move slow down ratio": 0.5
         }
     },
 

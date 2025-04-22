@@ -55,6 +55,7 @@ public:
     virtual void update();
     virtual void render(sf::RenderTarget *target);
 
+    /* GETTERS */
     const sf::Vector2f &getPosition() const;
     const sf::Vector2f &getSize() const;
     sf::FloatRect getBounds() const;
@@ -62,10 +63,15 @@ public:
     float getPlayerMoveSlowDownRatio() const;
     bool getReadyToAttack();
     float getDamage() const;
+    bool getEnemyAlive() const;
 
+    /* SETTERS */
     void setPosition(sf::Vector2f position);
     void setAvailableAreaForEnemy(std::shared_ptr<Map> map);
     void setPlayerBounds(const sf::FloatRect *playerBounds);
+
+    /* MODIFIERS */
+    void dealDamage(float damage);
 
 protected:
     sf::Vector2f m_position;
@@ -76,7 +82,7 @@ protected:
     sf::Vector2f m_moveDirectionRatio;
     const sf::FloatRect *m_playerBounds;
     sf::Vector2f m_playerCenter;
-    float m_health;
+    float m_healthPoints;
 
     float m_damage;
     sf::Clock m_attackDelayTimer;

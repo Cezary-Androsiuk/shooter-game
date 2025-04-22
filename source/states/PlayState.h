@@ -37,8 +37,9 @@ private:
     void updatePlayer();
     void updateEnemySpawner();
     void updateEnemies();
-    void updatePlayerAndEnemyRelation();
+    void updatePlayerAndEnemiesRelation();
     void updateBullets();
+    void updateBulletsAndEnemiesRelation();
 
     /* RENDER */
 

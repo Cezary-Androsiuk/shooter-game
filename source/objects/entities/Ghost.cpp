@@ -4,7 +4,7 @@ void Ghost::initData()
 {
     m_movementSpeedAddons.msDefault = InitialData::Enemy::Ghost::getMovementSpeed();
     m_playerMoveSlowDownRatio = InitialData::Enemy::Ghost::getPlayerMoveSlowDownRatio();
-    m_health = InitialData::Enemy::Ghost::getHealth();
+    m_healthPoints = InitialData::Enemy::Ghost::getHealth();
     m_damage = InitialData::Enemy::Ghost::getDamage();
 
     /// Size

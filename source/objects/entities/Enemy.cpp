@@ -8,7 +8,7 @@ void Enemy::initData()
     m_position.y = 0.f;
 
     m_movementSpeedAddons.msDefault = 100.f; /// need to be overrited
-    m_health = 100.f; /// need to be overrited
+    m_healthPoints = 100.f; /// need to be overrited
     m_damage = 10.f; /// need to be overrited
     m_movementSpeedAddons.msMultiplier = 1.f;
     m_movementSpeedAddons.msTimeMultiplier = 1.f;
@@ -202,6 +202,11 @@ float Enemy::getDamage() const
     return m_damage;
 }
 
+bool Enemy::getEnemyAlive() const
+{
+    return m_healthPoints > 0;
+}
+
 void Enemy::setPosition(sf::Vector2f position)
 {
     m_position = position;
@@ -215,4 +220,9 @@ void Enemy::setAvailableAreaForEnemy(std::shared_ptr<Map> map)
 void Enemy::setPlayerBounds(const sf::FloatRect *playerBounds)
 {
     m_playerBounds = playerBounds;
+}
+
+void Enemy::dealDamage(float damage)
+{
+    m_healthPoints -= damage;
 }

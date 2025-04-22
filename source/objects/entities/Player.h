@@ -67,7 +67,6 @@ public:
     void update();
     void render(sf::RenderTarget *target);
 
-public:
     /* GETTERS */
     sf::Vector2f getPosition() const;
     const sf::FloatRect *getBounds() const;

@@ -38,6 +38,8 @@ public:
     void setDamage(float damage);
 
     bool getReadyToDie();
+    sf::FloatRect getBounds() const;
+    float getDamage() const;
 
 private:
     sf::RectangleShape m_boundsShape;

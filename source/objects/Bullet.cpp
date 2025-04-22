@@ -146,3 +146,13 @@ bool Bullet::getReadyToDie()
 {
     return m_readyToDie;
 }
+
+sf::FloatRect Bullet::getBounds() const
+{
+    return sf::FloatRect(m_position, m_size);
+}
+
+float Bullet::getDamage() const
+{
+    return m_damage;
+}

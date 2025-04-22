@@ -84,24 +84,34 @@ void PlayState::updateEnemySpawner()
 
     enemy->setPlayerBounds(m_player->getBounds());
     enemy->setAvailableAreaForEnemy(m_map);
+
 }
 
 void PlayState::updateEnemies()
 {
-    for(const auto &enemy : m_enemies)
-    {
+    for (auto it = m_enemies.begin(); it != m_enemies.end(); ) {
+        Enemy *enemy = (*it).get();
         enemy->update();
+
+        /// deletes the object if not alive
+        if (!enemy->getEnemyAlive()) {
+            printf("enemy died\n");
+            fflush(stdout);
+            it = m_enemies.erase(it);
+        } else {
+            ++it;
+        }
     }
 }
 
-void PlayState::updatePlayerAndEnemyRelation()
+void PlayState::updatePlayerAndEnemiesRelation()
 {
     const FloatRectEdges playerBounds(*m_player->getBounds());
     for(const auto &enemy : m_enemies)
     {
         const FloatRectEdges enemyBounds(enemy->getBounds());
 
-        /// +-2 is required because collision detection is performed somewere else
+        /// +2 is required because collision detection is performed somewere else
         const float overlapLeft   = playerBounds.right+2 - enemyBounds.left;
         const float overlapRight  = enemyBounds.right - playerBounds.left+2;
         const float overlapTop    = playerBounds.bottom+2 - enemyBounds.top;
@@ -124,13 +134,46 @@ void PlayState::updatePlayerAndEnemyRelation()
 void PlayState::updateBullets()
 {
     for (auto it = m_bullets.begin(); it != m_bullets.end(); ) {
+        Bullet *bullet = (*it).get();
         (*it)->update();
 
-        /// deletes the object
+        /// deletes the object if out side the screen
         if ((*it)->getReadyToDie()) {
             it = m_bullets.erase(it);
         } else {
             ++it;
+        }
+    }
+}
+
+void PlayState::updateBulletsAndEnemiesRelation()
+{
+    for(const auto &enemy : m_enemies)
+    {
+        const FloatRectEdges enemyBounds(enemy->getBounds());
+
+        for (auto it = m_bullets.begin(); it != m_bullets.end(); )
+        {
+            Bullet *bullet = (*it).get();
+            const FloatRectEdges bulletBounds(bullet->getBounds());
+
+            const float overlapLeft   = bulletBounds.right - enemyBounds.left;
+            const float overlapRight  = enemyBounds.right - bulletBounds.left;
+            const float overlapTop    = bulletBounds.bottom - enemyBounds.top;
+            const float overlapBottom = enemyBounds.bottom - bulletBounds.top;
+
+            if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
+            {
+                enemy->dealDamage(bullet->getDamage());
+
+                /// deletes the bullet because hit he enemy
+                it = m_bullets.erase(it);
+            }
+            else {
+                ++it;
+            }
+
+
         }
     }
 }
@@ -149,8 +192,9 @@ void PlayState::update()
     this->updatePlayer();
     this->updateEnemySpawner();
     this->updateEnemies();
-    this->updatePlayerAndEnemyRelation();
+    this->updatePlayerAndEnemiesRelation();
     this->updateBullets();
+    this->updateBulletsAndEnemiesRelation();
 }
 
 void PlayState::render(sf::RenderTarget *target)
