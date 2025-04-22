@@ -219,11 +219,11 @@ void Player::limitPlayerMovementToMap()
     FloatRectEdges windowEgdes(0.f, 0.f, windowSize.x, windowSize.y);
 
     AdvancedComputation::preventMoveThatExitBounds(
-        playerEdges, windowEgdes, m_position, m_size);
+        playerEdges, windowEgdes, m_size, m_position);
 
     for(Obstacle *obstacle : m_map->getObstacles())
         AdvancedComputation::preventMoveThatEnterBounds(
-            playerEdges, obstacle->getBounds(), m_position, m_size);
+            playerEdges, obstacle->getBounds(), m_size, m_position);
 
     for(auto enemy : *m_enemies)
         this->limitMoveThatEnterEnemy(playerEdges, enemy);
