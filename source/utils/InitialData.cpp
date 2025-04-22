@@ -297,7 +297,7 @@ int InitialData::Weapon::getShotDelayMS(uint weaponIndex)
 {
     static const json::value_type container =
         InitialData::rawReadValue(Weapon::getWeapon(), "shot delay ms");
-    static const int values[9] = {
+    static const int values[WEAPON_TYPES_COUNT] = {
         InitialData::rawReadValue(container, "weapon 0"),
         InitialData::rawReadValue(container, "weapon 1"),
         InitialData::rawReadValue(container, "weapon 2"),
@@ -309,11 +309,11 @@ int InitialData::Weapon::getShotDelayMS(uint weaponIndex)
         InitialData::rawReadValue(container, "weapon 8")
     };
 
-    if(weaponIndex > 8)
+    if(weaponIndex > WEAPON_TYPES_COUNT-1)
     {
-        fprintf(stderr, "invalid weapon index, max is 8 and got: %u. (using 8 instead)\n", weaponIndex);
+        fprintf(stderr, "invalid weapon index, max is %u and got: %u. (using last instead)\n", WEAPON_TYPES_COUNT-1, weaponIndex);
         fflush(stderr);
-        weaponIndex = 8;
+        weaponIndex = WEAPON_TYPES_COUNT-1;
     }
 
     return values[weaponIndex];
@@ -323,7 +323,7 @@ float InitialData::Weapon::getDamage(uint weaponIndex)
 {
     static const json::value_type container =
         InitialData::rawReadValue(Weapon::getWeapon(), "damage");
-    static const int values[9] = {
+    static const int values[WEAPON_TYPES_COUNT] = {
         InitialData::rawReadValue(container, "weapon 0"),
         InitialData::rawReadValue(container, "weapon 1"),
         InitialData::rawReadValue(container, "weapon 2"),
@@ -335,11 +335,11 @@ float InitialData::Weapon::getDamage(uint weaponIndex)
         InitialData::rawReadValue(container, "weapon 8")
     };
 
-    if(weaponIndex > 8)
+    if(weaponIndex > WEAPON_TYPES_COUNT-1)
     {
-        fprintf(stderr, "invalid weapon index, max is 8 and got: %u. (using 8 instead)\n", weaponIndex);
+        fprintf(stderr, "invalid weapon index, max is %u and got: %u. (using last instead)\n", WEAPON_TYPES_COUNT-1, weaponIndex);
         fflush(stderr);
-        weaponIndex = 8;
+        weaponIndex = WEAPON_TYPES_COUNT-1;
     }
 
     return values[weaponIndex];
@@ -514,31 +514,118 @@ json::value_type InitialData::Enemy::Zombie::getZombie()
     return zombie;
 }
 
-float InitialData::Enemy::Zombie::getMovementSpeed()
+float InitialData::Enemy::Zombie::getMovementSpeed(uint zombieType)
 {
-    static const float value =
+    static const json::value_type container =
         InitialData::rawReadValue(Zombie::getZombie(), "movement speed");
-    return value;
+    static const float values[ZOMBIE_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "zombie 0"),
+        InitialData::rawReadValue(container, "zombie 1"),
+        InitialData::rawReadValue(container, "zombie 2"),
+        InitialData::rawReadValue(container, "zombie 3"),
+        InitialData::rawReadValue(container, "zombie 4"),
+        InitialData::rawReadValue(container, "zombie 5")
+    };
+
+    if(zombieType > ZOMBIE_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid zombie type, max is %u and got: %u. (using last instead)\n", ZOMBIE_TYPES_COUNT-1, zombieType);
+        fflush(stderr);
+        zombieType = ZOMBIE_TYPES_COUNT-1;
+    }
+
+    return values[zombieType];
 }
 
-float InitialData::Enemy::Zombie::getDamage()
+float InitialData::Enemy::Zombie::getDamage(uint zombieType)
 {
-    static const float value =
-        InitialData::rawReadValue(Zombie::getZombie(), "damage");
-    return value;
+    static const json::value_type container =
+        InitialData::rawReadValue(Zombie::getZombie(), "movement speed");
+    static const float values[ZOMBIE_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "zombie 0"),
+        InitialData::rawReadValue(container, "zombie 1"),
+        InitialData::rawReadValue(container, "zombie 2"),
+        InitialData::rawReadValue(container, "zombie 3"),
+        InitialData::rawReadValue(container, "zombie 4"),
+        InitialData::rawReadValue(container, "zombie 5")
+    };
+
+    if(zombieType > ZOMBIE_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid zombie type, max is %u and got: %u. (using last instead)\n", ZOMBIE_TYPES_COUNT-1, zombieType);
+        fflush(stderr);
+        zombieType = ZOMBIE_TYPES_COUNT-1;
+    }
+
+    return values[zombieType];
 }
 
-float InitialData::Enemy::Zombie::getHealth()
+float InitialData::Enemy::Zombie::getHealthPoints(uint zombieType)
 {
-    static const float value =
-        InitialData::rawReadValue(Zombie::getZombie(), "health");
-    return value;
+    static const json::value_type container =
+        InitialData::rawReadValue(Zombie::getZombie(), "health points");
+    static const float values[ZOMBIE_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "zombie 0"),
+        InitialData::rawReadValue(container, "zombie 1"),
+        InitialData::rawReadValue(container, "zombie 2"),
+        InitialData::rawReadValue(container, "zombie 3"),
+        InitialData::rawReadValue(container, "zombie 4"),
+        InitialData::rawReadValue(container, "zombie 5")
+    };
+
+    if(zombieType > ZOMBIE_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid zombie type, max is %u and got: %u. (using last instead)\n", ZOMBIE_TYPES_COUNT-1, zombieType);
+        fflush(stderr);
+        zombieType = ZOMBIE_TYPES_COUNT-1;
+    }
+
+    return values[zombieType];
 }
 
-float InitialData::Enemy::Zombie::getPlayerMoveSlowDownRatio()
+float InitialData::Enemy::Zombie::getPlayerMoveSlowDownRatio(uint zombieType)
 {
-    static const float value =
+    static const json::value_type container =
         InitialData::rawReadValue(Zombie::getZombie(), "player move slow down ratio");
-    return value;
+    static const float values[ZOMBIE_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "zombie 0"),
+        InitialData::rawReadValue(container, "zombie 1"),
+        InitialData::rawReadValue(container, "zombie 2"),
+        InitialData::rawReadValue(container, "zombie 3"),
+        InitialData::rawReadValue(container, "zombie 4"),
+        InitialData::rawReadValue(container, "zombie 5")
+    };
+
+    if(zombieType > ZOMBIE_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid zombie type, max is %u and got: %u. (using last instead)\n", ZOMBIE_TYPES_COUNT-1, zombieType);
+        fflush(stderr);
+        zombieType = ZOMBIE_TYPES_COUNT-1;
+    }
+
+    return values[zombieType];
+}
+
+float InitialData::Enemy::Zombie::getSpawnChance(uint zombieType)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Zombie::getZombie(), "spawn chance");
+    static const float values[ZOMBIE_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "zombie 0"),
+        InitialData::rawReadValue(container, "zombie 1"),
+        InitialData::rawReadValue(container, "zombie 2"),
+        InitialData::rawReadValue(container, "zombie 3"),
+        InitialData::rawReadValue(container, "zombie 4"),
+        InitialData::rawReadValue(container, "zombie 5")
+    };
+
+    if(zombieType > ZOMBIE_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid zombie type, max is %u and got: %u. (using last instead)\n", ZOMBIE_TYPES_COUNT-1, zombieType);
+        fflush(stderr);
+        zombieType = ZOMBIE_TYPES_COUNT-1;
+    }
+
+    return values[zombieType];
 }
 

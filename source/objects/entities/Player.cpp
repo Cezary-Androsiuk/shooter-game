@@ -83,6 +83,8 @@ void Player::initWeapon()
 
     m_weapon->setPlayerSize(m_size);
     m_weapon->init();
+
+    m_weapon->setWeaponIndex(8);
 }
 
 void Player::initArmor()
@@ -305,11 +307,11 @@ void Player::updateWeapon()
     m_weapon->setPosition(m_position);
     m_weapon->setRotationAngle(m_rotationAngle);
 
-    static uint weaponIndex = 0;
-    ++weaponIndex;
-    if(weaponIndex >= 900*40)
-        weaponIndex = 0;
-    m_weapon->setWeaponIndex(weaponIndex/(100*40));
+    // static uint weaponIndex = 0;
+    // ++weaponIndex;
+    // if(weaponIndex >= 900*40)
+    //     weaponIndex = 0;
+    // m_weapon->setWeaponIndex(weaponIndex/(100*40));
 
     m_weapon->update();
 }

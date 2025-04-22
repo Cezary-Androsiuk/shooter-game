@@ -10,7 +10,7 @@ class Zombie : public Enemy
     void initRenderModel();
 
 public:
-    Zombie();
+    Zombie(uint type);
     ~Zombie();
 
 private:
@@ -34,8 +34,6 @@ public:
     void update() override;
     void render(sf::RenderTarget *target) override;
 
-    void setType(int type);
-
 private:
     sf::RectangleShape m_boundsShape;
     bool m_boundsVisible;
@@ -44,7 +42,7 @@ private:
         sf::Sprite body;
     } m_renderModel;
 
-    int m_type;
+    uint m_type;
 };
 
 #endif // ZOMBIE_H

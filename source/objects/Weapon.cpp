@@ -168,11 +168,11 @@ void Weapon::setRotationAngle(float rotationAngle)
 
 void Weapon::setWeaponIndex(uint index)
 {
-    if(index > 8)
+    if(index > WEAPON_TYPES_COUNT-1)
     {
-        fprintf(stderr, "invalid weapon index, max is 8 and got: %u. (using 8 instead)\n", index);
+        fprintf(stderr, "invalid weapon index, max is %u and got: %u. (using last instead)\n", WEAPON_TYPES_COUNT-1, index);
         fflush(stderr);
-        m_setWeaponIndex = 8;
+        m_setWeaponIndex = WEAPON_TYPES_COUNT-1;
     }
     else
     {

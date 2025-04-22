@@ -74,31 +74,37 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
     if(m_readyToSpawn && enemiesSpawned < m_spawnCountLimit)
     {
         m_readyToSpawn = false;
-        if(m_spawnDelayMS < 400)
+
+        /// read probabilites
+        float probabilities[ZOMBIE_TYPES_COUNT];
+        float sum = 0;
+        #pragma unroll
+        for(int i=0; i<ZOMBIE_TYPES_COUNT; i++)
         {
-            if(enemiesSpawned % 10 == 0)
+            probabilities[i] = InitialData::Enemy::Zombie::getSpawnChance(i);
+            sum += probabilities[i];
+            fflush(stdout);
+        }
+
+        /// draw what zombie should spawn
+        float randNumber = Random::getFloat(0.f, sum);
+        int zombieType = ZOMBIE_TYPES_COUNT-1;
+        printf("%.4f\n", randNumber);
+        fflush(stdout);
+        sum = 0;
+        #pragma unroll
+        for(int i=0; i<ZOMBIE_TYPES_COUNT; i++)
+        {
+            sum += probabilities[i];
+            if(randNumber < sum)
             {
-                printf("enemy spawned %d\n", enemiesSpawned);
-                fflush(stdout);
+                zombieType = i;
+                break;
             }
         }
-        else
-        {
-            printf("enemy spawned %d\n", enemiesSpawned);
-            fflush(stdout);
-        }
-        ++enemiesSpawned;
 
-        std::shared_ptr<Enemy> enemy = std::make_shared<Zombie>();
+        std::shared_ptr<Enemy> enemy = std::make_shared<Zombie>(zombieType);
 
-        Zombie *zombie = dynamic_cast<Zombie*>(enemy.get());
-        if(zombie)
-        {
-            int type = Random::getInt(0, 5);
-            printf("creating with type: %u\n", type);
-            fflush(stdout);
-            zombie->setType(type);
-        }
         // printf("%u %u\n", m_mapSize.x, m_mapSize.y);
         enemy->init();
 

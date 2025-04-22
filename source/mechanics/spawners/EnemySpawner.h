@@ -36,7 +36,7 @@ private:
     sf::Clock m_spawnClock;
     int m_spawnDelayMS;
     bool m_readyToSpawn;
-    int m_spawnCountLimit = 10;
+    int m_spawnCountLimit = 1000;
 };
 
 #endif // ENEMYSPAWNER_H

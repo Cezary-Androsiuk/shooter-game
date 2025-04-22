@@ -3,6 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
+typedef unsigned int uint;
+typedef sf::Vector2f vFloat;
+typedef const vFloat &cvFloat;
+
 #define WINDOW_BACKGROUND_SF_COLOR sf::Color(30, 30, 30)
 
 #define ELEMENT_COLOR_IDLE sf::Color(0, 0, 0, 0)
@@ -22,25 +26,25 @@ extern const char *DEFEAT_BACKGROUND_IMAGE_PATH;
 namespace MAIN_SPRITE{
     extern const char *TEXTURE_PATH;
 
-    constexpr int PLAYER_FRAME_SIZE_X = 40;
-    constexpr int PLAYER_FRAME_SIZE_Y = 40;
-    constexpr int PLAYER_FRAME_OFFSET_X = 0;
-    constexpr int PLAYER_FRAME_OFFSET_Y = 0;
+    constexpr uint PLAYER_FRAME_SIZE_X = 40;
+    constexpr uint PLAYER_FRAME_SIZE_Y = 40;
+    constexpr uint PLAYER_FRAME_OFFSET_X = 0;
+    constexpr uint PLAYER_FRAME_OFFSET_Y = 0;
 
-    constexpr int WEAPON_FRAME_SIZE_X = 50;
-    constexpr int WEAPON_FRAME_SIZE_Y = 20;
-    constexpr int WEAPON_FRAME_OFFSET_X = 240;
-    constexpr int WEAPON_FRAME_OFFSET_Y = 0;
+    constexpr uint WEAPON_FRAME_SIZE_X = 50;
+    constexpr uint WEAPON_FRAME_SIZE_Y = 20;
+    constexpr uint WEAPON_FRAME_OFFSET_X = 240;
+    constexpr uint WEAPON_FRAME_OFFSET_Y = 0;
 
-    constexpr int BULLET_FRAME_SIZE_X = 2;
-    constexpr int BULLET_FRAME_SIZE_Y = 2;
-    constexpr int BULLET_FRAME_OFFSET_X = 290;
-    constexpr int BULLET_FRAME_OFFSET_Y = 0;
+    constexpr uint BULLET_FRAME_SIZE_X = 2;
+    constexpr uint BULLET_FRAME_SIZE_Y = 2;
+    constexpr uint BULLET_FRAME_OFFSET_X = 290;
+    constexpr uint BULLET_FRAME_OFFSET_Y = 0;
 
-    constexpr int ENEMY_FRAME_SIZE_X = 40;
-    constexpr int ENEMY_FRAME_SIZE_Y = 40;
-    constexpr int ENEMY_FRAME_OFFSET_X = 300;
-    constexpr int ENEMY_FRAME_OFFSET_Y = 0;
+    constexpr uint ENEMY_FRAME_SIZE_X = 40;
+    constexpr uint ENEMY_FRAME_SIZE_Y = 40;
+    constexpr uint ENEMY_FRAME_OFFSET_X = 300;
+    constexpr uint ENEMY_FRAME_OFFSET_Y = 0;
 }
 
 /// correct character rotation to point directly at mouse
@@ -49,9 +53,8 @@ constexpr int PLAYER_ROTATION_ANGLE_CORRECTION = 0;//-8;
 constexpr int ENEMY_ROTATION_ANGLE_CORRECTION = 0;
 
 
-typedef unsigned int uint;
-typedef sf::Vector2f vFloat;
-typedef const vFloat &cvFloat;
+constexpr uint WEAPON_TYPES_COUNT = 9;
+constexpr uint ZOMBIE_TYPES_COUNT = 6;
 
 
 

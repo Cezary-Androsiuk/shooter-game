@@ -92,10 +92,11 @@ public:
         class Zombie{
             static json::value_type getZombie();
         public:
-            static float getMovementSpeed();
-            static float getDamage();
-            static float getHealth();
-            static float getPlayerMoveSlowDownRatio();
+            static float getMovementSpeed(uint zombieType);
+            static float getDamage(uint zombieType);
+            static float getHealthPoints(uint zombieType);
+            static float getPlayerMoveSlowDownRatio(uint zombieType);
+            static float getSpawnChance(uint zombieType);
         };
     };
 

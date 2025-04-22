@@ -24,7 +24,7 @@
 
     "player": {
         "speed straight": 500.0,
-        "health points": 100,
+        "health points": 10000000,
         "show bounds": false,
         "default skin color": {
             "red": 255,
@@ -57,6 +57,7 @@
             "weapon 5": 250,
             "weapon 6": 210,
             "weapon 7": 130,
+            "weapon 8-0": 2,
             "weapon 8": 64
         },
         "damage": {
@@ -88,7 +89,7 @@
         "attack delay ms": 400,
         "speed increase time delay ms": 200,
         "speed increase time amount multiplier": 1.005,
-        "show bounds": true,
+        "show bounds": false,
         
         "ghost": {
             "movement speed": 200.0,
@@ -98,10 +99,46 @@
         },
 
         "zombie": {
-            "movement speed": 200.0,
-            "damage": 10.0,
-            "health": 100,
-            "player move slow down ratio": 0.5
+            "movement speed": {
+                "zombie 0": 200.0,
+                "zombie 1": 140.0,
+                "zombie 2": 260.0,
+                "zombie 3": 180.0,
+                "zombie 4": 120.0,
+                "zombie 5": 80.0
+            },
+            "damage": {
+                "zombie 0": 5.0,
+                "zombie 1": 7.0,
+                "zombie 2": 10.0,
+                "zombie 3": 20.0,
+                "zombie 4": 40.0,
+                "zombie 5": 100.0
+            },
+            "health points": {
+                "zombie 0": 50.0,
+                "zombie 1": 100.0,
+                "zombie 2": 200.0,
+                "zombie 3": 300.0,
+                "zombie 4": 500.0,
+                "zombie 5": 1000.0
+            },
+            "player move slow down ratio": {
+                "zombie 0": 0.3,
+                "zombie 1": 0.4,
+                "zombie 2": 0.5,
+                "zombie 3": 0.6,
+                "zombie 4": 0.7,
+                "zombie 5": 0.8
+            },
+            "spawn chance": {
+                "zombie 0": 0.5,
+                "zombie 1": 0.30,
+                "zombie 2": 0.15,
+                "zombie 3": 0.05,
+                "zombie 4": 0.05,
+                "zombie 5": 0.05
+            }
         }
     },
 

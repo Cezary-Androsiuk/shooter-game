@@ -5,10 +5,17 @@
 
 void Zombie::initData()
 {
-    m_movementSpeedAddons.msDefault = InitialData::Enemy::Zombie::getMovementSpeed();
-    m_playerMoveSlowDownRatio = InitialData::Enemy::Zombie::getPlayerMoveSlowDownRatio();
-    m_healthPoints = InitialData::Enemy::Zombie::getHealth();
-    m_damage = InitialData::Enemy::Zombie::getDamage();
+    if(m_type > ZOMBIE_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid enemy type, max is %u and got: %u. (using last instead)\n", ZOMBIE_TYPES_COUNT-1, m_type);
+        fflush(stderr);
+        m_type = ZOMBIE_TYPES_COUNT-1;
+    }
+
+    m_movementSpeedAddons.msDefault = InitialData::Enemy::Zombie::getMovementSpeed(m_type);
+    m_playerMoveSlowDownRatio = InitialData::Enemy::Zombie::getPlayerMoveSlowDownRatio(m_type);
+    m_healthPoints = InitialData::Enemy::Zombie::getHealthPoints(m_type);
+    m_damage = InitialData::Enemy::Zombie::getDamage(m_type);
 
     /// Size
     m_size.x = 50.f;
@@ -40,9 +47,9 @@ void Zombie::initRenderModel()
     m_renderModel.body.setScale(spriteScale, spriteScale);
 }
 
-Zombie::Zombie()
+Zombie::Zombie(uint type)
     : Enemy()
-    , m_type{0}
+    , m_type{type}
 {
 
 }
@@ -113,18 +120,4 @@ void Zombie::render(sf::RenderTarget *target)
 
     if(m_boundsVisible)
         target->draw(m_boundsShape);
-}
-
-void Zombie::setType(int type)
-{
-    if(type > 5)
-    {
-        fprintf(stderr, "invalid enemy type, max is 5 and got: %u. (using 5 instead)\n", type);
-        fflush(stderr);
-        m_type = 5;
-    }
-    else
-    {
-        m_type = type;
-    }
 }
