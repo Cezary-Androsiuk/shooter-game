@@ -48,6 +48,45 @@ namespace MAIN_SPRITE{
     constexpr uint ENEMY_FRAME_SIZE_Y = 40;
     constexpr uint ENEMY_FRAME_OFFSET_X = 300;
     constexpr uint ENEMY_FRAME_OFFSET_Y = 0;
+
+    namespace ARMOR{
+
+        namespace HELMET{
+            constexpr uint FRAME_SIZE_X = 40;
+            constexpr uint FRAME_SIZE_Y = 40;
+            constexpr uint FRAME_OFFSET_X = 40;
+            constexpr uint FRAME_OFFSET_Y = 0;
+        }
+
+        namespace CHEST{
+            constexpr uint FRAME_SIZE_X = 40;
+            constexpr uint FRAME_SIZE_Y = 40;
+            constexpr uint FRAME_OFFSET_X = 80;
+            constexpr uint FRAME_OFFSET_Y = 0;
+        }
+
+        namespace ARMS{
+            constexpr uint FRAME_SIZE_X = 40;
+            constexpr uint FRAME_SIZE_Y = 40;
+            constexpr uint FRAME_OFFSET_X = 120;
+            constexpr uint FRAME_OFFSET_Y = 0;
+        }
+
+        namespace FOREARMS{
+            constexpr uint FRAME_SIZE_X = 40;
+            constexpr uint FRAME_SIZE_Y = 40;
+            constexpr uint FRAME_OFFSET_X = 160;
+            constexpr uint FRAME_OFFSET_Y = 0;
+        }
+
+        namespace GLOVES{
+            constexpr uint FRAME_SIZE_X = 40;
+            constexpr uint FRAME_SIZE_Y = 40;
+            constexpr uint FRAME_OFFSET_X = 200;
+            constexpr uint FRAME_OFFSET_Y = 0;
+        }
+
+    }
 }
 
 /// correct character rotation to point directly at mouse

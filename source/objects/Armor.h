@@ -8,6 +8,7 @@
 class Armor
 {
     void initData();
+    void initRenderModels();
 
 public:
     Armor();
@@ -30,6 +31,7 @@ private:
     /* EVENTS */
 
     /* UPDATE */
+    void updateRenderModels();
 
     /* RENDER */
 
@@ -43,8 +45,6 @@ public:
     float getProtection() const;
 
     /* SETTERS */
-    void setPlayerPosition(const sf::Vector2f *position);
-    void setPlayerSize(const sf::Vector2f *size);
     void setPlayerCenter(const sf::Vector2f *center);
     void setPlayerRotationAngle(const float *rotationAngle);
 
@@ -57,7 +57,7 @@ public:
 private:
 
     struct ArmorElement{
-        std::unique_ptr<sf::Sprite> renderModel;
+        sf::Sprite renderModel;
         uint elementIndex; /// describes type of helmet, type of glove etc.
         float protection;
     };
@@ -68,8 +68,6 @@ private:
     ArmorElement m_forearms;
     ArmorElement m_gloves;
 
-    const sf::Vector2f *m_playerPosition;
-    const sf::Vector2f *m_playerSize;
     const sf::Vector2f *m_playerCenter;
     const float *m_playerRotationAngle;
 };

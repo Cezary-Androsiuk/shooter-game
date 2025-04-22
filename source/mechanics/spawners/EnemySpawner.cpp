@@ -70,8 +70,9 @@ void EnemySpawner::update()
 
 std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
 {
-    static int enemiesSpawned = 0;
-    if(m_readyToSpawn && enemiesSpawned < m_spawnCountLimit)
+    return nullptr;
+
+    if(m_readyToSpawn)
     {
         m_readyToSpawn = false;
 

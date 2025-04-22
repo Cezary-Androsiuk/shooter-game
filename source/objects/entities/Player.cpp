@@ -46,14 +46,14 @@ void Player::initRenderModel()
     m_renderModel.bounds.setTexture(mainSpriteTexture, false);
     m_renderModel.bounds.setTextureRect(
         sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
-    m_renderModel.bounds.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
+    m_renderModel.bounds.setOrigin(frameSizeX/2 ,frameSizeY/2);
     m_renderModel.bounds.setScale(spriteScale, spriteScale);
 
     objectYPos += frameSizeY;
     m_renderModel.skin.setTexture(mainSpriteTexture, false);
     m_renderModel.skin.setTextureRect(
         sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
-    m_renderModel.skin.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
+    m_renderModel.skin.setOrigin(frameSizeX/2 ,frameSizeY/2);
     m_renderModel.skin.setScale(spriteScale, spriteScale);
     m_renderModel.skin.setColor(InitialData::Player::getDefaultSkinColor());
 
@@ -61,7 +61,7 @@ void Player::initRenderModel()
     m_renderModel.shirt.setTexture(mainSpriteTexture, false);
     m_renderModel.shirt.setTextureRect(
         sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
-    m_renderModel.shirt.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
+    m_renderModel.shirt.setOrigin(frameSizeX/2 ,frameSizeY/2);
     m_renderModel.shirt.setScale(spriteScale, spriteScale);
     m_renderModel.shirt.setColor(InitialData::Player::getDefaultShirtColor());
 
@@ -70,7 +70,7 @@ void Player::initRenderModel()
     m_renderModel.bakpack.setTexture(mainSpriteTexture, false);
     m_renderModel.bakpack.setTextureRect(
         sf::IntRect(frameOffsetX, objectYPos, frameSizeX, frameSizeY));
-    m_renderModel.bakpack.setOrigin(frameSizeX/2 ,frameSizeY/2); /// position is (0,0)
+    m_renderModel.bakpack.setOrigin(frameSizeX/2 ,frameSizeY/2);
     m_renderModel.bakpack.setScale(spriteScale, spriteScale);
     m_renderModel.bakpack.setColor(InitialData::Player::getDefaultBackpackColor());
 
@@ -91,6 +91,12 @@ void Player::initArmor()
 {
     if(!m_armor)
         m_armor = std::make_unique<Armor>();
+
+    m_armor->setPlayerCenter(&m_center);
+    m_armor->setPlayerRotationAngle(&m_rotationAngle);
+
+    m_armor->setHelmet(1);
+
     m_armor->init();
 }
 
@@ -307,11 +313,9 @@ void Player::updateWeapon()
     m_weapon->setPosition(m_position);
     m_weapon->setRotationAngle(m_rotationAngle);
 
-    // static uint weaponIndex = 0;
-    // ++weaponIndex;
-    // if(weaponIndex >= 900*40)
-    //     weaponIndex = 0;
-    // m_weapon->setWeaponIndex(weaponIndex/(100*40));
+    static uint wi = 0; wi+=6;
+    if(wi >= 9*1000) wi = 0;
+    m_weapon->setWeaponIndex(wi/(1*1000));
 
     m_weapon->update();
 }
@@ -319,6 +323,27 @@ void Player::updateWeapon()
 void Player::updateArmor()
 {
 
+    static uint hi = 0; hi+=3;
+    if(hi >= 6*1000) hi = 0;
+    m_armor->setHelmet(hi/(1*1000));
+
+    static uint ci = 0; ci+=5;
+    if(ci >= 6*1000) ci = 0;
+    m_armor->setChest(ci/(1*1000));
+
+    static uint ai = 0; ai+=7;
+    if(ai >= 6*1000) ai = 0;
+    m_armor->setArms(ai/(1*1000));
+
+    static uint fi = 0; fi+=11;
+    if(fi >= 6*1000) fi = 0;
+    m_armor->setForearms(fi/(1*1000));
+
+    static uint gi = 0; gi+=13;
+    if(gi >= 6*1000) gi = 0;
+    m_armor->setGloves(gi/(1*1000));
+
+    m_armor->update();
 }
 
 void Player::updateEquipment()
@@ -339,6 +364,7 @@ void Player::init()
 void Player::pollEvent(const sf::Event &event)
 {
     this->m_weapon->pollEvent(event);
+    this->m_armor->pollEvent(event);
 }
 
 void Player::update()
@@ -363,6 +389,7 @@ void Player::render(sf::RenderTarget *target)
     target->draw(m_renderModel.bakpack);
 
     m_weapon->render(target);
+    m_armor->render(target);
 
     if(m_boundsVisible)
         target->draw(m_boundsShape);
