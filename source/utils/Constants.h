@@ -22,6 +22,7 @@ extern const char *RENDER_SHADER1_PATH;
 extern const char *MENU_BACKGROUND_IMAGE_PATH;
 extern const char *PAUSE_BACKGROUND_IMAGE_PATH;
 extern const char *DEFEAT_BACKGROUND_IMAGE_PATH;
+extern const char *PLAY_STAT_INFO_NOTCH_IMAGE_PATH;
 
 extern const char *GOT_DAMAGE_ANIMATION_TEXTURE;
 

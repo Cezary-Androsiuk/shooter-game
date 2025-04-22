@@ -20,6 +20,7 @@ class PlayState : public State
     void initPlayer();
     void initEnemySpawner();
     void initObjects();
+    void initStatInfo();
 
 public:
     PlayState();
@@ -52,6 +53,8 @@ public:
     void render(sf::RenderTarget *target) override;
 
 private:
+    std::shared_ptr<sf::Sprite> m_statInfoNotch;
+
     std::shared_ptr<Map> m_map;
     Player *m_player;
     std::vector<std::unique_ptr<Bullet>> m_bullets;

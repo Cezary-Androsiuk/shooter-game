@@ -39,9 +39,19 @@ void PlayState::initObjects()
     this->initEnemySpawner();
 }
 
+void PlayState::initStatInfo()
+{
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+
+    m_statInfoNotch = std::make_unique<sf::Sprite>(
+        GlobalData::getInstance()->getPlayStatInfoNotchTexture(),
+        sf::IntRect(0,0, 800, 90));
+    m_statInfoNotch->setScale(windowRatio);
+    m_statInfoNotch->setPosition(sf::Vector2f((1920.f/2 - 800.f/2) * windowRatio.x, 0.f ));
+}
+
 PlayState::PlayState()
 {
-
     printf("created playstate\n");
     fflush(stdout);
 }
@@ -54,6 +64,7 @@ PlayState::~PlayState()
 void PlayState::init()
 {
     this->initObjects();
+    this->initStatInfo();
 }
 
 bool PlayState::requestDefeatState()
@@ -97,8 +108,6 @@ void PlayState::updateEnemies()
 
         /// deletes the object if not alive
         if (!enemy->getEnemyAlive()) {
-            printf("enemy died\n");
-            fflush(stdout);
             it = m_enemies.erase(it);
         } else {
             ++it;
@@ -231,4 +240,6 @@ void PlayState::render(sf::RenderTarget *target)
 
     for(const auto &animation : m_animations)
         animation->render(target);
+
+    target->draw(*m_statInfoNotch);
 }

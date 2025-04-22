@@ -9,6 +9,7 @@ const char *RENDER_SHADER1_PATH = "./resources/shaders/blur.frag";
 const char *MENU_BACKGROUND_IMAGE_PATH = "./resources/images/MenuBackground.png";
 const char *PAUSE_BACKGROUND_IMAGE_PATH = "./resources/images/PauseBackground.png";
 const char *DEFEAT_BACKGROUND_IMAGE_PATH = "./resources/images/DefeatBackground.png";
+const char *PLAY_STAT_INFO_NOTCH_IMAGE_PATH = "./resources/images/PlayStatInfoNotch.png";
 
 const char *GOT_DAMAGE_ANIMATION_TEXTURE = "./resources/animations/static/damageOutline.png";
 

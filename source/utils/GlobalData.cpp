@@ -97,6 +97,20 @@ void GlobalData::loadGotDamageAnimationTexture()
     fflush(stdout);
 }
 
+void GlobalData::loadPlayStatInfoNotchTexture()
+{
+    if(!m_playStatInfoNotchTexture.loadFromFile(PLAY_STAT_INFO_NOTCH_IMAGE_PATH, sf::IntRect(0,0,800,90)))
+    {
+        std::string message = "Cannot load play stat info notch texture from path:\n";
+        message += PLAY_STAT_INFO_NOTCH_IMAGE_PATH;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("texture: 'play stat info notch' loaded\n");
+
+    fflush(stdout);
+}
+
 GlobalData::GlobalData()
 {
     this->loadFonts();
@@ -105,6 +119,7 @@ GlobalData::GlobalData()
     this->loadPausePlayStateBackgroundTexture();
     this->loadDefeatStateBackgroundTexture();
     this->loadGotDamageAnimationTexture();
+    this->loadPlayStatInfoNotchTexture();
 }
 
 GlobalData *GlobalData::getInstance()
@@ -136,6 +151,11 @@ const sf::Texture &GlobalData::getMainSpriteTexture() const
 const sf::Texture &GlobalData::getPausePlayStateBackgroundTexture() const
 {
     return m_pausePlayStateBackgroundTexture;
+}
+
+const sf::Texture &GlobalData::getPlayStatInfoNotchTexture() const
+{
+    return m_playStatInfoNotchTexture;
 }
 
 const sf::Texture &GlobalData::getGotDamageAnimationTexture() const
