@@ -19,7 +19,6 @@ public:
 
 private:
     /* OTHER */
-    static sf::Vector2f angleToDirection(float angleDegrees);
 
     /* EVENTS */
 

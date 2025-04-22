@@ -41,6 +41,7 @@ add_executable(
     source/utils/json.hpp
     source/utils/InitialData.h source/utils/InitialData.cpp
     source/utils/GlobalData.h source/utils/GlobalData.cpp
+    source/utils/AdvancedComputation.h source/utils/AdvancedComputation.cpp
 
     # ENUMS
     source/enums/GameState.h source/enums/GameState.cpp

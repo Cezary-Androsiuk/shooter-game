@@ -75,7 +75,7 @@ void Zombie::updateRenderModel()
         m_position.y + m_size.y/2);
 
     m_renderModel.body.setPosition(center);
-    // m_renderModel.body.setRotation(m_rotationAngle);
+    m_renderModel.body.setRotation(m_rotationAngle);
 }
 
 

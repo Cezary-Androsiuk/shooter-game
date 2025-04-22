@@ -3,6 +3,7 @@
 #include "utils/InitialData.h"
 #include "utils/DeltaTime.h"
 #include "utils/GlobalData.h"
+#include "utils/AdvancedComputation.h"
 
 void Player::initData()
 {
@@ -129,92 +130,12 @@ void Player::move(float moveX, float moveY)
     );
 }
 
-void Player::computeMovementSpeed()
+void Player::updateMovementSpeed()
 {
     m_movementSpeedStraight = m_movementSpeedAddons.msStraightDefault *
                               m_movementSpeedAddons.msMultiplier *
                               DeltaTime::get()->value();
     m_movementSpeedOblique = m_movementSpeedStraight / 1.4142f /* sqrt(2) */;
-}
-
-float Player::rotationFromVector(cvFloat originPoint, cvFloat targetPoint)
-{
-    /// compute difference
-    float dx = targetPoint.x - originPoint.x;
-    float dy = targetPoint.y - originPoint.y;
-
-    /// compute angle in radians (knowing that axis Y is inverted in SFML)
-    float angleRadians = std::atan2(-dy, dx);
-    // printf("Angle: %.2f  |   Pos: %.2f, %.2f   |   ", angleRadians, dx, dy);
-
-    /// convert radians to degrees
-    float angleDegrees = angleRadians * (180.0f / static_cast<float>(M_PI));
-    angleDegrees = -angleDegrees;
-
-    /// normalize angle [0, 360)
-    if (angleDegrees < 0) {
-        angleDegrees += 360.0f;
-    }
-
-    return angleDegrees;
-}
-
-void Player::preventMoveThatExitBounds(const FloatRectEdges &playerBounds, const FloatRectEdges &obstacleBounds)
-{
-    /// Left
-    if(playerBounds.left <= obstacleBounds.left)
-        m_position = sf::Vector2f(
-            obstacleBounds.left,
-            m_position.y);
-    /// Right
-    if(playerBounds.right >= obstacleBounds.right)
-        m_position = sf::Vector2f(
-            obstacleBounds.right - m_size.x,
-            m_position.y);
-    /// Top
-    if(playerBounds.top <= obstacleBounds.top)
-        m_position = sf::Vector2f(
-            m_position.x,
-            obstacleBounds.top);
-    /// Bottom
-    if(playerBounds.bottom >= obstacleBounds.bottom)
-        m_position = sf::Vector2f(
-            m_position.x,
-            obstacleBounds.bottom - m_size.y);
-}
-
-void Player::preventMoveThatEnterBounds(
-    const FloatRectEdges &playerBounds,
-    const FloatRectEdges &obstacleBounds)
-{
-    float overlapLeft   = playerBounds.right - obstacleBounds.left;
-    float overlapRight  = obstacleBounds.right - playerBounds.left;
-    float overlapTop    = playerBounds.bottom - obstacleBounds.top;
-    float overlapBottom = obstacleBounds.bottom - playerBounds.top;
-
-    /// test if collision occur
-    if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
-    {
-        /// test what collision is the smallest - that means this edges are colliding
-        float minOverlap = std::min({overlapLeft, overlapRight, overlapTop, overlapBottom});
-
-        if (minOverlap == overlapLeft)
-        {
-            m_position.x = obstacleBounds.left - m_size.x;
-        }
-        else if (minOverlap == overlapRight)
-        {
-            m_position.x = obstacleBounds.right;
-        }
-        else if (minOverlap == overlapTop)
-        {
-            m_position.y = obstacleBounds.top - m_size.y;
-        }
-        else if (minOverlap == overlapBottom)
-        {
-            m_position.y = obstacleBounds.bottom;
-        }
-    }
 }
 
 void Player::limitMoveThatEnterEnemy(
@@ -290,10 +211,12 @@ void Player::limitPlayerMovementToMap()
         GlobalData::getInstance()->getWindowSize();
     FloatRectEdges windowEgdes(0.f, 0.f, windowSize.x, windowSize.y);
 
-    this->preventMoveThatExitBounds(playerEdges, windowEgdes);
+    AdvancedComputation::preventMoveThatExitBounds(
+        playerEdges, windowEgdes, m_position, m_size);
 
     for(Obstacle *obstacle : m_map->getObstacles())
-        this->preventMoveThatEnterBounds(playerEdges, obstacle->getBounds());
+        AdvancedComputation::preventMoveThatEnterBounds(
+            playerEdges, obstacle->getBounds(), m_position, m_size);
 
     for(auto enemy : *m_enemies)
         this->limitMoveThatEnterEnemy(playerEdges, enemy);
@@ -366,14 +289,8 @@ void Player::updateRotation()
 {
     const sf::Vector2f &mousePos = GlobalData::getInstance()->getMousePosition();
 
-    m_rotationAngle = Player::rotationFromVector(
-        {
-            m_position.x + m_size.x/2,
-            m_position.y + m_size.y/2
-        },
-        mousePos
-        ) + PLAYER_ROTATION_ANGLE_CORRECTION;
-
+    m_rotationAngle = AdvancedComputation::vectorToRotation(m_center, mousePos) +
+                      PLAYER_ROTATION_ANGLE_CORRECTION;
 }
 
 void Player::updateWeapon()
@@ -417,13 +334,13 @@ void Player::pollEvent(const sf::Event &event)
 
 void Player::update()
 {
-    this->computeMovementSpeed();
+    this->updateMovementSpeed();
     this->updateMovement();
+    this->updateCenter();
     this->updateRotation();
     this->limitPlayerMovementToMap();
 
     this->updateBounds();
-    this->updateCenter();
     this->updateRenderModel();
 
     this->updateEquipment();

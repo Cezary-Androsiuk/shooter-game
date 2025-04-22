@@ -41,19 +41,12 @@ public:
 private:
     /* OTHER */
     void move(float moveX, float moveY);
-    void computeMovementSpeed();
-    static float rotationFromVector(cvFloat originPoint, cvFloat targetPoint);
 
 private:
     /* EVENTS */
 
     /* UPDATE */
-    void preventMoveThatExitBounds(
-        const FloatRectEdges &playerBounds,
-        const FloatRectEdges &obstacleBounds);
-    void preventMoveThatEnterBounds(
-        const FloatRectEdges &playerBounds,
-        const FloatRectEdges &obstacleBounds);
+    void updateMovementSpeed();
     void limitMoveThatEnterEnemy(
         const FloatRectEdges &playerBounds,
         std::shared_ptr<Enemy> enemy);

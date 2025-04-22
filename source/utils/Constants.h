@@ -42,8 +42,10 @@ namespace MAIN_SPRITE{
     constexpr int ENEMY_FRAME_OFFSET_Y = 0;
 }
 
-/// correct character to point directly at mouse
-constexpr int PLAYER_ROTATION_ANGLE_CORRECTION = 0;//-8; /// to match mouse and weapon
+/// correct character rotation to point directly at mouse
+constexpr int PLAYER_ROTATION_ANGLE_CORRECTION = 0;//-8;
+
+constexpr int ENEMY_ROTATION_ANGLE_CORRECTION = 0;
 
 
 typedef unsigned int uint;

@@ -29,21 +29,20 @@ public:
 
 protected:
     /* OTHER */
-    static sf::Vector2f calculateNormalizedMovementVector(
-        const sf::Vector2f& currentPosition,
-        const sf::Vector2f& targetPosition);
-
-    void computeMovementSpeed();
 
     /* EVENTS */
 
     /* UPDATE */
+    void updateMovementSpeed();
     void preventMoveThatEnterBounds(
         const FloatRectEdges &playerBounds,
         const FloatRectEdges &obstacleBounds);
     void performMoveTowardsPlayer();
     void updateDamageDelay();
     void updateMovementSpeedTimeMultiplier();
+    void updatePlayerCenter();
+    void updateCenter();
+    void updateRotation();
 
     /* RENDER */
 
@@ -67,8 +66,11 @@ protected:
     sf::Vector2f m_position;
     sf::Vector2f m_size;
     sf::Vector2f m_moveVector;
+    sf::Vector2f m_center;
+    float m_rotationAngle;
     sf::Vector2f m_moveDirectionRatio;
     const sf::FloatRect *m_playerBounds;
+    sf::Vector2f m_playerCenter;
     float m_health;
     float m_damage;
     float m_damageLagIncrease;

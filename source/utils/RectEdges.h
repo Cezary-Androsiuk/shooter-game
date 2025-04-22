@@ -20,5 +20,6 @@ public:
 };
 
 typedef RectEdges<float> FloatRectEdges;
+typedef const FloatRectEdges &creFloat;
 
 #endif // RECTEDGES_H

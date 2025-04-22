@@ -1,5 +1,7 @@
 #include "Enemy.h"
 
+#include "utils/AdvancedComputation.h"
+
 void Enemy::initData()
 {
     m_position.x = 0.f;
@@ -34,19 +36,7 @@ Enemy::~Enemy()
 
 }
 
-sf::Vector2f Enemy::calculateNormalizedMovementVector(const sf::Vector2f &currentPosition, const sf::Vector2f &targetPosition)
-{
-    sf::Vector2f direction = targetPosition - currentPosition;
-    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-    // printf("%0.4f, %0.4f, L: %0.2f\n", direction.x, direction.y, length);
-
-    if (length > 0) {
-        return direction / length;
-    }
-    return sf::Vector2f(0, 0);
-}
-
-void Enemy::computeMovementSpeed()
+void Enemy::updateMovementSpeed()
 {
     m_movementSpeed = m_movementSpeedAddons.msDefault *
                       m_movementSpeedAddons.msMultiplier *
@@ -102,12 +92,7 @@ void Enemy::preventMoveThatEnterBounds(
 
 void Enemy::performMoveTowardsPlayer()
 {
-    sf::Vector2f enemyCenter(m_position.x + m_size.x/2, m_position.y + m_size.y/2);
-    sf::Vector2f playerCenter(
-        m_playerBounds->left + m_playerBounds->width/2,
-        m_playerBounds->top + m_playerBounds->height/2);
-
-    m_moveVector = calculateNormalizedMovementVector(enemyCenter, playerCenter);
+    m_moveVector = AdvancedComputation::calculateNormalizedVector(m_center, m_playerCenter);
 
     m_position.x += m_moveVector.x * m_movementSpeed;
     m_position.y += m_moveVector.y * m_movementSpeed;
@@ -143,6 +128,23 @@ void Enemy::updateMovementSpeedTimeMultiplier()
     }
 }
 
+void Enemy::updatePlayerCenter()
+{
+    m_playerCenter.x = m_playerBounds->left + m_playerBounds->width/2;
+    m_playerCenter.y = m_playerBounds->top + m_playerBounds->height/2;
+}
+
+void Enemy::updateCenter()
+{
+    m_center.x = m_position.x + m_size.x/2;
+    m_center.y = m_position.y + m_size.y/2;
+}
+
+void Enemy::updateRotation()
+{
+    m_rotationAngle = AdvancedComputation::vectorToRotation(m_center, m_playerCenter);
+}
+
 void Enemy::init()
 {
     this->initData();
@@ -155,9 +157,12 @@ void Enemy::pollEvent(const sf::Event &event)
 
 void Enemy::update()
 {
-    this->computeMovementSpeed();
+    this->updateMovementSpeed();
     this->updateDamageDelay();
     this->updateMovementSpeedTimeMultiplier();
+    this->updateCenter();
+    this->updatePlayerCenter();
+    this->updateRotation();
 
     this->performMoveTowardsPlayer();
 }

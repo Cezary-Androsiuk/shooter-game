@@ -3,6 +3,7 @@
 #include "utils/GlobalData.h"
 #include "utils/InitialData.h"
 #include "utils/Support.h"
+#include "utils/AdvancedComputation.h"
 
 void Weapon::initData()
 {
@@ -43,12 +44,6 @@ Weapon::Weapon()
 Weapon::~Weapon()
 {
 
-}
-
-sf::Vector2f Weapon::angleToDirection(float angleDegrees)
-{
-    float angleRadians = angleDegrees * M_PI / 180.0f;
-    return sf::Vector2f(std::cos(angleRadians), std::sin(angleRadians));
 }
 
 void Weapon::updateWeaponType()
@@ -161,7 +156,7 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
             std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
 
             bullet->setPosition(m_position);
-            bullet->setVelocity(Weapon::angleToDirection(m_rotationAngle));
+            bullet->setVelocity(AdvancedComputation::rotationToVector(m_rotationAngle));
             bullet->setWeaponIndex(m_usedWeaponIndex);
             bullet->setDamage(InitialData::Weapon::getDamage(m_usedWeaponIndex));
 
