@@ -56,6 +56,7 @@ add_executable(
     source/states/MenuState.h source/states/MenuState.cpp
     source/states/PlayState.h source/states/PlayState.cpp
     source/states/PausePlayState.h source/states/PausePlayState.cpp
+    source/states/DefeatState.h source/states/DefeatState.cpp
 
     # OBJECTS
     source/objects/Weapon.h source/objects/Weapon.cpp

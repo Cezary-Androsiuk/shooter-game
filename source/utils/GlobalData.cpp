@@ -31,7 +31,7 @@ void GlobalData::loadMenuStateBackgroundTexture()
 {
     if(!m_menuStateBackgroundTexture.loadFromFile(MENU_BACKGROUND_IMAGE_PATH, sf::IntRect(0,0,1920,1080)))
     {
-        std::string message = "Cannot load main sprite texture from path:\n";
+        std::string message = "Cannot load menu state background texture from path:\n";
         message += MENU_BACKGROUND_IMAGE_PATH;
         Support::displayApplicationError(message);
         exit(1);
@@ -59,12 +59,26 @@ void GlobalData::loadPausePlayStateBackgroundTexture()
 {
     if(!m_pausePlayStateBackgroundTexture.loadFromFile(PAUSE_BACKGROUND_IMAGE_PATH, sf::IntRect(0,0,1920,1080)))
     {
-        std::string message = "Cannot load main sprite texture from path:\n";
+        std::string message = "Cannot load pause play state background texture from path:\n";
         message += PAUSE_BACKGROUND_IMAGE_PATH;
         Support::displayApplicationError(message);
         exit(1);
     }
     printf("texture: 'pause play state background' loaded\n");
+
+    fflush(stdout);
+}
+
+void GlobalData::loadDefeatStateBackgroundTexture()
+{
+    if(!m_defeatStateBackgroundTexture.loadFromFile(DEFEAT_BACKGROUND_IMAGE_PATH, sf::IntRect(0,0,1920,1080)))
+    {
+        std::string message = "Cannot load defeat state background texture from path:\n";
+        message += DEFEAT_BACKGROUND_IMAGE_PATH;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("texture: 'defeat state background' loaded\n");
 
     fflush(stdout);
 }
@@ -106,6 +120,11 @@ const sf::Texture &GlobalData::getMainSpriteTexture() const
 const sf::Texture &GlobalData::getPausePlayStateBackgroundTexture() const
 {
     return m_pausePlayStateBackgroundTexture;
+}
+
+const sf::Texture &GlobalData::getDefeatStateBackgroundTexture() const
+{
+
 }
 
 const sf::Vector2f &GlobalData::getWindowSize() const

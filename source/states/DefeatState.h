@@ -1,5 +1,5 @@
-#ifndef PAUSEPLAYSTATE_H
-#define PAUSEPLAYSTATE_H
+#ifndef DEFEATSTATE_H
+#define DEFEATSTATE_H
 
 #include <SFML/Graphics.hpp>
 #include <SimpleGUI/Button.hpp>
@@ -10,21 +10,19 @@
 
 using namespace sgui;
 
-class PausePlayState : public State
+class DefeatState : public State
 {
     /* INITIALIZE */
     void initBlurredPlayBackgroundSprite();
     void initBackgroundSprite();
-    void initContinuePlayButton();
     void initExitPlayButton();
 
 public:
-    PausePlayState();
-    ~PausePlayState();
+    DefeatState();
+    ~DefeatState();
 
     void init();
 
-    bool requestContinuePlay();
     bool requestExitPlay();
 
 public:
@@ -42,8 +40,7 @@ private:
 
     std::unique_ptr<sf::Sprite> m_backgroundSprite;
 
-    std::unique_ptr<Button> m_continuePlayButton;
     std::unique_ptr<Button> m_exitPlayButton;
 };
 
-#endif // PAUSEPLAYSTATE_H
+#endif // DEFEATSTATE_H
