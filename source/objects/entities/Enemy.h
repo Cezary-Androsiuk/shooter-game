@@ -61,6 +61,7 @@ public:
     float getMovementSpeed() const;
     float getPlayerMoveSlowDownRatio() const;
     bool getReadyToAttack();
+    float getDamage() const;
 
     void setPosition(sf::Vector2f position);
     void setAvailableAreaForEnemy(std::shared_ptr<Map> map);

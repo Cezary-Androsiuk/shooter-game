@@ -26,6 +26,8 @@ public:
 
     void init();
 
+    bool requestDefeatState();
+
 private:
     /* OTHER */
 

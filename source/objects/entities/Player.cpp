@@ -381,6 +381,11 @@ Weapon *Player::getWeapon() const
     return m_weapon.get();
 }
 
+bool Player::getPlayerAlive() const
+{
+    return m_healthPoints > 0;
+}
+
 void Player::setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies)
 {
     m_enemies = enemies;
@@ -407,4 +412,10 @@ void Player::setWeapon(std::unique_ptr<Weapon> weapon)
 void Player::setArmor(std::unique_ptr<Armor> armor)
 {
     m_armor.swap(armor);
+}
+
+void Player::dealDamage(float damage)
+{
+    m_healthPoints -=
+        damage; // - damage * // decrease by armor
 }

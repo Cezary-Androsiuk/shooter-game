@@ -95,35 +95,6 @@ void Weapon::render(sf::RenderTarget *target)
     target->draw(m_renderModel.body);
 }
 
-void Weapon::setPlayerSize(sf::Vector2f playerSize)
-{
-    m_playerSize = playerSize;
-}
-
-void Weapon::setPosition(sf::Vector2f position)
-{
-    m_position = position;
-}
-
-void Weapon::setRotationAngle(float rotationAngle)
-{
-    m_rotationAngle = rotationAngle;
-}
-
-void Weapon::setWeaponIndex(uint index)
-{
-    if(index > 8)
-    {
-        fprintf(stderr, "invalid weapon index, max is 8 and got: %u. (using 8 instead)\n", index);
-        fflush(stderr);
-        m_setWeaponIndex = 8;
-    }
-    else
-    {
-        m_setWeaponIndex = index;
-    }
-}
-
 std::unique_ptr<Bullet> Weapon::getBulletFromShot()
 {
     if(UNLIKELY(m_clickCorrection.needCheck))
@@ -161,11 +132,11 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
 
             sf::Vector2f bulletStartPosition =
                 AdvancedComputation::rotatePointAroundOrigin(
-                sf::Vector2f(
-                    playerCenter.x,
-                    playerCenter.y + 6.f),
-                playerCenter,
-                m_rotationAngle);
+                    sf::Vector2f(
+                        playerCenter.x,
+                        playerCenter.y + 6.f),
+                    playerCenter,
+                    m_rotationAngle);
 
             bullet->setPosition(bulletStartPosition);
             bullet->setVelocity(AdvancedComputation::rotationToVector(m_rotationAngle));
@@ -178,4 +149,33 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
         }
     }
     return nullptr;
+}
+
+void Weapon::setPlayerSize(sf::Vector2f playerSize)
+{
+    m_playerSize = playerSize;
+}
+
+void Weapon::setPosition(sf::Vector2f position)
+{
+    m_position = position;
+}
+
+void Weapon::setRotationAngle(float rotationAngle)
+{
+    m_rotationAngle = rotationAngle;
+}
+
+void Weapon::setWeaponIndex(uint index)
+{
+    if(index > 8)
+    {
+        fprintf(stderr, "invalid weapon index, max is 8 and got: %u. (using 8 instead)\n", index);
+        fflush(stderr);
+        m_setWeaponIndex = 8;
+    }
+    else
+    {
+        m_setWeaponIndex = index;
+    }
 }

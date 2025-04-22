@@ -54,6 +54,11 @@ void PlayState::init()
     this->initObjects();
 }
 
+bool PlayState::requestDefeatState()
+{
+    return !m_player->getPlayerAlive();
+}
+
 void PlayState::updatePlayer()
 {
     m_player->update();
@@ -110,10 +115,7 @@ void PlayState::updatePlayerAndEnemyRelation()
 
             if(enemy->getReadyToAttack())
             {
-                static int i =0;
-                printf("attack %d\n", i++);
-                fflush(stdout);
-
+                m_player->dealDamage(enemy->getDamage());
             }
         }
     }

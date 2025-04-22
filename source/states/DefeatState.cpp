@@ -7,7 +7,7 @@ void DefeatState::initBlurredPlayBackgroundSprite()
 {
     if(!m_blurredPlayBackgroundLoaded)
     {
-        printf("skipping initialization of blurred play background in PausePlay stage\n");
+        printf("skipping initialization of blurred play background in Defeat stage\n");
         fflush(stdout);
         return;
     }
@@ -28,7 +28,7 @@ void DefeatState::initBackgroundSprite()
     const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
 
     m_backgroundSprite = std::make_unique<sf::Sprite>(
-        GlobalData::getInstance()->getPausePlayStateBackgroundTexture(),
+        GlobalData::getInstance()->getDefeatStateBackgroundTexture(),
         sf::IntRect(0,0, 1920, 1080));
     m_backgroundSprite->setScale(windowRatio);
 }

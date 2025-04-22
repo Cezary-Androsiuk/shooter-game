@@ -4,7 +4,8 @@
 enum class GameState{
     Menu,
     Play,
-    PausePlay
+    PausePlay,
+    Defeat,
 };
 
 #endif // GAMESTATE_H

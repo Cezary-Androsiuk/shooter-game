@@ -89,6 +89,7 @@ GlobalData::GlobalData()
     this->loadMenuStateBackgroundTexture();
     this->loadMainSpriteTexture();
     this->loadPausePlayStateBackgroundTexture();
+    this->loadDefeatStateBackgroundTexture();
 }
 
 GlobalData *GlobalData::getInstance()
@@ -124,7 +125,7 @@ const sf::Texture &GlobalData::getPausePlayStateBackgroundTexture() const
 
 const sf::Texture &GlobalData::getDefeatStateBackgroundTexture() const
 {
-
+    return m_defeatStateBackgroundTexture;
 }
 
 const sf::Vector2f &GlobalData::getWindowSize() const

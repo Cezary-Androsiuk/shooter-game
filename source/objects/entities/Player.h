@@ -42,7 +42,6 @@ private:
     /* OTHER */
     void move(float moveX, float moveY);
 
-private:
     /* EVENTS */
 
     /* UPDATE */
@@ -73,6 +72,7 @@ public:
     sf::Vector2f getPosition() const;
     const sf::FloatRect *getBounds() const;
     Weapon *getWeapon() const;
+    bool getPlayerAlive() const;
 
     /* SETTERS */
     void setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies);
@@ -80,6 +80,9 @@ public:
     void setAvailableAreaForPlayer(std::shared_ptr<Map> map);
     void setWeapon(std::unique_ptr<Weapon> weapon); /// NOT REQUIRED
     void setArmor(std::unique_ptr<Armor> armor); /// NOT REQUIRED
+
+    /* MODIFIERS */
+    void dealDamage(float damage);
 
 private:
     sf::RectangleShape m_boundsShape;

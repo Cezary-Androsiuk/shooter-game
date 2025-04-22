@@ -197,6 +197,11 @@ bool Enemy::getReadyToAttack()
     return false;
 }
 
+float Enemy::getDamage() const
+{
+    return m_damage;
+}
+
 void Enemy::setPosition(sf::Vector2f position)
 {
     m_position = position;

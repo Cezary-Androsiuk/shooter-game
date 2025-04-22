@@ -12,6 +12,7 @@
 #include "states/MenuState.h"
 #include "states/PlayState.h"
 #include "states/PausePlayState.h"
+#include "states/DefeatState.h"
 #include "objects/entities/Player.h"
 
 using namespace sgui;
@@ -29,6 +30,7 @@ class Game
     void initMenuState();
     void initPlayState();
     void initPausePlayState();
+    void initDefeatState();
 
     Game();
     ~Game();
@@ -36,10 +38,12 @@ class Game
     void exitGame();
 
     /* OTHER */
-    void changeStateFromMenuToPlay();
-    void changeStateFromPlayToPause();
-    void changeStateFromPauseToPlay();
-    void changeStateFromPauseToMenu();
+    void changeStateFromMenuToPlay();   /// Menu -> Play
+    void changeStateFromPlayToPause();  /// Play -> Pause
+    void changeStateFromPauseToPlay();  /// Pause -> Play
+    void changeStateFromPauseToMenu();  /// Pause -> Menu
+    void changeStateFromPlayToDefeat(); /// Play -> Defeat
+    void changeStateFromDefeatToMenu(); /// Defeat -> Menu
     void freeUnusedState();
 
     /* EVENTS */
@@ -51,6 +55,7 @@ class Game
     void updateMenuState();
     void updatePlayState();
     void updatePausePlayState();
+    void updateDefeatState();
     void update();
 
     /* RENDER */
@@ -98,6 +103,7 @@ private:
     std::unique_ptr<MenuState> m_menuState;
     std::unique_ptr<PlayState> m_playState;
     std::unique_ptr<PausePlayState> m_pausePlayState;
+    std::unique_ptr<DefeatState> m_defeatState;
 
     Player *m_player;
 };

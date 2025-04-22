@@ -34,12 +34,12 @@ public:
     void update();
     void render(sf::RenderTarget *target);
 
+    std::unique_ptr<Bullet> getBulletFromShot();
+
     void setPlayerSize(sf::Vector2f playerSize);
     void setPosition(sf::Vector2f position);
     void setRotationAngle(float rotationAngle);
     void setWeaponIndex(uint index);
-
-    std::unique_ptr<Bullet> getBulletFromShot();
 
 private:
     struct{

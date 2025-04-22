@@ -124,12 +124,15 @@ void Game::initPausePlayState()
 
     /// PausePlay state can be started only from the Play state
     /// that means RenderTexture has inside last frame that was displayed (frame from Play state)
-    if(m_renderTextureInitialized && InitialData::Game::getApplyShaders())
+    if(m_renderTextureInitialized)
     {
         sf::RenderTexture renderTexture;
         if(renderTexture.create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
         {
-            renderTexture.draw(*m_renderSprite, m_blurShader.get());
+            if(InitialData::Game::getApplyShaders())
+                renderTexture.draw(*m_renderSprite, m_blurShader.get());
+            else
+                renderTexture.draw(*m_renderSprite);
 
             m_pausePlayState->setBlurredPlayBackgroundImage(
                 renderTexture.getTexture().copyToImage());
@@ -143,6 +146,37 @@ void Game::initPausePlayState()
     }
 
     m_pausePlayState->init();
+}
+
+void Game::initDefeatState()
+{
+    printf("init defeat\n");fflush(stdout);
+    m_defeatState = std::make_unique<DefeatState>();
+
+    /// PausePlay state can be started only from the Play state
+    /// that means RenderTexture has inside last frame that was displayed (frame from Play state)
+    if(m_renderTextureInitialized)
+    {
+        sf::RenderTexture renderTexture;
+        if(renderTexture.create(m_renderWindow->getSize().x, m_renderWindow->getSize().y))
+        {
+            // if(InitialData::Game::getApplyShaders())
+            //     renderTexture.draw(*m_renderSprite, m_blurShader.get());
+            // else
+                renderTexture.draw(*m_renderSprite);
+
+            m_defeatState->setBlurredPlayBackgroundImage(
+                renderTexture.getTexture().copyToImage());
+        }
+        else
+        {
+            fprintf(stderr, "failed to create blurred play background image\n");
+            fflush(stderr);
+            m_defeatState->disableBlurredPlayBackground();
+        }
+    }
+
+    m_defeatState->init();
 }
 
 Game::Game()
@@ -194,6 +228,18 @@ void Game::changeStateFromPauseToMenu()
     m_gameState = GameState::Menu;
 }
 
+void Game::changeStateFromPlayToDefeat()
+{
+    initDefeatState();
+    m_gameState = GameState::Defeat;
+}
+
+void Game::changeStateFromDefeatToMenu()
+{
+    initMenuState();
+    m_gameState = GameState::Menu;
+}
+
 void Game::freeUnusedState()
 {
     if(m_menuState && m_gameState != GameState::Menu)
@@ -208,6 +254,9 @@ void Game::freeUnusedState()
 
     if(m_pausePlayState && m_gameState != GameState::PausePlay)
         m_pausePlayState.reset();
+
+    if(m_defeatState && m_gameState != GameState::Defeat)
+        m_defeatState.reset();
 }
 
 void Game::pollEventGame()
@@ -217,25 +266,31 @@ void Game::pollEventGame()
         this->exitGame();
         break;
     case sf::Event::KeyPressed:
+
         if(m_currentEvent.key.code == sf::Keyboard::Escape)
         {
             switch (m_gameState) {
             case GameState::Menu: this->exitGame(); break;
             case GameState::Play: this->changeStateFromPlayToPause(); break;
             case GameState::PausePlay: this->changeStateFromPauseToPlay(); break;
+            case GameState::Defeat: this->changeStateFromDefeatToMenu(); break;
             default:
                 Support::displayApplicationError("unknown game state, can't render");
                 exit(1);
             }
         }
-        else if(InitialData::Game::getDebugExitView())
+        else if(m_currentEvent.key.code == sf::Keyboard::Grave)
         {
-            if(m_currentEvent.key.code == sf::Keyboard::Grave)
+            if(InitialData::Game::getDebugExitView())
                 this->exitGame();
         }
         else if(m_currentEvent.key.code == sf::Keyboard::F)
         {
             m_fps.displayed = !m_fps.displayed;
+        }
+        else if(m_currentEvent.key.code == sf::Keyboard::K) /// kill the player
+        {
+            m_player->dealDamage(10000);
         }
 
         if(m_enableLaggingTests)
@@ -297,6 +352,13 @@ void Game::pollEvent()
         while(m_renderWindow->pollEvent(m_currentEvent)){
             this->pollEventGame();
             m_pausePlayState->pollEvent(m_currentEvent);
+        }
+    }
+    else if(m_gameState == GameState::Defeat)
+    {
+        while(m_renderWindow->pollEvent(m_currentEvent)){
+            this->pollEventGame();
+            m_defeatState->pollEvent(m_currentEvent);
         }
     }
 }
@@ -387,6 +449,9 @@ void Game::updateMenuState()
 void Game::updatePlayState()
 {
     m_playState->update();
+
+    if(m_playState->requestDefeatState())
+        this->changeStateFromPlayToDefeat();
 }
 
 void Game::updatePausePlayState()
@@ -400,12 +465,21 @@ void Game::updatePausePlayState()
         this->changeStateFromPauseToMenu();
 }
 
+void Game::updateDefeatState()
+{
+    m_defeatState->update();
+
+    if(m_defeatState->requestExitPlay())
+        this->changeStateFromDefeatToMenu();
+}
+
 void Game::update()
 {
     switch (m_gameState) {
     case GameState::Menu: this->updateMenuState(); break;
     case GameState::Play: this->updatePlayState(); break;
     case GameState::PausePlay: this->updatePausePlayState(); break;
+    case GameState::Defeat: this->updateDefeatState(); break;
     default:
         Support::displayApplicationError("unknown game state, can't render");
         exit(1);
@@ -421,6 +495,7 @@ void Game::renderObjects(sf::RenderTarget *target)
     case GameState::Menu: m_menuState->render(target); break;
     case GameState::Play: m_playState->render(target); break;
     case GameState::PausePlay: m_pausePlayState->render(target); break;
+    case GameState::Defeat: m_defeatState->render(target); break;
     default:
         Support::displayApplicationError("unknown game state, can't render");
         exit(1);
