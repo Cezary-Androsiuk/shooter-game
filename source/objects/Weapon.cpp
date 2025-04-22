@@ -155,7 +155,19 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
 
             std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
 
-            bullet->setPosition(m_position);
+            sf::Vector2f playerCenter(
+                m_position.x + m_playerSize.x/2,
+                m_position.y + m_playerSize.y/2);
+
+            sf::Vector2f bulletStartPosition =
+                AdvancedComputation::rotatePointAroundOrigin(
+                sf::Vector2f(
+                    playerCenter.x,
+                    playerCenter.y + 6.f),
+                playerCenter,
+                m_rotationAngle);
+
+            bullet->setPosition(bulletStartPosition);
             bullet->setVelocity(AdvancedComputation::rotationToVector(m_rotationAngle));
             bullet->setWeaponIndex(m_usedWeaponIndex);
             bullet->setDamage(InitialData::Weapon::getDamage(m_usedWeaponIndex));

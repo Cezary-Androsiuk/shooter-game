@@ -100,3 +100,19 @@ sf::Vector2f AdvancedComputation::calculateNormalizedVector(cvFloat currentPosit
     }
     return sf::Vector2f(0, 0);
 }
+
+sf::Vector2f AdvancedComputation::rotatePointAroundOrigin(cvFloat point, cvFloat origin, float angleDegrees)
+{
+    /// amgle to radians
+    const float angleRad = angleDegrees * 3.14159265f / 180.f;
+    const float cosA = std::cos(angleRad);
+    const float sinA = std::sin(angleRad);
+
+    const sf::Vector2f translatedPoint = point - origin;
+
+    const float x = translatedPoint.x * cosA - translatedPoint.y * sinA;
+    const float y = translatedPoint.x * sinA + translatedPoint.y * cosA;
+
+    /// move back to global position
+    return sf::Vector2f(x + origin.x, y + origin.y);
+}

@@ -28,6 +28,10 @@ public:
 
     static sf::Vector2f calculateNormalizedVector(
         cvFloat currentPosition, cvFloat targetPosition);
+
+
+    static sf::Vector2f rotatePointAroundOrigin(
+        cvFloat point, cvFloat origin, float angleDegrees);
 };
 
 #endif // ADVANCEDCOMPUTATION_H

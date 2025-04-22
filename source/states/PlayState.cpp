@@ -127,8 +127,8 @@ void PlayState::render(sf::RenderTarget *target)
     for(const auto &enemy : m_enemies)
         enemy->render(target);
 
-    m_player->render(target);
-
     for(const auto &bullet : m_bullets)
         bullet->render(target);
+
+    m_player->render(target);
 }
