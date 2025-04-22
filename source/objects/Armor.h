@@ -55,45 +55,18 @@ public:
     void setGloves(int glovesIndex);
 
 private:
-    struct{
 
-    } m_helmet;
+    struct ArmorElement{
+        std::unique_ptr<sf::Sprite> renderModel;
+        uint elementIndex; /// describes type of helmet, type of glove etc.
+        float protection;
+    };
 
-    struct{
-
-    }
-
-    struct {
-        std::unique_ptr<sf::Sprite> helmet;
-        std::unique_ptr<sf::Sprite> chest;
-        std::unique_ptr<sf::Sprite> arms;
-        std::unique_ptr<sf::Sprite> forearms;
-        std::unique_ptr<sf::Sprite> gloves;
-    } m_renderModel;
-
-    struct {
-        uint helmet;
-        uint chest;
-        uint arms;
-        uint forearms;
-        uint gloves;
-    } m_usedIndex;
-
-    struct {
-        uint helmet;
-        uint chest;
-        uint arms;
-        uint forearms;
-        uint gloves;
-    } m_setIndex;
-
-    struct{
-        float helmet;
-        float chest;
-        float arms;
-        float forearms;
-        float gloves;
-    } m_protection;
+    ArmorElement m_helmet;
+    ArmorElement m_chest;
+    ArmorElement m_arms;
+    ArmorElement m_forearms;
+    ArmorElement m_gloves;
 
     const sf::Vector2f *m_playerPosition;
     const sf::Vector2f *m_playerSize;

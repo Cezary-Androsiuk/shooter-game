@@ -1,5 +1,8 @@
 #include "Armor.h"
 
+#include "utils/InitialData.h"
+#include "utils/GlobalData.h"
+
 void Armor::initData()
 {
 
@@ -46,27 +49,32 @@ void Armor::setGlovesRenderModel()
 
 void Armor::setHelmetProperties()
 {
-    m_protection.helmet =
+    m_helmet.protection =
+        InitialData::Armor::getHelemtProtection(m_helmet.elementIndex);
 }
 
 void Armor::setChestProperties()
 {
-
+    m_chest.protection =
+        InitialData::Armor::getChestProtection(m_chest.elementIndex);
 }
 
 void Armor::setArmsProperties()
 {
-
+    m_arms.protection =
+        InitialData::Armor::getArmsProtection(m_arms.elementIndex);
 }
 
 void Armor::setForearmsProperties()
 {
-
+    m_forearms.protection =
+        InitialData::Armor::getForearmsProtection(m_forearms.elementIndex);
 }
 
 void Armor::setGlovesProperties()
 {
-
+    m_gloves.protection =
+        InitialData::Armor::getGlovesProtection(m_gloves.elementIndex);
 }
 
 void Armor::init()
@@ -91,11 +99,11 @@ void Armor::render(sf::RenderTarget *target)
 
 float Armor::getProtection() const
 {
-    return m_protection.helmet +
-           m_protection.chest +
-           m_protection.arms +
-           m_protection.forearms +
-           m_protection.gloves;
+    return m_helmet.protection +
+           m_chest.protection +
+           m_arms.protection +
+           m_forearms.protection +
+           m_gloves.protection;
 }
 
 void Armor::setPlayerPosition(const sf::Vector2f *position)
