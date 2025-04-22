@@ -87,6 +87,8 @@
         "speed increase randomness": 1.1,
         "deal damage delay units": 0.4,
         "deal damage lag determiner": 0.06,
+        "speed increase time delay ms": 200,
+        "speed increase time amount multiplier": 1.005,
         
         "ghost": {
             "movement speed": 200.0,

@@ -71,30 +71,30 @@ std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
     static int enemiesSpawned = 0;
     if(m_readyToSpawn && enemiesSpawned < m_spawnCountLimit)
     {
-        // m_readyToSpawn = false;
-        // if(m_spawnDelayMS < 400)
-        // {
-        //     if(enemiesSpawned % 10 == 0)
-        //     {
-        //         printf("enemy spawned %d\n", enemiesSpawned);
-        //         fflush(stdout);
-        //     }
-        // }
-        // else
-        // {
-        //     printf("enemy spawned %d\n", enemiesSpawned);
-        //     fflush(stdout);
-        // }
-        // ++enemiesSpawned;
+        m_readyToSpawn = false;
+        if(m_spawnDelayMS < 400)
+        {
+            if(enemiesSpawned % 10 == 0)
+            {
+                printf("enemy spawned %d\n", enemiesSpawned);
+                fflush(stdout);
+            }
+        }
+        else
+        {
+            printf("enemy spawned %d\n", enemiesSpawned);
+            fflush(stdout);
+        }
+        ++enemiesSpawned;
 
-        // std::shared_ptr<Enemy> enemy = std::make_shared<Zombie>();
-        // enemy->init();
+        std::shared_ptr<Enemy> enemy = std::make_shared<Zombie>();
+        enemy->init();
 
-        // enemy->setPosition(this->getRandomPositionOutsideScreen( enemy->getSize() ));
+        enemy->setPosition(this->getRandomPositionOutsideScreen( enemy->getSize() ));
 
-        // // printf("%u %u\n", m_mapSize.x, m_mapSize.y);
+        // printf("%u %u\n", m_mapSize.x, m_mapSize.y);
 
-        // return enemy;
+        return enemy;
     }
 
     return nullptr;

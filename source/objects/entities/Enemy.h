@@ -43,6 +43,7 @@ protected:
         const FloatRectEdges &obstacleBounds);
     void performMoveTowardsPlayer();
     void updateDamageDelay();
+    void updateMovementSpeedTimeMultiplier();
 
     /* RENDER */
 
@@ -82,6 +83,7 @@ protected:
         float msDefault;
         float msMultiplier; /// will be increased if needed
         float msTimeMultiplier; /// will be increased with time
+        sf::Clock msTimeMultiplierClock;
         float msRandomness;
         float collisionRoughness;
     }m_movementSpeedAddons;

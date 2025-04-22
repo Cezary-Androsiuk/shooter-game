@@ -427,6 +427,20 @@ float InitialData::Enemy::getDealDamageLagDeterminer()
     return value;
 }
 
+int InitialData::Enemy::getSpeedIncreaseTimeDelayMS()
+{
+    static const float value =
+        InitialData::rawReadValue(Enemy::getEnemy(), "speed increase time delay ms");
+    return value;
+}
+
+float InitialData::Enemy::getSpeedIncreaseTimeAmountMultiplier()
+{
+    static const float value =
+        InitialData::rawReadValue(Enemy::getEnemy(), "speed increase time amount multiplier");
+    return value;
+}
+
 
 
 

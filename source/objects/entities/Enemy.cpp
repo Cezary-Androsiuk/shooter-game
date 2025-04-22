@@ -132,6 +132,17 @@ void Enemy::updateDamageDelay()
     }
 }
 
+void Enemy::updateMovementSpeedTimeMultiplier()
+{
+    int elapsedTimeMS = m_movementSpeedAddons.msTimeMultiplierClock.getElapsedTime().asMilliseconds();
+    if(elapsedTimeMS > InitialData::Enemy::getSpeedIncreaseTimeDelayMS())
+    {
+        m_movementSpeedAddons.msTimeMultiplierClock.restart();
+        m_movementSpeedAddons.msTimeMultiplier *=
+            InitialData::Enemy::getSpeedIncreaseTimeAmountMultiplier();
+    }
+}
+
 void Enemy::init()
 {
     this->initData();
@@ -146,6 +157,7 @@ void Enemy::update()
 {
     this->computeMovementSpeed();
     this->updateDamageDelay();
+    this->updateMovementSpeedTimeMultiplier();
 
     this->performMoveTowardsPlayer();
 }

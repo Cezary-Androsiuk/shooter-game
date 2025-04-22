@@ -77,6 +77,8 @@ public:
         static float getSpeedIncreaseRandomness();
         static float getDealDamageDelay();
         static float getDealDamageLagDeterminer();
+        static int getSpeedIncreaseTimeDelayMS();
+        static float getSpeedIncreaseTimeAmountMultiplier();
 
         class Ghost{
             static json::value_type getGhost();
