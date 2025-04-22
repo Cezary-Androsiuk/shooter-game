@@ -5,6 +5,7 @@
 
 #include <cstdio>
 
+#include "utils/Constants.h"
 #include "utils/json.hpp"
 
 using json = nlohmann::json;
@@ -52,7 +53,8 @@ public:
         static json::value_type getWeapon();
     public:
         static int getAmmo();
-        static int getShotDelayMS();
+        static int getShotDelayMS(uint weaponIndex);
+        static float getDamage(uint weaponIndex);
     };
 
     class Bullet{

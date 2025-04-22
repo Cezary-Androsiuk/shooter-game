@@ -138,7 +138,7 @@ void Bullet::setWeaponIndex(uint index)
 
 void Bullet::setDamage(float damage)
 {
-
+    m_damage = damage;
 }
 
 bool Bullet::getReadyToDie()

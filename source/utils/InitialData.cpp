@@ -293,11 +293,56 @@ int InitialData::Weapon::getAmmo()
     return value;
 }
 
-int InitialData::Weapon::getShotDelayMS()
+int InitialData::Weapon::getShotDelayMS(uint weaponIndex)
 {
-    static const int value =
+    static const json::value_type container =
         InitialData::rawReadValue(Weapon::getWeapon(), "shot delay ms");
-    return value;
+    static const int values[9] = {
+        InitialData::rawReadValue(container, "weapon 0"),
+        InitialData::rawReadValue(container, "weapon 1"),
+        InitialData::rawReadValue(container, "weapon 2"),
+        InitialData::rawReadValue(container, "weapon 3"),
+        InitialData::rawReadValue(container, "weapon 4"),
+        InitialData::rawReadValue(container, "weapon 5"),
+        InitialData::rawReadValue(container, "weapon 6"),
+        InitialData::rawReadValue(container, "weapon 7"),
+        InitialData::rawReadValue(container, "weapon 8")
+    };
+
+    if(weaponIndex > 8)
+    {
+        fprintf(stderr, "invalid weapon index, max is 8 and got: %u. (using 8 instead)\n", weaponIndex);
+        fflush(stderr);
+        weaponIndex = 8;
+    }
+
+    return values[weaponIndex];
+}
+
+float InitialData::Weapon::getDamage(uint weaponIndex)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Weapon::getWeapon(), "damage");
+    static const int values[9] = {
+        InitialData::rawReadValue(container, "weapon 0"),
+        InitialData::rawReadValue(container, "weapon 1"),
+        InitialData::rawReadValue(container, "weapon 2"),
+        InitialData::rawReadValue(container, "weapon 3"),
+        InitialData::rawReadValue(container, "weapon 4"),
+        InitialData::rawReadValue(container, "weapon 5"),
+        InitialData::rawReadValue(container, "weapon 6"),
+        InitialData::rawReadValue(container, "weapon 7"),
+        InitialData::rawReadValue(container, "weapon 8")
+    };
+
+    if(weaponIndex > 8)
+    {
+        fprintf(stderr, "invalid weapon index, max is 8 and got: %u. (using 8 instead)\n", weaponIndex);
+        fflush(stderr);
+        weaponIndex = 8;
+    }
+
+    return values[weaponIndex];
 }
 
 

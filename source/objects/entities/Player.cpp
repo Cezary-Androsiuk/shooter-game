@@ -381,6 +381,12 @@ void Player::updateWeapon()
     m_weapon->setPosition(m_position);
     m_weapon->setRotationAngle(m_rotationAngle);
 
+    static uint weaponIndex = 0;
+    ++weaponIndex;
+    if(weaponIndex >= 900*40)
+        weaponIndex = 0;
+    m_weapon->setWeaponIndex(weaponIndex/(100*40));
+
     m_weapon->update();
 }
 

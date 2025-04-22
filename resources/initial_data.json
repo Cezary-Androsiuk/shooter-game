@@ -49,15 +49,15 @@
     "weapon": {
         "ammo": 50,
         "shot delay ms": {
-            "weapon 0": 200,
-            "weapon 1": 200,
-            "weapon 2": 200,
-            "weapon 3": 200,
-            "weapon 4": 200,
-            "weapon 5": 200,
-            "weapon 6": 200,
-            "weapon 7": 200,
-            "weapon 8": 200
+            "weapon 0": 420,
+            "weapon 1": 370,
+            "weapon 2": 350,
+            "weapon 3": 320,
+            "weapon 4": 280,
+            "weapon 5": 250,
+            "weapon 6": 210,
+            "weapon 7": 130,
+            "weapon 8": 64
         },
         "damage": {
             "weapon 0": 200,

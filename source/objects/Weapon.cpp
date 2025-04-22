@@ -7,7 +7,8 @@
 void Weapon::initData()
 {
     m_setWeaponIndex = 0;
-    m_shotDelay = InitialData::Weapon::getShotDelayMS();
+    m_usedWeaponIndex = m_setWeaponIndex;
+    m_shotDelay = InitialData::Weapon::getShotDelayMS(m_usedWeaponIndex);
     m_shotDelayTimer.restart();
 
     m_clickCorrection.mouseLButtonClickedWhileInitialization =
@@ -51,7 +52,7 @@ sf::Vector2f Weapon::angleToDirection(float angleDegrees)
     return sf::Vector2f(std::cos(angleRadians), std::sin(angleRadians));
 }
 
-void Weapon::updateRenderModel()
+void Weapon::updateWeaponType()
 {
     if(m_setWeaponIndex != m_usedWeaponIndex)
     {
@@ -64,8 +65,13 @@ void Weapon::updateRenderModel()
         m_renderModel.body.setTextureRect(
             sf::IntRect(frameOffsetX, weaponYPos, frameSizeX, frameSizeY));
         m_usedWeaponIndex = m_setWeaponIndex;
-    }
 
+        m_shotDelay = InitialData::Weapon::getShotDelayMS(m_usedWeaponIndex);
+    }
+}
+
+void Weapon::updateRenderModel()
+{
     m_renderModel.body.setPosition(sf::Vector2f(
         m_position.x + m_playerSize.x/2,
         m_position.y + m_playerSize.y/2));
@@ -85,6 +91,7 @@ void Weapon::pollEvent(const sf::Event &event)
 
 void Weapon::update()
 {
+    this->updateWeaponType();
 
     this->updateRenderModel();
 }
@@ -157,6 +164,7 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
             bullet->setPosition(m_position);
             bullet->setVelocity(Weapon::angleToDirection(m_rotationAngle));
             bullet->setWeaponIndex(m_usedWeaponIndex);
+            bullet->setDamage(InitialData::Weapon::getDamage(m_usedWeaponIndex));
 
             bullet->init();
 

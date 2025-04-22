@@ -35,6 +35,7 @@ public:
     void setPosition(sf::Vector2f position);
     void setVelocity(sf::Vector2f velocity);
     void setWeaponIndex(uint index);
+    void setDamage(float damage);
 
     bool getReadyToDie();
 

@@ -23,6 +23,7 @@ private:
     /* EVENTS */
 
     /* UPDATE */
+    void updateWeaponType();
     void updateRenderModel();
 
     /* RENDER */
