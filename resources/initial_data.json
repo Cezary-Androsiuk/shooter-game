@@ -84,7 +84,50 @@
     },
 
     "armor" :{
+        "helmet protection": {
+            "armor 0": 0,
+            "armor 1": 0,
+            "armor 2": 0,
+            "armor 3": 0,
+            "armor 4": 0,
+            "armor 5": 0
+        },
+        "chest protection": {
+            "armor 0": 0,
+            "armor 1": 0,
+            "armor 2": 0,
+            "armor 3": 0,
+            "armor 4": 0,
+            "armor 5": 0
 
+        },
+        "Arms protection": {
+            "armor 0": 0,
+            "armor 1": 0,
+            "armor 2": 0,
+            "armor 3": 0,
+            "armor 4": 0,
+            "armor 5": 0
+
+        },
+        "forearms protection": {
+            "armor 0": 0,
+            "armor 1": 0,
+            "armor 2": 0,
+            "armor 3": 0,
+            "armor 4": 0,
+            "armor 5": 0
+
+        },
+        "gloves protection": {
+            "armor 0": 0,
+            "armor 1": 0,
+            "armor 2": 0,
+            "armor 3": 0,
+            "armor 4": 0,
+            "armor 5": 0
+
+        }
     },
 
     "enemy" : {

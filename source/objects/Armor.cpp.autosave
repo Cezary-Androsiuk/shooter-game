@@ -1,5 +1,8 @@
 #include "Armor.h"
 
+#include "utils/InitialData.h"
+#include "utils/GlobalData.h"
+
 void Armor::initData()
 {
 
@@ -46,7 +49,7 @@ void Armor::setGlovesRenderModel()
 
 void Armor::setHelmetProperties()
 {
-    m_protection.helmet =
+    m_helmet.protection = InitialData::Armor::
 }
 
 void Armor::setChestProperties()

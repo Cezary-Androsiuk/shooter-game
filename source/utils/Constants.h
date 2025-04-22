@@ -56,8 +56,10 @@ constexpr int PLAYER_ROTATION_ANGLE_CORRECTION = 0;//-8;
 constexpr int ENEMY_ROTATION_ANGLE_CORRECTION = 0;
 
 
+
 constexpr uint WEAPON_TYPES_COUNT = 9;
 constexpr uint ZOMBIE_TYPES_COUNT = 6;
+constexpr uint ARMOR_TYPES_COUNT = 6;
 
 
 

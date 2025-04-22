@@ -55,13 +55,13 @@ public:
     void setGloves(int glovesIndex);
 
 private:
-    struct{
-
-    } m_helmet;
-
-    struct{
-
-    }
+    
+    struct ArmorElement{
+        std::unique_ptr<sf::Sprite> renderMode
+    };
+    
+    ArmorElement m_helmet;
+    
 
     struct {
         std::unique_ptr<sf::Sprite> helmet;

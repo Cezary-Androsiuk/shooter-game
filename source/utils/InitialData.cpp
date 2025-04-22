@@ -407,6 +407,121 @@ json::value_type InitialData::Armor::getArmor()
     return armor;
 }
 
+float InitialData::Armor::getHelemtProtection(uint armorIndex)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Armor::getArmor(), "helmet protection");
+    static const float values[ARMOR_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "armor 0"),
+        InitialData::rawReadValue(container, "armor 1"),
+        InitialData::rawReadValue(container, "armor 2"),
+        InitialData::rawReadValue(container, "armor 3"),
+        InitialData::rawReadValue(container, "armor 4"),
+        InitialData::rawReadValue(container, "armor 5"),
+    };
+
+    if(armorIndex > ARMOR_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid armor index, max is %u and got: %u. (using last instead)\n", ARMOR_TYPES_COUNT-1, armorIndex);
+        fflush(stderr);
+        armorIndex = ARMOR_TYPES_COUNT-1;
+    }
+
+    return values[armorIndex];
+}
+
+float InitialData::Armor::getChestProtection(uint armorIndex)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Armor::getArmor(), "chest protection");
+    static const float values[ARMOR_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "armor 0"),
+        InitialData::rawReadValue(container, "armor 1"),
+        InitialData::rawReadValue(container, "armor 2"),
+        InitialData::rawReadValue(container, "armor 3"),
+        InitialData::rawReadValue(container, "armor 4"),
+        InitialData::rawReadValue(container, "armor 5"),
+    };
+
+    if(armorIndex > ARMOR_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid armor index, max is %u and got: %u. (using last instead)\n", ARMOR_TYPES_COUNT-1, armorIndex);
+        fflush(stderr);
+        armorIndex = ARMOR_TYPES_COUNT-1;
+    }
+
+    return values[armorIndex];
+}
+
+float InitialData::Armor::getArmsProtection(uint armorIndex)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Armor::getArmor(), "Arms protection");
+    static const float values[ARMOR_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "armor 0"),
+        InitialData::rawReadValue(container, "armor 1"),
+        InitialData::rawReadValue(container, "armor 2"),
+        InitialData::rawReadValue(container, "armor 3"),
+        InitialData::rawReadValue(container, "armor 4"),
+        InitialData::rawReadValue(container, "armor 5"),
+    };
+
+    if(armorIndex > ARMOR_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid armor index, max is %u and got: %u. (using last instead)\n", ARMOR_TYPES_COUNT-1, armorIndex);
+        fflush(stderr);
+        armorIndex = ARMOR_TYPES_COUNT-1;
+    }
+
+    return values[armorIndex];
+}
+
+float InitialData::Armor::getForearmsProtection(uint armorIndex)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Armor::getArmor(), "forearms protection");
+    static const float values[ARMOR_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "armor 0"),
+        InitialData::rawReadValue(container, "armor 1"),
+        InitialData::rawReadValue(container, "armor 2"),
+        InitialData::rawReadValue(container, "armor 3"),
+        InitialData::rawReadValue(container, "armor 4"),
+        InitialData::rawReadValue(container, "armor 5"),
+    };
+
+    if(armorIndex > ARMOR_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid armor index, max is %u and got: %u. (using last instead)\n", ARMOR_TYPES_COUNT-1, armorIndex);
+        fflush(stderr);
+        armorIndex = ARMOR_TYPES_COUNT-1;
+    }
+
+    return values[armorIndex];
+}
+
+float InitialData::Armor::getGlovesProtection(uint armorIndex)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Armor::getArmor(), "gloves protection");
+    static const float values[ARMOR_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "armor 0"),
+        InitialData::rawReadValue(container, "armor 1"),
+        InitialData::rawReadValue(container, "armor 2"),
+        InitialData::rawReadValue(container, "armor 3"),
+        InitialData::rawReadValue(container, "armor 4"),
+        InitialData::rawReadValue(container, "armor 5"),
+    };
+
+    if(armorIndex > ARMOR_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid armor index, max is %u and got: %u. (using last instead)\n", ARMOR_TYPES_COUNT-1, armorIndex);
+        fflush(stderr);
+        armorIndex = ARMOR_TYPES_COUNT-1;
+    }
+
+    return values[armorIndex];
+}
+
 
 
 
