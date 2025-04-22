@@ -46,7 +46,7 @@ private:
     bool m_boundsVisible;
 
     struct{
-        sf::Sprite body;
+        // sf::Sprite body;
         sf::RectangleShape simpleBody;
     } m_renderModel;
 

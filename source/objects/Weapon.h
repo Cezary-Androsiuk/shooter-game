@@ -41,6 +41,8 @@ public:
     void setRotationAngle(float rotationAngle);
     void setWeaponIndex(uint index);
 
+    void rememberIfMouseButtonClicked();
+
 private:
     struct{
         sf::Sprite body;

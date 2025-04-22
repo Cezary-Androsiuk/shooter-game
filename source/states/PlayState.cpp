@@ -23,6 +23,10 @@ void PlayState::initPlayer()
     m_player->setPosition(sf::Vector2f(windowSize.x/2.f, windowSize.y/2.f));
     m_player->setAvailableAreaForPlayer(m_map);
     m_player->setEnemies(&m_enemies);
+
+    /// forces to first release left mouse button before shoting
+    /// because oppening this stage is always with key pressed after pressing start button
+    m_player->getWeapon()->rememberIfMouseButtonClicked();
 }
 
 void PlayState::initEnemySpawner()

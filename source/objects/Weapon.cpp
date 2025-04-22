@@ -11,8 +11,7 @@ void Weapon::initData()
     m_shotDelay = InitialData::Weapon::getShotDelayMS(m_usedWeaponIndex);
     m_shotDelayTimer.restart();
 
-    m_clickCorrection.mouseLButtonClickedWhileInitialization =
-        sf::Mouse::isButtonPressed(sf::Mouse::Left);
+    this->rememberIfMouseButtonClicked();
     m_clickCorrection.needCheck = true;
 }
 
@@ -97,7 +96,9 @@ void Weapon::render(sf::RenderTarget *target)
 
 std::unique_ptr<Bullet> Weapon::getBulletFromShot()
 {
-    if(UNLIKELY(m_clickCorrection.needCheck))
+    printf("function\n");
+    fflush(stdout);
+    if(m_clickCorrection.needCheck)
     {
         if(m_clickCorrection.mouseLButtonClickedWhileInitialization)
         {
@@ -178,4 +179,10 @@ void Weapon::setWeaponIndex(uint index)
     {
         m_setWeaponIndex = index;
     }
+}
+
+void Weapon::rememberIfMouseButtonClicked()
+{
+    m_clickCorrection.mouseLButtonClickedWhileInitialization =
+        sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
