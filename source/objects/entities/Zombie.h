@@ -19,6 +19,9 @@ private:
     /* EVENTS */
 
     /* UPDATE */
+    ///
+    /// NOTE: move following method logic to PlayState class
+    ///
     void limitZombieMovementToMap();
     void updateRenderModel();
 

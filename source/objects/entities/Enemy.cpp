@@ -19,11 +19,9 @@ void Enemy::initData()
 
     m_movementSpeedAddons.collisionRoughness = InitialData::getCollisionRoughness();
 
-    m_damageDelayConstant = InitialData::Enemy::getDealDamageDelay();
-    m_damageDelay = m_damageDelayConstant;
-    m_canDealDamage = true;
-    m_damageLagDeterminer = (-1) * InitialData::Enemy::getDealDamageLagDeterminer();
-    m_damageLagIncrease = 0.f;
+    m_attackDelay = InitialData::Enemy::getAttackDelayMS();
+    m_attackDelayTimer.restart();
+    m_readyToAttack = true;
 }
 
 Enemy::Enemy()
@@ -52,6 +50,9 @@ void Enemy::preventMoveThatEnterBounds(
     const FloatRectEdges &entityBounds,
     const FloatRectEdges &obstacleBounds)
 {
+    ///
+    /// NOTE: move this logic to PlayState class
+    ///
     float overlapLeft   = entityBounds.right - obstacleBounds.left;
     float overlapRight  = obstacleBounds.right - entityBounds.left;
     float overlapTop    = entityBounds.bottom - obstacleBounds.top;
@@ -100,20 +101,13 @@ void Enemy::performMoveTowardsPlayer()
 
 void Enemy::updateDamageDelay()
 {
-    m_damageDelay -= DeltaTime::get()->value();
-    if(m_damageDelay < 0)
+    if(!m_readyToAttack)
     {
-        /// if delay was much below 0, then
-        if(m_damageDelay < m_damageLagDeterminer)
-            m_damageLagIncrease = m_damage * m_damageDelay * (-1);
-        else
-            m_damageLagIncrease = 0.f;
-
-        // printf("can deal damage: %g\n", m_damage + m_damageLagIncrease);
-        // fflush(stdout);
-
-        m_canDealDamage = true;
-        m_damageDelay = m_damageDelayConstant;
+        if(m_attackDelayTimer.getElapsedTime().asMilliseconds() > m_attackDelay)
+        {
+            m_attackDelayTimer.restart();
+            m_readyToAttack = true;
+        }
     }
 }
 
@@ -190,6 +184,17 @@ float Enemy::getMovementSpeed() const
 float Enemy::getPlayerMoveSlowDownRatio() const
 {
     return m_playerMoveSlowDownRatio;
+}
+
+bool Enemy::getReadyToAttack()
+{
+    if(m_readyToAttack)
+    {
+        m_readyToAttack = false;
+        m_attackDelayTimer.restart();
+        return true;
+    }
+    return false;
 }
 
 void Enemy::setPosition(sf::Vector2f position)

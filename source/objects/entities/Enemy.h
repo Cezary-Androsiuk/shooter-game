@@ -34,6 +34,9 @@ protected:
 
     /* UPDATE */
     void updateMovementSpeed();
+    ///
+    /// NOTE: move following method logic to PlayState or AdvancedComputation class
+    ///
     void preventMoveThatEnterBounds(
         const FloatRectEdges &playerBounds,
         const FloatRectEdges &obstacleBounds);
@@ -57,6 +60,7 @@ public:
     sf::FloatRect getBounds() const;
     float getMovementSpeed() const;
     float getPlayerMoveSlowDownRatio() const;
+    bool getReadyToAttack();
 
     void setPosition(sf::Vector2f position);
     void setAvailableAreaForEnemy(std::shared_ptr<Map> map);
@@ -72,12 +76,11 @@ protected:
     const sf::FloatRect *m_playerBounds;
     sf::Vector2f m_playerCenter;
     float m_health;
+
     float m_damage;
-    float m_damageLagIncrease;
-    float m_damageDelay;
-    float m_damageDelayConstant;
-    bool m_canDealDamage;
-    float m_damageLagDeterminer;
+    sf::Clock m_attackDelayTimer;
+    float m_attackDelay;
+    bool m_readyToAttack;
 
     float m_movementSpeed; /// calculated after every update from dt and movement speed addons
     float m_movementSpeedWithRoughness;

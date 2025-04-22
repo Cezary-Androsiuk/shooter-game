@@ -7,6 +7,7 @@
 
 #include "mechanics/spawners/EnemySpawner.h"
 #include "objects/entities/Enemy.h"
+#include "objects/entities/Zombie.h"
 #include "objects/entities/Player.h"
 #include "objects/Bullet.h"
 #include "environment/Map.h"
@@ -34,6 +35,7 @@ private:
     void updatePlayer();
     void updateEnemySpawner();
     void updateEnemies();
+    void updatePlayerAndEnemyRelation();
     void updateBullets();
 
     /* RENDER */

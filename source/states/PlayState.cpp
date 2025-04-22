@@ -89,6 +89,36 @@ void PlayState::updateEnemies()
     }
 }
 
+void PlayState::updatePlayerAndEnemyRelation()
+{
+    const FloatRectEdges playerBounds(*m_player->getBounds());
+    for(const auto &enemy : m_enemies)
+    {
+        const FloatRectEdges enemyBounds(enemy->getBounds());
+
+        /// +-2 is required because collision detection is performed somewere else
+        const float overlapLeft   = playerBounds.right+2 - enemyBounds.left;
+        const float overlapRight  = enemyBounds.right - playerBounds.left+2;
+        const float overlapTop    = playerBounds.bottom+2 - enemyBounds.top;
+        const float overlapBottom = enemyBounds.bottom - playerBounds.top+2;
+
+        if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
+        {
+            // static int i =0;
+            // printf("occur %d\n", i++);
+            // fflush(stdout);
+
+            if(enemy->getReadyToAttack())
+            {
+                static int i =0;
+                printf("attack %d\n", i++);
+                fflush(stdout);
+
+            }
+        }
+    }
+}
+
 void PlayState::updateBullets()
 {
     for (auto it = m_bullets.begin(); it != m_bullets.end(); ) {
@@ -117,6 +147,7 @@ void PlayState::update()
     this->updatePlayer();
     this->updateEnemySpawner();
     this->updateEnemies();
+    this->updatePlayerAndEnemyRelation();
     this->updateBullets();
 }
 

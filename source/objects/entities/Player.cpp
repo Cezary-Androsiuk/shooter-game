@@ -141,6 +141,9 @@ void Player::updateMovementSpeed()
 void Player::limitMoveThatEnterEnemy(
     const FloatRectEdges &playerBounds, std::shared_ptr<Enemy> enemy)
 {
+    ///
+    /// NOTE: move this logic to PlayState class
+    ///
     const FloatRectEdges enemyBounds(enemy->getBounds());
 
     const float overlapLeft   = playerBounds.right - enemyBounds.left;
@@ -205,6 +208,10 @@ void Player::limitMoveThatEnterEnemy(
 
 void Player::limitPlayerMovementToMap()
 {
+    ///
+    /// NOTE: move this logic to PlayState class
+    ///
+
     FloatRectEdges playerEdges(
         m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
     const sf::Vector2f &windowSize =

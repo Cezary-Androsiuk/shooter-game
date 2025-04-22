@@ -413,17 +413,10 @@ float InitialData::Enemy::getSpeedIncreaseRandomness()
     return value;
 }
 
-float InitialData::Enemy::getDealDamageDelay()
+float InitialData::Enemy::getAttackDelayMS()
 {
     static const float value =
-        InitialData::rawReadValue(Enemy::getEnemy(), "deal damage delay units");
-    return value;
-}
-
-float InitialData::Enemy::getDealDamageLagDeterminer()
-{
-    static const float value =
-        InitialData::rawReadValue(Enemy::getEnemy(), "deal damage lag determiner");
+        InitialData::rawReadValue(Enemy::getEnemy(), "attack delay ms");
     return value;
 }
 

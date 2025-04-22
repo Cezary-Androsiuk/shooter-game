@@ -54,6 +54,10 @@ Zombie::~Zombie()
 
 void Zombie::limitZombieMovementToMap()
 {
+    ///
+    /// NOTE: move this logic to PlayState class
+    ///
+
     FloatRectEdges entityEdges(m_position.x, m_position.y, m_position.x + m_size.x, m_position.y + m_size.y);
     FloatRectEdges playerBounds(
         m_playerBounds->left, m_playerBounds->top,

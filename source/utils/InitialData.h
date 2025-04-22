@@ -75,8 +75,7 @@ public:
     public:
         static float getSpeedDecreaseRandomness();
         static float getSpeedIncreaseRandomness();
-        static float getDealDamageDelay();
-        static float getDealDamageLagDeterminer();
+        static float getAttackDelayMS();
         static int getSpeedIncreaseTimeDelayMS();
         static float getSpeedIncreaseTimeAmountMultiplier();
         static bool getShowBounds();
