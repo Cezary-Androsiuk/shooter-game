@@ -218,6 +218,31 @@ float Armor::getProtection() const
     return armorProtectionSum / max;
 }
 
+int Armor::getHelmetIndex() const
+{
+    return m_helmet.elementIndex;
+}
+
+int Armor::getChestIndex() const
+{
+    return m_chest.elementIndex;
+}
+
+int Armor::getArmsIndex() const
+{
+    return m_arms.elementIndex;
+}
+
+int Armor::getForearmsIndex() const
+{
+    return m_forearms.elementIndex;
+}
+
+int Armor::getGlovesIndex() const
+{
+    return m_gloves.elementIndex;
+}
+
 void Armor::setPlayerCenter(const sf::Vector2f *center)
 {
     m_playerCenter = center;

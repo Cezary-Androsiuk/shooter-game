@@ -35,6 +35,7 @@ public:
     void render(sf::RenderTarget *target);
 
     std::unique_ptr<Bullet> getBulletFromShot();
+    uint getWeaponIndex();
 
     void setPlayerSize(sf::Vector2f playerSize);
     void setPosition(sf::Vector2f position);

@@ -153,6 +153,11 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
     return nullptr;
 }
 
+uint Weapon::getWeaponIndex()
+{
+    return m_setWeaponIndex;
+}
+
 void Weapon::setPlayerSize(sf::Vector2f playerSize)
 {
     m_playerSize = playerSize;

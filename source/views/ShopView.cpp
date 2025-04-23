@@ -107,6 +107,7 @@ ShopView::ShopView()
 void ShopView::init()
 {
     m_player = Player::getInstance();
+    m_refreshSelectedDelay = 30;
     this->initButtons();
 
 }
@@ -178,6 +179,55 @@ void ShopView::update()
         if(m_weapons[i]->getClick())
         {
             m_player->getWeapon()->setWeaponIndex(i);
+        }
+    }
+
+    if(m_refreshSelectedClock.getElapsedTime().asMilliseconds() > m_refreshSelectedDelay)
+    {
+        m_refreshSelectedClock.restart();
+
+
+        int hi = m_player->getArmor()->getHelmetIndex();
+        for(int i=0; i<ARMOR_TYPES_COUNT; i++)
+        {
+            m_helmet[i]->setColor( hi == i ? ELEMENT_COLOR_IDLE_SELECTED : ELEMENT_COLOR_IDLE );
+
+        }
+
+
+        int ci = m_player->getArmor()->getChestIndex();
+        for(int i=0; i<ARMOR_TYPES_COUNT; i++)
+        {
+            m_chest[i]->setColor( ci == i ? ELEMENT_COLOR_IDLE_SELECTED : ELEMENT_COLOR_IDLE );
+        }
+
+
+        int ai = m_player->getArmor()->getArmsIndex();
+        for(int i=0; i<ARMOR_TYPES_COUNT; i++)
+        {
+            m_arms[i]->setColor( ai == i ? ELEMENT_COLOR_IDLE_SELECTED : ELEMENT_COLOR_IDLE );
+        }
+
+
+        int fi = m_player->getArmor()->getForearmsIndex();
+        for(int i=0; i<ARMOR_TYPES_COUNT; i++)
+        {
+            m_forearms[i]->setColor( fi == i ? ELEMENT_COLOR_IDLE_SELECTED : ELEMENT_COLOR_IDLE );
+        }
+
+
+        int gi = m_player->getArmor()->getGlovesIndex();
+        for(int i=0; i<ARMOR_TYPES_COUNT; i++)
+        {
+            m_gloves[i]->setColor( gi == i ? ELEMENT_COLOR_IDLE_SELECTED : ELEMENT_COLOR_IDLE );
+        }
+
+
+
+        int wi = m_player->getWeapon()->getWeaponIndex();
+        for(int i=0; i<WEAPON_TYPES_COUNT; i++)
+        {
+            m_weapons[i]->setColor( wi == i ? ELEMENT_COLOR_IDLE_SELECTED : ELEMENT_COLOR_IDLE );
         }
     }
 

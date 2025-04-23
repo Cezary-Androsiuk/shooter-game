@@ -43,6 +43,11 @@ public:
 
     /* GETTERS */
     float getProtection() const;
+    int getHelmetIndex() const;
+    int getChestIndex() const;
+    int getArmsIndex() const;
+    int getForearmsIndex() const;
+    int getGlovesIndex() const;
 
     /* SETTERS */
     void setPlayerCenter(const sf::Vector2f *center);

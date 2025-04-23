@@ -1,5 +1,6 @@
 #ifndef SHOPVIEW_H
 #define SHOPVIEW_H
+
 #include <SFML/Graphics.hpp>
 #include <SimpleGUI/Button.hpp>
 
@@ -33,6 +34,9 @@ private:
     std::unique_ptr<Button> m_gloves[ARMOR_TYPES_COUNT];
 
     std::unique_ptr<Button> m_weapons[WEAPON_TYPES_COUNT];
+
+    sf::Clock m_refreshSelectedClock;
+    int m_refreshSelectedDelay;
 };
 
 #endif // SHOPVIEW_H
