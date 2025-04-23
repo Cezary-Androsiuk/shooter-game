@@ -240,7 +240,7 @@ void PlayState::updateStatInfo()
 
     /// set text
     m_sesionMoney = round(m_sesionMoney * 100) / 100.f; /// to make sure, but shoud be rounded
-    requiredSize = snprintf(snOut, bufferSize, "Money: %d$`", (int)m_sesionMoney);
+    requiredSize = snprintf(snOut, bufferSize, "Money: %d$", (int)m_sesionMoney);
     Support::informAboutToSmallBuffer(requiredSize, bufferSize);
     m_moneyLabel->setString(snOut);
 

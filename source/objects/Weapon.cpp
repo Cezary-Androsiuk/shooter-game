@@ -2,6 +2,7 @@
 
 #include "utils/GlobalData.h"
 #include "utils/InitialData.h"
+#include "utils/Support.h"
 #include "utils/AdvancedComputation.h"
 #include "environment/Sound.h"
 
@@ -96,7 +97,7 @@ void Weapon::render(sf::RenderTarget *target)
 
 std::unique_ptr<Bullet> Weapon::getBulletFromShot()
 {
-    if(m_clickCorrection.needCheck)
+    if(UNLIKELY(m_clickCorrection.needCheck))
     {
         if(m_clickCorrection.mouseLButtonClickedWhileInitialization)
         {
@@ -185,4 +186,5 @@ void Weapon::rememberIfMouseButtonClicked()
 {
     m_clickCorrection.mouseLButtonClickedWhileInitialization =
         sf::Mouse::isButtonPressed(sf::Mouse::Left);
+    m_clickCorrection.needCheck = true;
 }
