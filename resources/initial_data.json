@@ -10,7 +10,8 @@
     },
 
     "play":{
-        "max dealt damage handled by damage animation": 200.0
+        "max dealt damage handled by damage animation": 200.0,
+        "stat info display delay ms": 40
     },
 
     "collision roughness": 0.8,
@@ -28,7 +29,7 @@
 
     "player": {
         "speed straight": 500.0,
-        "health points": 10000000,
+        "health points": 100,
         "show bounds": false,
         "default skin color": {
             "red": 255,
@@ -133,6 +134,8 @@
     "enemy" : {
         "speed decrease randomness": 0.9,
         "speed increase randomness": 1.1,
+        "money decrease randomness": 0.9,
+        "money increase randomness": 1.1,
         "attack delay ms": 400,
         "speed increase time delay ms": 200,
         "speed increase time amount multiplier": 1.005,
@@ -185,6 +188,14 @@
                 "zombie 3": 0.05,
                 "zombie 4": 0.05,
                 "zombie 5": 0.05
+            },
+            "net worth": {
+                "zombie 0": 10.0,
+                "zombie 1": 21.0,
+                "zombie 2": 35.0,
+                "zombie 3": 44.0,
+                "zombie 4": 73.0,
+                "zombie 5": 120.0
             }
         }
     },

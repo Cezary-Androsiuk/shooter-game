@@ -64,6 +64,8 @@ public:
     bool getReadyToAttack();
     float getDamage() const;
     bool getEnemyAlive() const;
+    float getNetWorth() const;
+
 
     /* SETTERS */
     void setPosition(sf::Vector2f position);
@@ -102,6 +104,8 @@ protected:
     float m_playerMoveSlowDownRatio;
 
     std::shared_ptr<Map> m_map;
+
+    float m_netWorth;
 };
 
 #endif // ENEMY_H

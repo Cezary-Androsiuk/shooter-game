@@ -20,6 +20,12 @@ void Zombie::initData()
     /// Size
     m_size.x = 50.f;
     m_size.y = 50.f;
+
+    m_netWorth = Random::getFloat(
+                     InitialData::Enemy::getMoneyDecreaseRandomness(),
+                     InitialData::Enemy::getMoneyIncreaseRandomness()
+                     ) * InitialData::Enemy::Zombie::getNetWorth(m_type);
+    m_netWorth = round(m_netWorth * 100) / 100.f;
 }
 
 void Zombie::initRenderModel()

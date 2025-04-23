@@ -7,7 +7,7 @@
 
 void Weapon::initData()
 {
-    m_setWeaponIndex = 0;
+
     m_shotDelay = InitialData::Weapon::getShotDelayMS(m_usedWeaponIndex);
     m_shotDelayTimer.restart();
 
@@ -37,7 +37,7 @@ void Weapon::initRenderModel()
 
 Weapon::Weapon()
 {
-
+    m_setWeaponIndex = 0;
 }
 
 Weapon::~Weapon()

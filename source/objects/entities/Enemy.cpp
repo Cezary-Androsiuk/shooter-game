@@ -207,6 +207,11 @@ bool Enemy::getEnemyAlive() const
     return m_healthPoints > 0;
 }
 
+float Enemy::getNetWorth() const
+{
+    return m_netWorth;
+}
+
 void Enemy::setPosition(sf::Vector2f position)
 {
     m_position = position;

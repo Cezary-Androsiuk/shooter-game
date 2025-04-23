@@ -250,6 +250,10 @@ void Game::changeStateFromPlayToDefeat()
 
     initDefeatState();
     m_gameState = GameState::Defeat;
+
+    m_defeatState->setEarnedMoney(m_playState->getEarnedMoney());
+    m_defeatState->setSurvivedSeconds(m_playState->getSurvivedSeconds());
+    m_defeatState->refreshStats();
 }
 
 void Game::changeStateFromDefeatToMenu()

@@ -82,6 +82,8 @@ public:
 
     /* MODIFIERS */
     void dealDamage(float damage);
+    void addMoney(float money);
+    void resetHealtPoints();
 
 private:
     sf::RectangleShape m_boundsShape;
@@ -104,9 +106,10 @@ private:
 
     std::shared_ptr<Map> m_map;
 
-    int m_points;
+    // int m_points;
     int m_healthPoints;
-    int m_headCount;
+    // int m_headCount;
+    float m_money;
 
     const std::vector<std::shared_ptr<Enemy>> *m_enemies;
 

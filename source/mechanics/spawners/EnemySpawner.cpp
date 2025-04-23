@@ -70,7 +70,7 @@ void EnemySpawner::update()
 
 std::shared_ptr<Enemy> EnemySpawner::createdEnemy()
 {
-    return nullptr;
+    // return nullptr;
 
     if(m_readyToSpawn)
     {

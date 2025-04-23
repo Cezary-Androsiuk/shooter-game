@@ -11,9 +11,10 @@ void Player::initData()
     m_size.x = 50.f;
     m_size.y = 50.f;
 
-    m_points = 0;
+    // m_points = 0;
+    // m_headCount = 0;
+    m_money = 0.f;
     m_healthPoints = InitialData::Player::getHealthPoints();
-    m_headCount = 0;
 
     m_movementSpeedAddons.msStraightDefault = InitialData::Player::getSpeedStraight();
     m_movementSpeedAddons.msMultiplier = 1.0;
@@ -80,10 +81,12 @@ void Player::initWeapon()
     if(!m_weapon)
         m_weapon = std::make_unique<Weapon>();
 
+    m_weapon->setWeaponIndex(8);
+
     m_weapon->setPlayerSize(m_size);
     m_weapon->init();
 
-    m_weapon->setWeaponIndex(8);
+    // m_weapon->setWeaponIndex(8);
 }
 
 void Player::initArmor()
@@ -160,7 +163,7 @@ void Player::limitMoveThatEnterEnemy(
 
     // bool p = DeltaTime::canPrint();
 
-    const float dt = DeltaTime::get()->value();
+    // const float dt = DeltaTime::get()->value();
     const float enemyNewtons = enemy->getSize().x *
                                enemy->getSize().y *
                                enemy->getMovementSpeed();
@@ -312,35 +315,34 @@ void Player::updateWeapon()
     m_weapon->setPosition(m_position);
     m_weapon->setRotationAngle(m_rotationAngle);
 
-    static uint wi = 0; wi+=6;
-    if(wi >= 9*1000) wi = 0;
-    m_weapon->setWeaponIndex(wi/(1*1000));
+    // static uint wi = 0; wi+=6;
+    // if(wi >= 9*1000) wi = 0;
+    // m_weapon->setWeaponIndex(wi/(1*1000));
 
     m_weapon->update();
 }
 
 void Player::updateArmor()
 {
+    // static uint hi = 0; hi+=3;
+    // if(hi >= 6*1000) hi = 0;
+    // m_armor->setHelmet(hi/(1*1000));
 
-    static uint hi = 0; hi+=3;
-    if(hi >= 6*1000) hi = 0;
-    m_armor->setHelmet(hi/(1*1000));
+    // static uint ci = 0; ci+=5;
+    // if(ci >= 6*1000) ci = 0;
+    // m_armor->setChest(ci/(1*1000));
 
-    static uint ci = 0; ci+=5;
-    if(ci >= 6*1000) ci = 0;
-    m_armor->setChest(ci/(1*1000));
+    // static uint ai = 0; ai+=7;
+    // if(ai >= 6*1000) ai = 0;
+    // m_armor->setArms(ai/(1*1000));
 
-    static uint ai = 0; ai+=7;
-    if(ai >= 6*1000) ai = 0;
-    m_armor->setArms(ai/(1*1000));
+    // static uint fi = 0; fi+=11;
+    // if(fi >= 6*1000) fi = 0;
+    // m_armor->setForearms(fi/(1*1000));
 
-    static uint fi = 0; fi+=11;
-    if(fi >= 6*1000) fi = 0;
-    m_armor->setForearms(fi/(1*1000));
-
-    static uint gi = 0; gi+=13;
-    if(gi >= 6*1000) gi = 0;
-    m_armor->setGloves(gi/(1*1000));
+    // static uint gi = 0; gi+=13;
+    // if(gi >= 6*1000) gi = 0;
+    // m_armor->setGloves(gi/(1*1000));
 
     m_armor->update();
 }
@@ -446,4 +448,14 @@ void Player::dealDamage(float damage)
 {
     m_healthPoints -=
         damage; // - damage * // decrease by armor
+}
+
+void Player::addMoney(float money)
+{
+    m_money += money;
+}
+
+void Player::resetHealtPoints()
+{
+    m_healthPoints = InitialData::Player::getHealthPoints();
 }

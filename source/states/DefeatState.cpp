@@ -1,6 +1,7 @@
 #include "DefeatState.h"
 
 #include "utils/Constants.h"
+#include "utils/Support.h"
 #include "utils/GlobalData.h"
 
 void DefeatState::initBlurredPlayBackgroundSprite()
@@ -46,6 +47,19 @@ void DefeatState::initExitPlayButton()
     m_exitPlayButton->setColorPress(ELEMENT_COLOR_PRESS);
 }
 
+void DefeatState::initStats()
+{
+    m_moneyLabel = std::make_unique<sgui::Label>();
+    m_moneyLabel->setFont(GlobalData::getInstance()->getFontInkFree());
+    m_moneyLabel->setCharacterSize(20);
+
+    m_timeLabel = std::make_unique<sgui::Label>();
+    m_timeLabel->setFont(GlobalData::getInstance()->getFontInkFree());
+    m_timeLabel->setCharacterSize(20);
+
+    this->refreshStats();
+}
+
 DefeatState::DefeatState()
     : m_blurredPlayBackgroundLoaded{false}
 {
@@ -62,6 +76,7 @@ void DefeatState::init()
     this->initBlurredPlayBackgroundSprite();
     this->initBackgroundSprite();
     this->initExitPlayButton();
+    this->initStats();
 }
 
 bool DefeatState::requestExitPlay()
@@ -86,6 +101,9 @@ void DefeatState::render(sf::RenderTarget *target)
     target->draw(*m_backgroundSprite);
 
     m_exitPlayButton->render(target);
+
+    m_moneyLabel->render(target);
+    m_timeLabel->render(target);
 }
 
 void DefeatState::setBlurredPlayBackgroundImage(const sf::Image &image)
@@ -97,6 +115,51 @@ void DefeatState::setBlurredPlayBackgroundImage(const sf::Image &image)
         m_blurredPlayBackgroundLoaded = false;
     }
     m_blurredPlayBackgroundLoaded = true;
+}
+
+void DefeatState::setEarnedMoney(float earnedMoney)
+{
+    m_earnedMoney = earnedMoney;
+}
+
+void DefeatState::setSurvivedSeconds(int survivedSeconds)
+{
+    m_survivedSeconds = survivedSeconds;
+}
+
+void DefeatState::refreshStats()
+{
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+    constexpr int bufferSize = 32;
+    char snOut[bufferSize] = {0};
+    int requiredSize;
+
+    /// set text
+    m_earnedMoney = round(m_earnedMoney * 100) / 100.f; /// to make sure, but shoud be rounded
+    requiredSize = snprintf(snOut, bufferSize, "Money: %d$", (int)m_earnedMoney);
+    Support::informAboutToSmallBuffer(requiredSize, bufferSize);
+    m_moneyLabel->setString(snOut);
+
+    /// set text
+    int secondsElapsed = m_survivedSeconds % 60;
+    int minutesElapsed = secondsElapsed / 60;
+    requiredSize = snprintf(snOut, bufferSize, "Time: %02d:%02ds",
+                            minutesElapsed, secondsElapsed);
+    Support::informAboutToSmallBuffer(requiredSize, bufferSize);
+    m_timeLabel->setString(snOut);
+
+
+    /// set size
+    sf::Vector2f moneyLabelSize = m_moneyLabel->getSize();
+    m_moneyLabel->setPosition(
+        sf::Vector2f((1920.f/2) * windowRatio.x -moneyLabelSize.x/2,
+                     (1080.f/2 - 65.f) * windowRatio.y));
+
+    /// set size
+    sf::Vector2f timeLabelSize = m_timeLabel->getSize();
+    m_timeLabel->setPosition(
+        sf::Vector2f((1920.f/2) * windowRatio.x -timeLabelSize.x/2,
+                     (1080.f/2 +10.f) * windowRatio.y));
 }
 
 void DefeatState::disableBlurredPlayBackground()

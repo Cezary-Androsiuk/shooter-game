@@ -42,6 +42,7 @@ public:
         static json::value_type getPlay();
     public:
         static float getMaxDealtDamageHandledByDamageAnimation();
+        static int getStatInfoDisplayDelayMS();
     };
 
     class Player{
@@ -86,6 +87,8 @@ public:
     public:
         static float getSpeedDecreaseRandomness();
         static float getSpeedIncreaseRandomness();
+        static float getMoneyDecreaseRandomness();
+        static float getMoneyIncreaseRandomness();
         static float getAttackDelayMS();
         static int getSpeedIncreaseTimeDelayMS();
         static float getSpeedIncreaseTimeAmountMultiplier();
@@ -108,6 +111,7 @@ public:
             static float getHealthPoints(uint zombieType);
             static float getPlayerMoveSlowDownRatio(uint zombieType);
             static float getSpawnChance(uint zombieType);
+            static float getNetWorth(uint zombieType);
         };
     };
 

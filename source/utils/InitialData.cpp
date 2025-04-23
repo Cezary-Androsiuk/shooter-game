@@ -222,6 +222,13 @@ float InitialData::Play::getMaxDealtDamageHandledByDamageAnimation()
     return value;
 }
 
+int InitialData::Play::getStatInfoDisplayDelayMS()
+{
+    static const float value =
+        InitialData::rawReadValue(Play::getPlay(), "stat info display delay ms");
+    return value;
+}
+
 
 
 
@@ -548,6 +555,20 @@ float InitialData::Enemy::getSpeedIncreaseRandomness()
     return value;
 }
 
+float InitialData::Enemy::getMoneyDecreaseRandomness()
+{
+    static const float value =
+        InitialData::rawReadValue(Enemy::getEnemy(), "money decrease randomness");
+    return value;
+}
+
+float InitialData::Enemy::getMoneyIncreaseRandomness()
+{
+    static const float value =
+        InitialData::rawReadValue(Enemy::getEnemy(), "money increase randomness");
+    return value;
+}
+
 float InitialData::Enemy::getAttackDelayMS()
 {
     static const float value =
@@ -745,6 +766,29 @@ float InitialData::Enemy::Zombie::getSpawnChance(uint zombieType)
 {
     static const json::value_type container =
         InitialData::rawReadValue(Zombie::getZombie(), "spawn chance");
+    static const float values[ZOMBIE_TYPES_COUNT] = {
+        InitialData::rawReadValue(container, "zombie 0"),
+        InitialData::rawReadValue(container, "zombie 1"),
+        InitialData::rawReadValue(container, "zombie 2"),
+        InitialData::rawReadValue(container, "zombie 3"),
+        InitialData::rawReadValue(container, "zombie 4"),
+        InitialData::rawReadValue(container, "zombie 5")
+    };
+
+    if(zombieType > ZOMBIE_TYPES_COUNT-1)
+    {
+        fprintf(stderr, "invalid zombie type, max is %u and got: %u. (using last instead)\n", ZOMBIE_TYPES_COUNT-1, zombieType);
+        fflush(stderr);
+        zombieType = ZOMBIE_TYPES_COUNT-1;
+    }
+
+    return values[zombieType];
+}
+
+float InitialData::Enemy::Zombie::getNetWorth(uint zombieType)
+{
+    static const json::value_type container =
+        InitialData::rawReadValue(Zombie::getZombie(), "net worth");
     static const float values[ZOMBIE_TYPES_COUNT] = {
         InitialData::rawReadValue(container, "zombie 0"),
         InitialData::rawReadValue(container, "zombie 1"),
