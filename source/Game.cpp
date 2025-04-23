@@ -184,6 +184,8 @@ void Game::initDefeatState()
 }
 
 Game::Game()
+    : m_player{nullptr}
+    , m_sound{nullptr}
 {
     printf("game start\n");fflush(stdout);
 
@@ -214,10 +216,14 @@ void Game::changeStateFromMenuToPlay()
 {
     initPlayState();
     m_gameState = GameState::Play;
+
+    m_sound->playMusic();
 }
 
 void Game::changeStateFromPlayToPause()
 {
+    m_sound->pauseMusic();
+
     initPausePlayState();
     m_gameState = GameState::PausePlay;
 }
@@ -225,22 +231,32 @@ void Game::changeStateFromPlayToPause()
 void Game::changeStateFromPauseToPlay()
 {
     m_gameState = GameState::Play;
+
+    m_sound->playMusic();
 }
 
 void Game::changeStateFromPauseToMenu()
 {
+    if(m_sound)
+        m_sound->stopMusic();
+
     initMenuState();
     m_gameState = GameState::Menu;
 }
 
 void Game::changeStateFromPlayToDefeat()
 {
+    m_sound->pauseMusic();
+
     initDefeatState();
     m_gameState = GameState::Defeat;
 }
 
 void Game::changeStateFromDefeatToMenu()
 {
+    if(m_sound)
+        m_sound->stopMusic();
+
     initMenuState();
     m_gameState = GameState::Menu;
 }

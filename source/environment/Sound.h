@@ -26,10 +26,14 @@ public:
 
     void update();
 
+    void playMusic();
+    void pauseMusic();
+    void stopMusic();
     void playShot();
 
 private:
     sf::Music m_music;
+    bool m_musicLoaded;
 
     struct SoundPair{
         std::queue<std::unique_ptr<sf::Sound>> sounds;

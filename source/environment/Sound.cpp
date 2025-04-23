@@ -9,7 +9,15 @@ void Sound::initData()
 
 void Sound::initMusic()
 {
-
+    if(m_music.openFromFile(SOUND::MUSIC_AUDIO_FILE_PATH))
+    {
+        fprintf(stderr, "music loading failed\n");
+        fflush(stderr);
+        m_musicLoaded = false;
+    }
+    m_musicLoaded = true;
+    m_music.setVolume(SOUND::MUSIC_VOLUME);
+    m_music.setLoop(true);
 }
 
 void Sound::initWeaponShot()
@@ -50,6 +58,31 @@ void Sound::update()
             m_weaponShot.sounds.pop();
         }
     }
+}
+
+void Sound::playMusic()
+{
+    if(!m_musicLoaded)
+        return;
+
+    if(m_music.getStatus() != sf::Music::Status::Playing)
+        m_music.play();
+}
+
+void Sound::pauseMusic()
+{
+    if(!m_musicLoaded)
+        return;
+
+    m_music.pause();
+}
+
+void Sound::stopMusic()
+{
+    if(!m_musicLoaded)
+        return;
+
+    m_music.stop();
 }
 
 void Sound::playShot()
