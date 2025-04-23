@@ -4,6 +4,7 @@
 #include <SFML/Audio.hpp>
 
 #include <queue>
+#include <memory>
 
 class Sound
 {
@@ -31,7 +32,7 @@ private:
     sf::Music m_music;
 
     struct SoundPair{
-        std::queue<sf::Sound*> sound;
+        std::queue<std::unique_ptr<sf::Sound>> sounds;
         sf::SoundBuffer buffer;
         bool loaded;
     };

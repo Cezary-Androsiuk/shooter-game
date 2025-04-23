@@ -43,13 +43,12 @@ Sound *Sound::getInstance()
 
 void Sound::update()
 {
-    if(!m_weaponShot.sound.empty())
+    if(!m_weaponShot.sounds.empty())
     {
-        // if(m_weaponShot.sound.front().getStatus() != sf::Sound::Status::Playing)
-        // {
-        //     m_weaponShot.sound.pop();
-        //     printf("Shot POP!\n"); fflush(stdout);
-        // }
+        if(m_weaponShot.sounds.front()->getStatus() != sf::Sound::Status::Playing)
+        {
+            m_weaponShot.sounds.pop();
+        }
     }
 }
 
@@ -58,10 +57,10 @@ void Sound::playShot()
     if(!m_weaponShot.loaded)
         return;
 
-    printf("Shot play!\n"); fflush(stdout);
-    sf::Sound *sound = new sf::Sound;
+    m_weaponShot.sounds.push(std::make_unique<sf::Sound>());
+    sf::Sound *sound = m_weaponShot.sounds.back().get();
+
     sound->setBuffer(m_weaponShot.buffer);
-    sound->setVolume(SOUND::VOLUME);
+    sound->setVolume(SOUND::SHOT_VOLUME);
     sound->play();
-    // m_weaponShot.sound.push(sound);
 }

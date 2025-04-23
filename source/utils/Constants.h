@@ -104,9 +104,10 @@ constexpr uint ARMOR_TYPES_COUNT = 6;
 
 
 namespace SOUND{
-    constexpr float VOLUME = 20.f;
     extern const char *MUSIC_AUDIO_FILE_PATH;
+    constexpr float MUSIC_VOLUME = 10.f;
     extern const char *SHOT_AUDIO_FILE_PATH;
+    constexpr float SHOT_VOLUME = 2.f;
 }
 
 
