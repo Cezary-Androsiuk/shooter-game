@@ -109,6 +109,8 @@ private:
 
     Player *m_player;
     Sound *m_sound;
+
+    bool m_makeScreenshot;
 };
 
 #endif // GAME_H

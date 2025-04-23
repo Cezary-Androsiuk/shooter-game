@@ -37,7 +37,7 @@ void Game::initRenderWindow()
             sf::Style::Default : sf::Style::None,
         m_contextSettings
     );
-    // m_renderWindow->setFramerateLimit(240);
+    m_renderWindow->setFramerateLimit(120);
 
     GlobalData::getInstance()->setWindowSize({
         static_cast<float>(windowSize.x),
@@ -186,6 +186,7 @@ void Game::initDefeatState()
 Game::Game()
     : m_player{nullptr}
     , m_sound{nullptr}
+    , m_makeScreenshot{false}
 {
     printf("game start\n");fflush(stdout);
 
@@ -316,6 +317,10 @@ void Game::pollEventGame()
         else if(m_currentEvent.key.code == sf::Keyboard::K) /// kill the player
         {
             m_player->dealDamage(1000000);
+        }
+        else if(m_currentEvent.key.code == sf::Keyboard::P)
+        {
+            m_makeScreenshot = true;
         }
 
         if(m_enableLaggingTests)
@@ -544,6 +549,11 @@ void Game::renderUsingTexture()
     //     m_renderWindow->draw(*m_renderSprite, m_blurShader.get());
     // else
 
+    if(m_makeScreenshot)
+    {
+        Support::makeScreenshot(m_renderTexture.get());
+        m_makeScreenshot = false;
+    }
 
     m_renderWindow->draw(*m_renderSprite);
 }
@@ -551,6 +561,14 @@ void Game::renderUsingTexture()
 void Game::renderRightToScreen()
 {
     this->renderObjects(m_renderWindow.get());
+
+
+    if(m_makeScreenshot)
+    {
+        Support::displayApplicationError("Can't make a screenshot, while rendering only for screen\n"
+                                         "RenderTexture is required");
+        m_makeScreenshot = false;
+    }
 }
 
 void Game::render()
