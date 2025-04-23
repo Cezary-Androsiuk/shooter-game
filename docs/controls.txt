@@ -1,0 +1,18 @@
+Controls
+W - forward
+S - backward
+A - left
+D - right
+Mouse movement - weapon aiming
+Left mouse button - fire (can hold)
+
+ESC - pause (during gameplay) / exit application (in menu)
+~ - exit application
+
+K - kill player
+
+L - emulate lag (default: 100ms)
+; - increase lag time by 100ms
+' - decrease lag time by 100ms
+F - toggle FPS info
+P - take screenshot (saves to "screenshots/" folder in application directory)
