@@ -17,7 +17,9 @@ public:
 
 private:
     sf::FloatRect m_bounds;
-    sf::RectangleShape m_body;
+    // sf::RectangleShape m_boundsBody;
+
+    sf::Sprite m_body;
 };
 
 #endif // OBSTACLE_H

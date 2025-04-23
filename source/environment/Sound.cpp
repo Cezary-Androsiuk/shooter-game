@@ -9,14 +9,15 @@ void Sound::initData()
 
 void Sound::initMusic()
 {
-    if(m_music.openFromFile(SOUND::MUSIC_AUDIO_FILE_PATH))
+    if(!m_music.openFromFile(SOUND::MUSIC_AUDIO_FILE_PATH))
     {
         fprintf(stderr, "music loading failed\n");
         fflush(stderr);
         m_musicLoaded = false;
+        return;
     }
     m_musicLoaded = true;
-    m_music.setVolume(SOUND::MUSIC_VOLUME);
+    m_music.setVolume(3.f);
     m_music.setLoop(true);
 }
 
@@ -27,6 +28,7 @@ void Sound::initWeaponShot()
         fprintf(stderr, "shot sound loading failed\n");
         fflush(stderr);
         m_weaponShot.loaded = false;
+        return;
     }
     m_weaponShot.loaded = true;
 }
@@ -94,6 +96,6 @@ void Sound::playShot()
     sf::Sound *sound = m_weaponShot.sounds.back().get();
 
     sound->setBuffer(m_weaponShot.buffer);
-    sound->setVolume(SOUND::SHOT_VOLUME);
+    sound->setVolume(2.f);
     sound->play();
 }

@@ -88,6 +88,13 @@ namespace MAIN_SPRITE{
         }
 
     }
+
+
+    constexpr uint OBSTACLE_FRAME_SIZE_X = 42;
+    constexpr uint OBSTACLE_FRAME_SIZE_Y = 42;
+    constexpr uint OBSTACLE_FRAME_OFFSET_X = 380;
+    constexpr uint OBSTACLE_FRAME_OFFSET_Y = 0;
+
 }
 
 
