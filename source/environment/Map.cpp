@@ -29,8 +29,62 @@ void Map::buildObstacles()
 {
     if(m_obstaclesBuilded) return;
 
-    m_obstacles.push_back(new Obstacle(sf::FloatRect(100,100,40,40)));
-    m_obstacles.push_back(new Obstacle(sf::FloatRect(200,200,40,40)));
+    const sf::Vector2f &windowSize = GlobalData::getInstance()->getWindowSize();
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+
+    sf::Vector2f obstacleSize(40, 40);
+
+    /// temporary position:
+    auto tPos = [&](float x, float y){
+        return sf::Vector2f(x, y);
+    };
+    /// temporary position:
+    auto tRect = [&](float x, float y){
+        return sf::FloatRect(tPos(x, y), obstacleSize);
+    };
+
+
+    /// left
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -180 ,windowSize.y/2+60)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -180 ,windowSize.y/2+20)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -180 ,windowSize.y/2-20))); /// center
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -180 ,windowSize.y/2-60)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -180 ,windowSize.y/2-100)));
+
+    /// right
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +140 ,windowSize.y/2+60)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +140 ,windowSize.y/2+20)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +140 ,windowSize.y/2-20))); /// center
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +140 ,windowSize.y/2-60)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +140 ,windowSize.y/2-100)));
+
+
+    /// top
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -220 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -180 ,windowSize.y/2 -240)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -140 ,windowSize.y/2 -240)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -100 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -60 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -20 ,windowSize.y/2 -240))); /// center
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +20 ,windowSize.y/2 -240))); /// center
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +60 ,windowSize.y/2 -240)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +100 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +140 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +180 ,windowSize.y/2 -240)));
+
+
+    /// top
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -220 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -180 ,windowSize.y/2 -240)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -140 ,windowSize.y/2 -240)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -100 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -60 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 -20 ,windowSize.y/2 -240))); /// center
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +20 ,windowSize.y/2 -240))); /// center
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +60 ,windowSize.y/2 -240)));
+    // m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +100 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +140 ,windowSize.y/2 -240)));
+    m_obstacles.push_back(new Obstacle(tRect(windowSize.x/2 +180 ,windowSize.y/2 -240)));
 
     m_obstaclesBuilded = true;
 }
