@@ -258,7 +258,7 @@ int InitialData::Player::getHealthPoints()
 
 bool InitialData::Player::getShowBounds()
 {
-    static const int value =
+    static const bool value =
         InitialData::rawReadValue(Player::getPlayer(), "show bounds");
     return value;
 }
@@ -350,7 +350,7 @@ float InitialData::Weapon::getDamage(uint weaponIndex)
 {
     static const json::value_type container =
         InitialData::rawReadValue(Weapon::getWeapon(), "damage");
-    static const int values[WEAPON_TYPES_COUNT] = {
+    static const float values[WEAPON_TYPES_COUNT] = {
         InitialData::rawReadValue(container, "weapon 0"),
         InitialData::rawReadValue(container, "weapon 1"),
         InitialData::rawReadValue(container, "weapon 2"),
@@ -391,14 +391,14 @@ int InitialData::Bullet::getMovementSpeed()
 
 bool InitialData::Bullet::getShowBounds()
 {
-    static const int value =
+    static const bool value =
         InitialData::rawReadValue(Bullet::getBullet(), "show bounds");
     return value;
 }
 
 float InitialData::Bullet::getAliveDistanceFromWindowEdge()
 {
-    static const int value =
+    static const float value =
         InitialData::rawReadValue(Bullet::getBullet(), "alive distance from window edge");
     return value;
 }
@@ -412,6 +412,13 @@ json::value_type InitialData::Armor::getArmor()
     static const json::value_type armor =
         InitialData::getObject()->readValue("armor");
     return armor;
+}
+
+float InitialData::Armor::getMaxArmorProtection()
+{
+    static const float value =
+        InitialData::rawReadValue(Armor::getArmor(), "max armor protection");
+    return value;
 }
 
 float InitialData::Armor::getHelemtProtection(uint armorIndex)
@@ -592,7 +599,7 @@ float InitialData::Enemy::getSpeedIncreaseTimeAmountMultiplier()
 
 bool InitialData::Enemy::getShowBounds()
 {
-    static const int value =
+    static const bool value =
         InitialData::rawReadValue(Enemy::getEnemy(), "show bounds");
     return value;
 }

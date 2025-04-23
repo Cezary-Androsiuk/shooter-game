@@ -85,49 +85,59 @@
     },
 
     "armor" :{
+        "max armor protection": 1000,
+
         "helmet protection": {
             "armor 0": 0,
-            "armor 1": 0,
-            "armor 2": 0,
-            "armor 3": 0,
-            "armor 4": 0,
-            "armor 5": 0
+            "armor 1": 10,
+            "armor 2": 30,
+            "armor 3": 50,
+            "armor 4": 75,
+            "armor 5": 90
         },
         "chest protection": {
             "armor 0": 0,
-            "armor 1": 0,
-            "armor 2": 0,
-            "armor 3": 0,
-            "armor 4": 0,
-            "armor 5": 0
+            "armor 1": 40,
+            "armor 2": 100,
+            "armor 3": 200,
+            "armor 4": 300,
+            "armor 5": 400
 
         },
         "Arms protection": {
             "armor 0": 0,
-            "armor 1": 0,
-            "armor 2": 0,
-            "armor 3": 0,
-            "armor 4": 0,
-            "armor 5": 0
+            "armor 1": 20,
+            "armor 2": 60,
+            "armor 3": 100,
+            "armor 4": 150,
+            "armor 5": 200
 
         },
         "forearms protection": {
             "armor 0": 0,
-            "armor 1": 0,
-            "armor 2": 0,
-            "armor 3": 0,
-            "armor 4": 0,
-            "armor 5": 0
+            "armor 1": 20,
+            "armor 2": 60,
+            "armor 3": 100,
+            "armor 4": 150,
+            "armor 5": 200
 
         },
         "gloves protection": {
             "armor 0": 0,
-            "armor 1": 0,
-            "armor 2": 0,
-            "armor 3": 0,
-            "armor 4": 0,
-            "armor 5": 0
+            "armor 1": 10,
+            "armor 2": 30,
+            "armor 3": 50,
+            "armor 4": 75,
+            "armor 5": 90
+        },
 
+        "notes":{
+            "armor 0 armor sum info": 0,
+            "armor 1 armor sum info": 100,
+            "armor 2 armor sum info": 280,
+            "armor 3 armor sum info": 500,
+            "armor 4 armor sum info": 750,
+            "armor 5 armor sum info": 980
         }
     },
 

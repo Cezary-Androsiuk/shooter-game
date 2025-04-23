@@ -97,7 +97,11 @@ void Player::initArmor()
     m_armor->setPlayerCenter(&m_center);
     m_armor->setPlayerRotationAngle(&m_rotationAngle);
 
-    m_armor->setHelmet(1);
+    m_armor->setHelmet(5);
+    m_armor->setChest(5);
+    m_armor->setArms(5);
+    m_armor->setForearms(5);
+    m_armor->setGloves(5);
 
     m_armor->init();
 }
@@ -446,8 +450,10 @@ void Player::setArmor(std::unique_ptr<Armor> armor)
 
 void Player::dealDamage(float damage)
 {
-    m_healthPoints -=
-        damage; // - damage * // decrease by armor
+    float damageThatWasDecreasedByArmor =
+        damage * (1.f-m_armor->getProtection());
+
+    m_healthPoints -= damageThatWasDecreasedByArmor;
 }
 
 void Player::addMoney(float money)

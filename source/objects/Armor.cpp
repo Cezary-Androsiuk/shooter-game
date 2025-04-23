@@ -207,11 +207,15 @@ void Armor::render(sf::RenderTarget *target)
 
 float Armor::getProtection() const
 {
-    return m_helmet.protection +
-           m_chest.protection +
-           m_arms.protection +
-           m_forearms.protection +
-           m_gloves.protection;
+    float max = InitialData::Armor::getMaxArmorProtection();
+    float armorProtectionSum =
+        m_helmet.protection +
+        m_chest.protection +
+        m_arms.protection +
+        m_forearms.protection +
+        m_gloves.protection;
+
+    return armorProtectionSum / max;
 }
 
 void Armor::setPlayerCenter(const sf::Vector2f *center)

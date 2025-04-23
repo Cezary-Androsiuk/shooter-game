@@ -14,14 +14,14 @@ void GotDamageAnimation::initTexture()
     m_sprite = std::make_unique<sf::Sprite>(
         GlobalData::getInstance()->getGotDamageAnimationTexture(),
         sf::IntRect(0,0, 1920, 1080));
-    m_sprite->setColor(sf::Color(255,255,255,200));
+    m_sprite->setColor(sf::Color(255,255,255,255));
     m_sprite->setScale(windowRatio);
 }
 
 GotDamageAnimation::GotDamageAnimation()
     : Animation()
 {
-    this->init();
+    GotDamageAnimation::init();
 }
 
 GotDamageAnimation::~GotDamageAnimation()

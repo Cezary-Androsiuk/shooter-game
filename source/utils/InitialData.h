@@ -75,6 +75,7 @@ public:
     class Armor{
         static json::value_type getArmor();
     public:
+        static float getMaxArmorProtection();
         static float getHelemtProtection(uint armorIndex);
         static float getChestProtection(uint armorIndex);
         static float getArmsProtection(uint armorIndex);
