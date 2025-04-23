@@ -102,6 +102,11 @@ void Game::initPlayer()
     m_player->init();
 }
 
+void Game::initSound()
+{
+    m_sound = Sound::getInstance();
+}
+
 void Game::initMenuState()
 {
     printf("init menu\n");fflush(stdout);
@@ -190,6 +195,7 @@ Game::Game()
     this->initFPSLabel();
 
     this->initPlayer();
+    this->initSound();
 
     this->initMenuState();
 }
@@ -474,6 +480,8 @@ void Game::updateDefeatState()
 
 void Game::update()
 {
+    m_sound->update();
+
     switch (m_gameState) {
     case GameState::Menu: this->updateMenuState(); break;
     case GameState::Play: this->updatePlayState(); break;

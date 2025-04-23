@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SFML_DIR "C:/SFML-2.6.1/lib/cmake/SFML")
-find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)
+find_package(SFML 2.6 COMPONENTS graphics window system audio REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR}/source)
 
@@ -49,6 +49,7 @@ add_executable(
     # ENVIRONMENT
     source/environment/Obstacle.h source/environment/Obstacle.cpp
     source/environment/Map.h source/environment/Map.cpp
+    source/environment/Sound.h source/environment/Sound.cpp
 
     # STATES
     source/states/StateManager.h source/states/StateManager.cpp
@@ -119,6 +120,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     sfml-graphics
     sfml-window
     sfml-system
+    sfml-audio
 )
 
 

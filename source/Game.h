@@ -14,6 +14,7 @@
 #include "states/PausePlayState.h"
 #include "states/DefeatState.h"
 #include "objects/entities/Player.h"
+#include "environment/Sound.h"
 
 using namespace sgui;
 
@@ -26,6 +27,7 @@ class Game
     void initBlurShader();
     void initFPSLabel();
     void initPlayer();
+    void initSound();
 
     void initMenuState();
     void initPlayState();
@@ -106,6 +108,7 @@ private:
     std::unique_ptr<DefeatState> m_defeatState;
 
     Player *m_player;
+    Sound *m_sound;
 };
 
 #endif // GAME_H

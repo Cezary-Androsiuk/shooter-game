@@ -90,6 +90,7 @@ namespace MAIN_SPRITE{
     }
 }
 
+
 /// correct character rotation to point directly at mouse
 constexpr int PLAYER_ROTATION_ANGLE_CORRECTION = 0;//-8;
 
@@ -101,6 +102,12 @@ constexpr uint WEAPON_TYPES_COUNT = 9;
 constexpr uint ZOMBIE_TYPES_COUNT = 6;
 constexpr uint ARMOR_TYPES_COUNT = 6;
 
+
+namespace SOUND{
+    constexpr float VOLUME = 20.f;
+    extern const char *MUSIC_AUDIO_FILE_PATH;
+    extern const char *SHOT_AUDIO_FILE_PATH;
+}
 
 
 #endif // CONSTANTS_H

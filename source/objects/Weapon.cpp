@@ -2,8 +2,8 @@
 
 #include "utils/GlobalData.h"
 #include "utils/InitialData.h"
-#include "utils/Support.h"
 #include "utils/AdvancedComputation.h"
+#include "environment/Sound.h"
 
 void Weapon::initData()
 {
@@ -96,8 +96,6 @@ void Weapon::render(sf::RenderTarget *target)
 
 std::unique_ptr<Bullet> Weapon::getBulletFromShot()
 {
-    printf("function\n");
-    fflush(stdout);
     if(m_clickCorrection.needCheck)
     {
         if(m_clickCorrection.mouseLButtonClickedWhileInitialization)
@@ -124,6 +122,8 @@ std::unique_ptr<Bullet> Weapon::getBulletFromShot()
         if(m_shotDelayTimer.getElapsedTime().asMilliseconds() > m_shotDelay)
         {
             m_shotDelayTimer.restart();
+
+            Sound::getInstance()->playShot();
 
             std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
 
