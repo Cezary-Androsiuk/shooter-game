@@ -6,6 +6,8 @@ D - prawo
 ruch myszki - celowanie bronią
 lewy przycisk myszy - strzał (można trzymać)
 
+ESC - pauza / zamknij aplikację
+
 K - zabij gracza
 
 L - emuluj lag (domyślnie 100ms)
