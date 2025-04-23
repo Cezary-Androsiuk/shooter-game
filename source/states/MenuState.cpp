@@ -39,11 +39,25 @@ void MenuState::initExitGameButton()
     m_exitButton->setColorPress(ELEMENT_COLOR_PRESS);
 }
 
+void MenuState::initShop()
+{
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+
+    m_shopSprite = std::make_unique<sf::Sprite>(
+        GlobalData::getInstance()->getShopTexture(),
+        sf::IntRect(0,0,1284,674));
+    m_shopSprite->setScale(windowRatio);
+    m_shopSprite->setPosition(sf::Vector2f(575, 320));
+
+    m_shopView.init();
+}
+
 void MenuState::initObjects()
 {
     this->initBackgroundImage();
     this->initStartPlayButton();
     this->initExitGameButton();
+    this->initShop();
 }
 
 MenuState::MenuState()
@@ -81,18 +95,24 @@ void MenuState::pollEvent(const sf::Event &event)
 {
     m_startPlayButton->event(event);
     m_exitButton->event(event);
+    m_shopView.pollEvent(event);
 }
 
 void MenuState::update()
 {
     m_startPlayButton->update();
     m_exitButton->update();
+    m_shopView.update();
 }
 
 void MenuState::render(sf::RenderTarget *target)
 {
     target->draw(*m_backgroundSprite);
+    target->draw(*m_shopSprite);
+
     m_startPlayButton->render(target);
 
     m_exitButton->render(target);
+
+    m_shopView.render(target);
 }

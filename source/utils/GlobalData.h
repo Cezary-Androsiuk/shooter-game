@@ -13,6 +13,7 @@ class GlobalData
     void loadDefeatStateBackgroundTexture();
     void loadGotDamageAnimationTexture();
     void loadPlayStatInfoNotchTexture();
+    void loadShopTexture();
 
     GlobalData();
 
@@ -37,6 +38,7 @@ public:
     const sf::Texture &getMainSpriteTexture() const;
     const sf::Texture &getPausePlayStateBackgroundTexture() const;
     const sf::Texture &getPlayStatInfoNotchTexture() const;
+    const sf::Texture &getShopTexture() const;
 
     const sf::Texture &getGotDamageAnimationTexture() const;
 
@@ -58,6 +60,7 @@ private:
     sf::Texture m_pausePlayStateBackgroundTexture;
     sf::Texture m_defeatStateBackgroundTexture;
     sf::Texture m_playStatInfoNotchTexture;
+    sf::Texture m_shopTexture;
 
     sf::Texture m_gotDamageAnimationTexture;
 

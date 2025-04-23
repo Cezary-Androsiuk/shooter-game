@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "State.h"
+#include "views/ShopView.h"
 
 using namespace sgui;
 
@@ -17,6 +18,7 @@ class MenuState : public State
     void initBackgroundImage();
     void initStartPlayButton();
     void initExitGameButton();
+    void initShop();
     void initObjects();
 
 public:
@@ -39,6 +41,10 @@ private:
     std::unique_ptr<Button> m_startPlayButton;
 
     std::unique_ptr<Button> m_exitButton;
+
+    std::unique_ptr<sf::Sprite> m_shopSprite;
+
+    ShopView m_shopView;
 };
 
 #endif // MENUSTATE_H

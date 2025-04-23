@@ -125,6 +125,20 @@ void GlobalData::loadPlayStatInfoNotchTexture()
     fflush(stdout);
 }
 
+void GlobalData::loadShopTexture()
+{
+    if(!m_shopTexture.loadFromFile(SHOP_IMAGE_PATH, sf::IntRect(0,0,1284,674)))
+    {
+        std::string message = "Cannot load shop texture from path:\n";
+        message += SHOP_IMAGE_PATH;
+        Support::displayApplicationError(message);
+        exit(1);
+    }
+    printf("texture: 'shop' loaded\n");
+
+    fflush(stdout);
+}
+
 GlobalData::GlobalData()
 {
     this->loadFonts();
@@ -135,6 +149,7 @@ GlobalData::GlobalData()
     this->loadDefeatStateBackgroundTexture();
     this->loadGotDamageAnimationTexture();
     this->loadPlayStatInfoNotchTexture();
+    this->loadShopTexture();
 }
 
 GlobalData *GlobalData::getInstance()
@@ -176,6 +191,11 @@ const sf::Texture &GlobalData::getPausePlayStateBackgroundTexture() const
 const sf::Texture &GlobalData::getPlayStatInfoNotchTexture() const
 {
     return m_playStatInfoNotchTexture;
+}
+
+const sf::Texture &GlobalData::getShopTexture() const
+{
+    return m_shopTexture;
 }
 
 const sf::Texture &GlobalData::getGotDamageAnimationTexture() const

@@ -81,7 +81,7 @@ void Player::initWeapon()
     if(!m_weapon)
         m_weapon = std::make_unique<Weapon>();
 
-    m_weapon->setWeaponIndex(8);
+    // m_weapon->setWeaponIndex(8);
 
     m_weapon->setPlayerSize(m_size);
     m_weapon->init();
@@ -97,11 +97,11 @@ void Player::initArmor()
     m_armor->setPlayerCenter(&m_center);
     m_armor->setPlayerRotationAngle(&m_rotationAngle);
 
-    m_armor->setHelmet(5);
-    m_armor->setChest(5);
-    m_armor->setArms(5);
-    m_armor->setForearms(5);
-    m_armor->setGloves(5);
+    // m_armor->setHelmet(5);
+    // m_armor->setChest(5);
+    // m_armor->setArms(5);
+    // m_armor->setForearms(5);
+    // m_armor->setGloves(5);
 
     m_armor->init();
 }
@@ -413,6 +413,11 @@ const sf::FloatRect *Player::getBounds() const
 Weapon *Player::getWeapon() const
 {
     return m_weapon.get();
+}
+
+Armor *Player::getArmor() const
+{
+    return m_armor.get();
 }
 
 bool Player::getPlayerAlive() const

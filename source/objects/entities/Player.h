@@ -71,6 +71,7 @@ public:
     sf::Vector2f getPosition() const;
     const sf::FloatRect *getBounds() const;
     Weapon *getWeapon() const;
+    Armor *getArmor() const;
     bool getPlayerAlive() const;
     int getHealthPoints() const;
 

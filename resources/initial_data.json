@@ -212,6 +212,6 @@
 
     "enemy spawner": {
         "spawn distance to screen": 10.0,
-        "spawn delay ms": 500
+        "spawn delay ms": 2000
     }
 }

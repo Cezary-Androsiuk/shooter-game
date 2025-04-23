@@ -11,6 +11,7 @@ const char *PLAY_BACKGROUND_IMAGE_PATH = "./resources/images/Background.png";
 const char *PAUSE_BACKGROUND_IMAGE_PATH = "./resources/images/PauseBackground.png";
 const char *DEFEAT_BACKGROUND_IMAGE_PATH = "./resources/images/DefeatBackground.png";
 const char *PLAY_STAT_INFO_NOTCH_IMAGE_PATH = "./resources/images/PlayStatInfoNotch.png";
+const char *SHOP_IMAGE_PATH = "./resources/images/Shop.png";
 
 const char *GOT_DAMAGE_ANIMATION_TEXTURE = "./resources/animations/static/damageOutline.png";
 
