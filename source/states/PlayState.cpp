@@ -76,6 +76,15 @@ void PlayState::initStatInfo()
     sf::Vector2f timeLabelSize = m_timeLabel->getSize();
     m_timeLabel->setPosition(sf::Vector2f((1920.f/2) * windowRatio.x -timeLabelSize.x/2, 10.f* windowRatio.y));
 
+    /// PLAYER HEALTH POINTS
+    m_playerHealthPointsLabel = std::make_unique<sgui::Label>();
+    m_playerHealthPointsLabel->setFont(GlobalData::getInstance()->getFontInkFree());
+    m_playerHealthPointsLabel->setString("Health: 1000");
+    m_playerHealthPointsLabel->setCharacterSize(20);
+    sf::Vector2f playerHealthPoinsLabelSize = m_playerHealthPointsLabel->getSize();
+    m_playerHealthPointsLabel->setPosition(
+        sf::Vector2f((1920.f/2 + 250) * windowRatio.x -playerHealthPoinsLabelSize.x/2,
+                     10.f* windowRatio.y));
 }
 
 PlayState::PlayState()
@@ -231,6 +240,7 @@ void PlayState::updateStatInfo()
     if(m_statInfoDisplayClock.getElapsedTime().asMilliseconds() < m_statInfoDisplayDelay)
         return;
     m_statInfoDisplayClock.restart();
+
     const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
 
 
@@ -253,6 +263,10 @@ void PlayState::updateStatInfo()
     Support::informAboutToSmallBuffer(requiredSize, bufferSize);
     m_timeLabel->setString(snOut);
 
+    /// set text
+    requiredSize = snprintf(snOut, bufferSize, "Health: %d", m_player->getHealthPoints());
+    Support::informAboutToSmallBuffer(requiredSize, bufferSize);
+    m_playerHealthPointsLabel->setString(snOut);
 
     /// set size
     sf::Vector2f moneyLabelSize = m_moneyLabel->getSize();
@@ -262,9 +276,16 @@ void PlayState::updateStatInfo()
     sf::Vector2f timeLabelSize = m_timeLabel->getSize();
     m_timeLabel->setPosition(sf::Vector2f((1920.f/2) * windowRatio.x -timeLabelSize.x/2, 10.f* windowRatio.y));
 
+    /// set size
+    sf::Vector2f playerHealthPoinsLabelSize = m_playerHealthPointsLabel->getSize();
+    m_playerHealthPointsLabel->setPosition(
+        sf::Vector2f((1920.f/2 + 250) * windowRatio.x -playerHealthPoinsLabelSize.x/2,
+                     10.f* windowRatio.y));
+
     /// update
     m_moneyLabel->update();
     m_timeLabel->update();
+    m_playerHealthPointsLabel->update();
 }
 
 void PlayState::updateAnimations()
@@ -287,6 +308,7 @@ void PlayState::renderStatInfo(sf::RenderTarget *target)
     target->draw(*m_statInfoNotch);
     m_moneyLabel->render(target);
     m_timeLabel->render(target);
+    m_playerHealthPointsLabel->render(target);
 }
 
 void PlayState::pollEvent(const sf::Event &event)

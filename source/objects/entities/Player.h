@@ -72,6 +72,7 @@ public:
     const sf::FloatRect *getBounds() const;
     Weapon *getWeapon() const;
     bool getPlayerAlive() const;
+    int getHealthPoints() const;
 
     /* SETTERS */
     void setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies);

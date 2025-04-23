@@ -29,7 +29,7 @@
 
     "player": {
         "speed straight": 500.0,
-        "health points": 100,
+        "health points": 1000,
         "show bounds": false,
         "default skin color": {
             "red": 255,

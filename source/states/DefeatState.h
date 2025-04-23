@@ -18,6 +18,7 @@ class DefeatState : public State
     void initBackgroundSprite();
     void initExitPlayButton();
     void initStats();
+    void intMargin();
 
 public:
     DefeatState();
@@ -53,6 +54,15 @@ private:
     int m_survivedSeconds;
     std::unique_ptr<sgui::Label> m_moneyLabel;
     std::unique_ptr<sgui::Label> m_timeLabel;
+
+
+    std::shared_ptr<sf::Sprite> m_statInfoNotch;
+    struct {
+        sf::RectangleShape top;
+        sf::RectangleShape bottom;
+        sf::RectangleShape left;
+        sf::RectangleShape right;
+    } m_margin;
 };
 
 #endif // DEFEATSTATE_H

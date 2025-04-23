@@ -420,6 +420,11 @@ bool Player::getPlayerAlive() const
     return m_healthPoints > 0;
 }
 
+int Player::getHealthPoints() const
+{
+    return m_healthPoints;
+}
+
 void Player::setEnemies(const std::vector<std::shared_ptr<Enemy>> *enemies)
 {
     m_enemies = enemies;

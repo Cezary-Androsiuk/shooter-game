@@ -60,6 +60,39 @@ void DefeatState::initStats()
     this->refreshStats();
 }
 
+void DefeatState::intMargin()
+{
+    const sf::Vector2f &windowSize = GlobalData::getInstance()->getWindowSize();
+    const sf::Vector2f &windowRatio = GlobalData::getInstance()->getWindowRatio();
+
+    // float thickness = 100;
+    // float thicknessX = thickness * windowRatio.x;
+    // float thicknessY = thickness * windowRatio.y;
+
+    // m_margin.top.setSize(sf::Vector2f(windowSize.x, thicknessY));
+    // m_margin.left.setSize(sf::Vector2f(thicknessX, windowSize.y));
+    // m_margin.bottom.setSize(sf::Vector2f(windowSize.x, thicknessY));
+    // m_margin.right.setSize(sf::Vector2f(thicknessX, windowSize.y));
+
+    // m_margin.top.setPosition(sf::Vector2f(0.f, 0.f));
+    // m_margin.left.setPosition(sf::Vector2f(0.f, 0.f));
+    // m_margin.bottom.setPosition(sf::Vector2f(0.f, windowSize.y - thicknessX));
+    // m_margin.right.setPosition(sf::Vector2f(windowSize.x - thicknessX, 0.f));
+
+    // m_margin.top.setFillColor(WINDOW_BACKGROUND_SF_COLOR);
+    // m_margin.left.setFillColor(WINDOW_BACKGROUND_SF_COLOR);
+    // m_margin.bottom.setFillColor(WINDOW_BACKGROUND_SF_COLOR);
+    // m_margin.right.setFillColor(WINDOW_BACKGROUND_SF_COLOR);
+
+    /// NOTCH
+    m_statInfoNotch = std::make_unique<sf::Sprite>(
+        GlobalData::getInstance()->getPlayStatInfoNotchTexture(),
+        sf::IntRect(0,0, 800, 90));
+    m_statInfoNotch->setScale(windowRatio);
+    m_statInfoNotch->setPosition(sf::Vector2f((1920.f/2 - 800.f/2) * windowRatio.x, 0.f ));
+
+}
+
 DefeatState::DefeatState()
     : m_blurredPlayBackgroundLoaded{false}
 {
@@ -77,6 +110,7 @@ void DefeatState::init()
     this->initBackgroundSprite();
     this->initExitPlayButton();
     this->initStats();
+    this->intMargin();
 }
 
 bool DefeatState::requestExitPlay()
@@ -98,6 +132,13 @@ void DefeatState::render(sf::RenderTarget *target)
 {
     if(m_blurredPlayBackgroundLoaded)
         target->draw(*m_blurredPlayBackgroundSprite);
+
+    target->draw(*m_statInfoNotch);
+    // target->draw(m_margin.top);
+    // target->draw(m_margin.left);
+    // target->draw(m_margin.bottom);
+    // target->draw(m_margin.right);
+
     target->draw(*m_backgroundSprite);
 
     m_exitPlayButton->render(target);

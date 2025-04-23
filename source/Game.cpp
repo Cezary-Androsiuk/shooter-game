@@ -315,7 +315,7 @@ void Game::pollEventGame()
         }
         else if(m_currentEvent.key.code == sf::Keyboard::K) /// kill the player
         {
-            m_player->dealDamage(1000);
+            m_player->dealDamage(1000000);
         }
 
         if(m_enableLaggingTests)

@@ -76,6 +76,7 @@ private:
     int m_survivedSeconds;
     std::unique_ptr<sgui::Label> m_moneyLabel;
     std::unique_ptr<sgui::Label> m_timeLabel;
+    std::unique_ptr<sgui::Label> m_playerHealthPointsLabel;
     sf::Clock m_statInfoDisplayClock;
     int m_statInfoDisplayDelay;
 };
