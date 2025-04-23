@@ -1,0 +1,14 @@
+sterowanie
+W - przód
+S - tył
+A - lewo
+D - prawo
+ruch myszki - celowanie bronią
+lewy przycisk myszy - strzał (można trzymać)
+
+K - zabij gracza
+
+L - emuluj lag (domyślnie 100ms)
+; - zwiększ czas laga o 100ms
+' - zmniejsz czas laga o 100ms
+F - włącz/wyłącz FPS info
